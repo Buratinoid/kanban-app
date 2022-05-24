@@ -1,0 +1,17 @@
+header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: end;
+    align-items: center;
+    width: 100wv;
+    height: 10vh;
+    background-color: rgb(197, 233, 212);
+}
+
+a, button {
+    background-color: seashell;
+    text-decoration: none;
+    color: black;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+}

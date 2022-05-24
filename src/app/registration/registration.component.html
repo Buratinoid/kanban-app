@@ -1,0 +1,17 @@
+<form [formGroup]="registrationForm" (submit)="signUp()"> 
+  <label i18n="Name field in sign up page | @@signUpNameField">
+    <p>Имя:</p>
+    <input formControlName="name">
+  </label>
+  <label i18n="Login field in sign up page | @@signUpLoginField">
+    <p>Логин:</p>
+    <input formControlName="login">
+  </label>
+  <label i18n="Password field in sign up page | @@signUpPasswordField">
+    <p>Пароль:</p> 
+    <input formControlName="password">
+  </label>
+    <p>
+    <button type="submit" i18n="SignUp button in sign up page | @@signUpButton">Регистрация</button>
+    </p>
+</form>

@@ -1,0 +1,17 @@
+<header>
+<div>
+  <a [routerLink]="['']" i18n="Home button  in navbar | @@navBarHomeButton">Домой</a>
+</div>
+<div>
+  <a [routerLink]="['kanban']" i18n="Kanban button in navbar | @@navBarKanbanButton">Доска канбан</a>
+</div>
+<div>
+    <a [routerLink]="['signin']" i18n="SignIn button in navBar | @@navBarSignInButton">Войти</a>
+</div>
+<div>
+    <a [routerLink]="['signup']" i18n="SignUp button in navBar | @@navBarSignUpButton">Регистрация</a>
+</div>
+<div>
+    <button (click)="logOut()" i18n="LogOut button in navBar | @@navBarLogOutButton">Выйти</button>
+</div>
+</header>
