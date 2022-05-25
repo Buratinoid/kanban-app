@@ -2,5 +2,7 @@
   This is Kanban Board
 </p>
 <ul *ngFor="let board of boards">
-  <li>{{board.title}} - {{board.description}}</li>
+  <li>
+  <a [routerLink]="['/', 'board', board.id]">{{board.title}} - {{board.description}}</a>
+  </li>
 </ul>
