@@ -13,4 +13,8 @@ public getAllColumns(boardId: string) {
 public createColumn(boardId: string, column: any) {
   return this.http.postRequest('/boards/' + boardId + '/columns', column)
 }
+
+public getColumn(boardId: string, columnId: string) {
+  return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId)
+}
 }
