@@ -17,4 +17,8 @@ public createTask(boardId: string, columnId: string, task: any) {
 public getTask(boardId: string, columnId: string, taskId: string) {
   return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
 }
+
+public deleteTask(boardId: string, columnId: string, taskId: string) {
+  return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
+}
 }
