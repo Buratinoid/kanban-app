@@ -18,7 +18,10 @@ import { AutorizationComponent } from './autorization/autorization.component';
 import { HeaderComponent } from './header/header.component';
 import { KanbanComponent } from './kanban/kanban.component';
 import { HomeComponent } from './home/home.component';
+
 import { RequestService } from './services/request.service';
+import { BoardService } from './services/board.service';
+
 
 @NgModule({
   declarations: [							
@@ -37,7 +40,8 @@ import { RequestService } from './services/request.service';
     RouterModule.forRoot(routes)
   ],
   providers: [
-    RequestService
+    RequestService,
+    BoardService
   ],
   bootstrap: [AppComponent]
 })

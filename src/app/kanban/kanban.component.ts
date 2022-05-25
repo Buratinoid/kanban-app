@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { RequestService } from '../services/request.service';
+import { BoardService } from '../services/board.service';
 
 @Component({
   selector: 'app-kanban',
@@ -11,7 +11,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
   subscription: Subscription = new Subscription;
 
-  constructor(private http: RequestService) { }
+  constructor(private http: BoardService) { }
 
   ngOnInit() {
     this.subscription = this.http

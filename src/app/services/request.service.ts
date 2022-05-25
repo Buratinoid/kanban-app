@@ -10,7 +10,7 @@ export class RequestService {
     
     constructor(private request: HttpClient) { }
 
-private getRequest(path: string) {
+public getRequest(path: string) {
     const header = {'Authorization': 'Bearer ' + this.token}
     return this.request.get<any>(this.url + path, { headers: header })
     .pipe(
@@ -71,10 +71,6 @@ public signInUser(body: any): Observable<any> {
 
 public getAllUsers(): Observable<any> {
     return this.getRequest('/users')
-}
-
-public getAllBoards(): Observable<any> {
-    return this.getRequest('/boards')
 }
 
 public logOut() {

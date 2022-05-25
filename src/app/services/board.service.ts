@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { RequestService } from './request.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class BoardService {
 
-constructor() { }
+constructor(private http: RequestService) { }
 
+public getAllBoards(): Observable<any> {
+  return this.http.getRequest('/boards')
+}
 }
