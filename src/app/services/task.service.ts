@@ -13,4 +13,8 @@ public getAllTasks(boardId: string, columnId: string) {
 public createTask(boardId: string, columnId: string, task: any) {
   return this.http.postRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks', task)
 }
+
+public getTask(boardId: string, columnId: string, taskId: string) {
+  return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
+}
 }
