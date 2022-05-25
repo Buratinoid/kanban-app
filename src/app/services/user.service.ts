@@ -23,4 +23,8 @@ public deleteUser(userId: string) {
   return this.http.deleteRequest('/users/' + userId)
 }
 
+public updateUser(userId: string, user: any) {
+  return this.http.putRequest('/users/' + userId, user)
+}
+
 }
