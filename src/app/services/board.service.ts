@@ -14,4 +14,8 @@ public getAllBoards(): Observable<any> {
 public createBoard(board: any): Observable<any> {
   return this.http.postRequest('/boards', board)
 }
+
+public getBoard(boardId: string) {
+  return this.http.getRequest('/boards/' + boardId)
+}
 }
