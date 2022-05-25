@@ -32,7 +32,7 @@ public postRequest(path: string, body: any) {
     )
 }
 
-private putRequest(path: string, body: any) {
+public putRequest(path: string, body: any) {
     const header = {'Authorization': 'Bearer ' + this.token}
     return this.request.put<any>(this.url + path, body, { headers: header })
     .pipe(

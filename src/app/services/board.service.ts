@@ -22,4 +22,8 @@ public getBoard(boardId: string) {
 public deleteBoard(boardId: string) {
   return this.http.deleteRequest('/boards/' + boardId)
 }
+
+public updateBoard(boardId: string, board: any) {
+  return this.http.putRequest('/boards/' + boardId, board)
+}
 }
