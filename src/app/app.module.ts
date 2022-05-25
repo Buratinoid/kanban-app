@@ -21,6 +21,10 @@ import { HomeComponent } from './home/home.component';
 
 import { RequestService } from './services/request.service';
 import { BoardService } from './services/board.service';
+import { ColumnService } from './services/column.service';
+import { TaskService } from './services/task.service';
+import { UserService } from './services/user.service';
+
 
 
 @NgModule({
@@ -41,7 +45,10 @@ import { BoardService } from './services/board.service';
   ],
   providers: [
     RequestService,
-    BoardService
+    BoardService,
+    ColumnService,
+    TaskService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
