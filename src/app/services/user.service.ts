@@ -19,4 +19,8 @@ public getUser(userId: string) {
   return this.http.getRequest('/users/' + userId)
 }
 
+public deleteUser(userId: string) {
+  return this.http.deleteRequest('/users/' + userId)
+}
+
 }
