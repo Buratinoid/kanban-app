@@ -43,7 +43,7 @@ private putRequest(path: string, body: any) {
     )
 }
 
-private deleteRequest(path: string) {
+public deleteRequest(path: string) {
     const header = {'Authorization': 'Bearer ' + this.token}
     return this.request.delete<any>(this.url + path, { headers: header })
     .pipe(

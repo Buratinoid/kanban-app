@@ -18,4 +18,8 @@ public createBoard(board: any): Observable<any> {
 public getBoard(boardId: string) {
   return this.http.getRequest('/boards/' + boardId)
 }
+
+public deleteBoard(boardId: string) {
+  return this.http.deleteRequest('/boards/' + boardId)
+}
 }
