@@ -21,4 +21,8 @@ public getColumn(boardId: string, columnId: string) {
 public deleteColumn(boardId: string, columnId: string) {
   return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId)
 }
+
+public updateColumn(boardId: string, columnId: string, column: any) {
+  return this.http.putRequest('/boards/' + boardId + '/columns/' + columnId, column)
+}
 }
