@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: 'kanban', component: KanbanComponent},
   { path: 'signup', component: RegistrationComponent},
   { path: 'signin', component: AutorizationComponent},
-  { path: 'board', component: BoardComponent}
+  { path: 'board/:id', component: BoardComponent}
 ];
 
 import { AppRoutingModule } from './app-routing.module';
