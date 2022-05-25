@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { RequestService } from './request.service';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,6 +7,10 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
-constructor() { }
+constructor(private http: RequestService) { }
+
+public signUpUser(body: any): Observable<any> {
+  return this.http.postRequest('/signup', body)
+}
 
 }

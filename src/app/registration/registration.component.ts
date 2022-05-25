@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { RequestService } from '../services/request.service';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-registration',
@@ -21,7 +21,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     password: ''
   }
 
-  constructor(private router: Router, private http: RequestService) { 
+  constructor(private router: Router, private http: UserService) { 
     this.registrationForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       login: new FormControl('', [Validators.required]),

@@ -54,10 +54,6 @@ public deleteRequest(path: string) {
     )
 }
 
-public signUpUser(body: any): Observable<any> {
-    return this.postRequest('/signup', body)
-}
-
 public signInUser(body: any): Observable<any> {
     return this.postRequest('/signin', body)
     .pipe(
