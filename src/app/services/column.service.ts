@@ -17,4 +17,8 @@ public createColumn(boardId: string, column: any) {
 public getColumn(boardId: string, columnId: string) {
   return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId)
 }
+
+public deleteColumn(boardId: string, columnId: string) {
+  return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId)
+}
 }
