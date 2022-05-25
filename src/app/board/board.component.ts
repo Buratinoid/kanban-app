@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { BoardService } from './../services/board.service';
 
 @Component({
   selector: 'app-board',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private http: BoardService) { }
 
   ngOnInit() {
   }
