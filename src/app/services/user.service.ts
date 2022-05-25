@@ -15,4 +15,8 @@ public getAllUsers(): Observable<any> {
   return this.http.getRequest('/users')
 }
 
+public getUser(userId: string) {
+  return this.http.getRequest('/users/' + userId)
+}
+
 }
