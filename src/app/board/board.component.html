@@ -1,3 +1,8 @@
 <p>
   {{board?.title}} - {{board?.description}}
 </p>
+
+<ul *ngFor="let column of columns">
+  <app-column 
+  [column]="column"></app-column>
+</ul>

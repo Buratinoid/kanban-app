@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BoardService } from './../services/board.service';
 import { map, switchMap, Subscription } from 'rxjs';
+import { ColumnService } from '../services/column.service';
 import { Board } from '../models/board';
+import { Column } from './../models/column';
 
 @Component({
   selector: 'app-board',
@@ -12,21 +13,23 @@ import { Board } from '../models/board';
 export class BoardComponent implements OnInit, OnDestroy {
 
   board!: Board;
+  columns!: Column[];
 
-  subscribtion!: Subscription;
+  columnSubscription: Subscription = new Subscription;
 
-  constructor(private route: ActivatedRoute, private http: BoardService) { }
+  constructor(  private route: ActivatedRoute, 
+                private columnHttp: ColumnService) { }
 
   ngOnInit() {
-    this.subscribtion = this.route.params
+    this.columnSubscription = this.route.params
     .pipe(
       map(params => params['id']),
-      switchMap(boardId => this.http.getBoard(boardId))
+      switchMap((boardId: string) => this.columnHttp.getAllColumns(boardId))
     )
-    .subscribe((board: Board) => this.board = board)
+    .subscribe((columns: Column[]) => this.columns = columns)
   }
   
   ngOnDestroy(): void {
-    this.subscribtion.unsubscribe()
+    this.columnSubscription.unsubscribe()
   }
 }

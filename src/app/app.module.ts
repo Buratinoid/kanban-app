@@ -21,13 +21,13 @@ import { AutorizationComponent } from './autorization/autorization.component';
 import { HeaderComponent } from './header/header.component';
 import { KanbanComponent } from './kanban/kanban.component';
 import { BoardComponent } from './board/board.component';
+import { ColumnComponent } from './column/column.component';
 
 import { RequestService } from './services/request.service';
 import { BoardService } from './services/board.service';
 import { ColumnService } from './services/column.service';
 import { TaskService } from './services/task.service';
 import { UserService } from './services/user.service';
-import { ColumnComponent } from './column/column.component';
 
 
 
@@ -39,6 +39,7 @@ import { ColumnComponent } from './column/column.component';
       HeaderComponent,
       KanbanComponent,
       HomeComponent,
+      BoardComponent,
       ColumnComponent
    ],
   imports: [
