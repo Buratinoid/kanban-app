@@ -65,10 +65,6 @@ public signInUser(body: any): Observable<any> {
     )
 }
 
-public getAllUsers(): Observable<any> {
-    return this.getRequest('/users')
-}
-
 public logOut() {
     this.token = 'logout token';
 }
