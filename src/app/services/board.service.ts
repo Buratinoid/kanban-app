@@ -10,4 +10,8 @@ constructor(private http: RequestService) { }
 public getAllBoards(): Observable<any> {
   return this.http.getRequest('/boards')
 }
+
+public createBoard(board: any): Observable<any> {
+  return this.http.postRequest('/boards', board)
+}
 }

@@ -21,7 +21,7 @@ public getRequest(path: string) {
     )
 }
 
-private postRequest(path: string, body: any) {
+public postRequest(path: string, body: any) {
     const header = {'Authorization': 'Bearer ' + this.token}
     return this.request.post<any>(this.url + path, body, { headers: header })
     .pipe(
