@@ -30,6 +30,8 @@ import { ColumnService } from './services/column.service';
 import { TaskService } from './services/task.service';
 import { UserService } from './services/user.service';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 
 @NgModule({
@@ -49,7 +51,8 @@ import { UserService } from './services/user.service';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    BrowserAnimationsModule
   ],
   providers: [
     RequestService,
