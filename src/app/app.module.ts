@@ -28,11 +28,12 @@ import { BoardService } from './services/board.service';
 import { ColumnService } from './services/column.service';
 import { TaskService } from './services/task.service';
 import { UserService } from './services/user.service';
+import { TaskComponent } from './task/task.component';
 
 
 
 @NgModule({
-  declarations: [								
+  declarations: [									
       AppComponent,
       RegistrationComponent,
       AutorizationComponent,
@@ -40,7 +41,8 @@ import { UserService } from './services/user.service';
       KanbanComponent,
       HomeComponent,
       BoardComponent,
-      ColumnComponent
+      ColumnComponent,
+      TaskComponent
    ],
   imports: [
     BrowserModule,
