@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
-import { Board } from '../../models/board';
+import { Board } from 'src/app/models/board';
 
 @Component({
   selector: 'app-kanban',
@@ -11,18 +11,18 @@ import { Board } from '../../models/board';
 export class KanbanComponent implements OnInit, OnDestroy {
 
   boards!: Board[];
-  
-  subscription: Subscription = new Subscription;
 
-  constructor(private http: BoardService) { }
+  boardSubscription: Subscription = new Subscription;
 
-  ngOnInit() {
-    this.subscription = this.http
+  constructor(private boardHttp: BoardService) { }
+
+  ngOnInit(): void {
+    this.boardSubscription = this.boardHttp
     .getAllBoards()
     .subscribe((boards: Board[]) => this.boards = boards)
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
+    this.boardSubscription.unsubscribe()
   }
 }

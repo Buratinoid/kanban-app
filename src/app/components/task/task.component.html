@@ -1,12 +1,9 @@
+<div *ngFor="let task of tasks" >
 <p>
-  {{task.title}}
+  Task: {{task?.title}} [Done: {{task?.done}}, Order: {{task?.order}}]
 </p>
 <p>
-  {{task.done}}
+  Task description:<br>
+  {{task?.description}}
 </p>
-<p>
-  {{task.order}}
-</p>
-<p>
-  {{task.description}}
-</p>
+</div>

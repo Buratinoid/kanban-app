@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Board } from '../../models/board';
 import { Column } from '../../models/column';
 import { Task } from '../../models/task';
@@ -9,10 +10,7 @@ import { TaskService } from '../../services/task.service';
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css']
 })
-export class TaskComponent implements OnInit {
-
-  @Input()
-  task!: Task;
+export class TaskComponent implements OnInit, OnDestroy {
 
   @Input()
   column!: Column;
@@ -22,10 +20,17 @@ export class TaskComponent implements OnInit {
 
   tasks!: Task[];
 
-  constructor() { }
+  taskSubscription: Subscription = new Subscription;
 
-  ngOnInit() {
+  constructor(private taskHttp: TaskService) { }
 
+  ngOnInit(): void {
+    this.taskSubscription = this.taskHttp
+    .getAllTasks(this.board.id, this.column.id)
+    .subscribe((tasks: Task[]) => this.tasks = tasks)
   }
 
+  ngOnDestroy(): void {
+    this.taskSubscription.unsubscribe()
+  }
 }
