@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BoardService } from '../services/board.service';
-import { Board } from '../models/board';
+import { BoardService } from '../../services/board.service';
+import { Board } from '../../models/board';
 
 @Component({
   selector: 'app-kanban',

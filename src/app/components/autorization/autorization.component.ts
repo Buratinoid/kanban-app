@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { RequestService } from './../services/request.service';
+import { RequestService } from '../../services/request.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Column } from '../models/column';
+import { Board } from '../../models/board';
+import { Column } from '../../models/column';
+import { Task } from '../../models/task';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-column',
@@ -11,7 +14,12 @@ export class ColumnComponent implements OnInit {
   @Input()
   column!: Column;
 
-  constructor() { }
+  @Input()
+  board!: Board;
+
+  tasks!: Task[];
+
+  constructor(private http: TaskService) { }
 
   ngOnInit() {
   }

@@ -1,4 +1,4 @@
-import { RequestService } from './../services/request.service';
+import { RequestService } from '../../services/request.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 

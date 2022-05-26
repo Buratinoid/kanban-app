@@ -1,12 +1,16 @@
+import { Task } from './task';
 export class Column {
 
-    id!: string;
+    id: string;
     title: string;
     order: number;
+    tasks: Task[];
 
-    constructor(title: string, order: number) {
+    constructor(id: string, title: string, order: number, tasks: Task[]) {
+        this.id = id
         this.title = title
         this.order = order
+        this.tasks = []
     }
     
 }

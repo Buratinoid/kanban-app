@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { map, switchMap, Subscription } from 'rxjs';
-import { ColumnService } from '../services/column.service';
-import { Board } from '../models/board';
-import { Column } from './../models/column';
+import { ColumnService } from '../../services/column.service';
+import { Board } from '../../models/board';
+import { Column } from '../../models/column';
 
 @Component({
   selector: 'app-board',

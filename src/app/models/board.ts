@@ -1,12 +1,16 @@
+import { Column } from './column';
 export class Board {
 
-    id!: string;
+    id: string;
     title: string;
     description: string;
+    columns: Column[]; 
 
-    constructor(title: string, description: string) {
+    constructor(id: string, title: string, description: string, column: Column[]) {
+        this.id = id
         this.title = title
         this.description = description
+        this.columns = []
     }
 
 }
