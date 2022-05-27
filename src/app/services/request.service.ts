@@ -1,3 +1,4 @@
+import { UserRequest } from './../models/user-request';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, Observable, throwError, map } from 'rxjs';
@@ -61,8 +62,8 @@ public deleteRequest(path: string) {
     )
 }
 
-public signInUser(body: any): Observable<any> {
-    return this.postRequest('/signin', body)
+public signInUser(user: UserRequest): Observable<string> {
+    return this.postRequest('/signin', user)
     .pipe(
         map(value => this.setToken(value.token)),
         catchError((error: HttpErrorResponse) => {
@@ -72,11 +73,11 @@ public signInUser(body: any): Observable<any> {
     )
 }
 
-public logOut() {
+public logOut(): void {
     this.setToken('no token');
 }
 
-public showToken() {
+public showToken(): void {
     console.log(this.getToken());
 }
 }
