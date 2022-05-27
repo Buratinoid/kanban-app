@@ -1,3 +1,4 @@
+import { UserRequest } from './../../models/user-request';
 import { Router } from '@angular/router';
 import { RequestService } from '../../services/request.service';
 import { Subscription } from 'rxjs';
@@ -15,11 +16,6 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   signInSubscription: Subscription = new Subscription;
 
-  userSignUp = {
-    login: '',
-    password: ''
-  }
-
   constructor(private router:Router, private http: RequestService) {
     this.authorizationForm = new FormGroup({
         login: new FormControl('', [Validators.required]),
@@ -33,13 +29,13 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   signIn(): void {
     if(this.authorizationForm.valid) {
       const value = this.authorizationForm.value;
-    
-
-    this.userSignUp.login = value.login
-    this.userSignUp.password = value.password
+      const sigInUser: UserRequest = {
+        login: value.login,
+        password: value.password
+      }
 
     this.signInSubscription = this.http
-    .signInUser(this.userSignUp)
+    .signInUser(sigInUser)
     .subscribe(
       () => {
         console.log('Sign In Complete!')
