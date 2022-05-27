@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ColumnResponce } from '../../models/column-responce';
-import { TaskResponce } from './../../models/task-responce';
+import { ColumnResponse } from '../../models/column-response';
+import { TaskResponse } from '../../models/task-response';
 
 @Component({
   selector: 'app-column',
@@ -10,10 +10,10 @@ import { TaskResponce } from './../../models/task-responce';
 export class ColumnComponent implements OnInit, OnDestroy {
   
   @Input()
-  column!: ColumnResponce;
+  column!: ColumnResponse;
   
-  tasks!: TaskResponce[];
-  task!: TaskResponce;
+  tasks!: TaskResponse[];
+  task!: TaskResponse;
   
   constructor() { }
   

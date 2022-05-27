@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { TaskResponce } from '../../models/task-responce';
+import { TaskResponse } from '../../models/task-response';
 
 @Component({
   selector: 'app-task',
@@ -9,7 +9,7 @@ import { TaskResponce } from '../../models/task-responce';
 export class TaskComponent implements OnInit, OnDestroy {
 
   @Input()
-  task!: TaskResponce;
+  task!: TaskResponse;
 
   constructor() { }
 

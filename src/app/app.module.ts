@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'kanban', component: KanbanComponent},
   { path: 'signup', component: RegistrationComponent},
-  { path: 'signin', component: AutorizationComponent},
+  { path: 'signin', component: AuthorizationComponent},
   { path: 'board/:id', component: BoardComponent}
 ];
 
@@ -16,7 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { HomeComponent } from './components/home/home.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { AutorizationComponent } from './components/autorization/autorization.component';
+import { AuthorizationComponent } from './components/authorization/authorization.component';
 import { HeaderComponent } from './components/header/header.component';
 import { KanbanComponent } from './components/kanban/kanban.component';
 import { BoardComponent } from './components/board/board.component';
@@ -41,7 +41,7 @@ import { MatButtonModule } from '@angular/material/button';
   declarations: [									
       AppComponent,
       RegistrationComponent,
-      AutorizationComponent,
+      AuthorizationComponent,
       HeaderComponent,
       KanbanComponent,
       HomeComponent,

@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { BoardModalComponent } from 'src/app/modals/board-modal/board-modal.component';
-import { BoardResponce } from './../../models/board-responce';
+import { BoardResponse } from '../../models/board-response';
 
 @Component({
   selector: 'app-kanban',
@@ -12,7 +12,7 @@ import { BoardResponce } from './../../models/board-responce';
 })
 export class KanbanComponent implements OnInit, OnDestroy {
 
-  boards!: BoardResponce[];
+  boards!: BoardResponse[];
 
   boardSubscription: Subscription = new Subscription;
 
@@ -23,7 +23,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.boardSubscription = this.boardHttp
     .getAllBoards()
-    .subscribe((boards: BoardResponce[]) => this.boards = boards)
+    .subscribe((boards: BoardResponse[]) => this.boards = boards)
   }
 
   ngOnDestroy(): void {

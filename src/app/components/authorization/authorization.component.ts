@@ -5,13 +5,13 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-autorization',
-  templateUrl: './autorization.component.html',
-  styleUrls: ['./autorization.component.css']
+  selector: 'app-authorization',
+  templateUrl: './authorization.component.html',
+  styleUrls: ['./authorization.component.css']
 })
-export class AutorizationComponent implements OnInit, OnDestroy {
+export class AuthorizationComponent implements OnInit, OnDestroy {
 
-  autorizationForm: FormGroup;
+  authorizationForm: FormGroup;
 
   signInSubscription: Subscription = new Subscription;
 
@@ -21,7 +21,7 @@ export class AutorizationComponent implements OnInit, OnDestroy {
   }
 
   constructor(private router:Router, private http: RequestService) {
-    this.autorizationForm = new FormGroup({
+    this.authorizationForm = new FormGroup({
         login: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required])
     })
@@ -31,8 +31,8 @@ export class AutorizationComponent implements OnInit, OnDestroy {
   }
 
   signIn(): void {
-    if(this.autorizationForm.valid) {
-      const value = this.autorizationForm.value;
+    if(this.authorizationForm.valid) {
+      const value = this.authorizationForm.value;
     
 
     this.userSignUp.login = value.login

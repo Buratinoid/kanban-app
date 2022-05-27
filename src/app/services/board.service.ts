@@ -1,5 +1,5 @@
 import { BoardRequest } from '../models/board-request';
-import { BoardResponce } from '../models/board-responce';
+import { BoardResponse } from '../models/board-response';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from './request.service';
@@ -9,7 +9,7 @@ export class BoardService {
 
 constructor(private http: RequestService) { }
 
-public getAllBoards(): Observable<BoardResponce[]> {
+public getAllBoards(): Observable<BoardResponse[]> {
   return this.http.getRequest('/boards');
 }
 
@@ -17,7 +17,7 @@ public createBoard(board: BoardRequest): Observable<BoardRequest> {
   return this.http.postRequest('/boards', board)
 }
 
-public getBoard(boardId: string): Observable<BoardResponce> {
+public getBoard(boardId: string): Observable<BoardResponse> {
   return this.http.getRequest('/boards/' + boardId)
 }
 

@@ -1,5 +1,5 @@
 import { UserRequest } from '../models/user-request';
-import { UserResponce } from '../models/user-responce';
+import { UserResponse } from '../models/user-response';
 import { Observable } from 'rxjs';
 import { RequestService } from './request.service';
 import { Injectable } from '@angular/core';
@@ -13,11 +13,11 @@ public signUpUser(user: UserRequest): Observable<UserRequest> {
   return this.http.postRequest('/signup', user)
 }
 
-public getAllUsers(): Observable<UserResponce[]> {
+public getAllUsers(): Observable<UserResponse[]> {
   return this.http.getRequest('/users')
 }
 
-public getUser(userId: string): Observable<UserResponce> {
+public getUser(userId: string): Observable<UserResponse> {
   return this.http.getRequest('/users/' + userId)
 }
 

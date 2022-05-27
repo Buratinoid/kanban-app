@@ -1,10 +1,9 @@
-import { TaskResponce } from './../../models/task-responce';
-import { ColumnResponce } from './../../models/column-responce';
+import { ColumnResponse } from '../../models/column-response';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { BoardService } from './../../services/board.service';
-import { BoardResponce } from '../../models/board-responce';
+import { BoardResponse } from '../../models/board-response';
 
 @Component({
   selector: 'app-board',
@@ -13,9 +12,9 @@ import { BoardResponce } from '../../models/board-responce';
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
-  board!: BoardResponce;
-  columns!: ColumnResponce[];
-  column!: ColumnResponce;
+  board: BoardResponse = new BoardResponse('','','',[]);
+  columns!: ColumnResponse[];
+  column!: ColumnResponse;
 
   boardSubscription: Subscription = new Subscription;
 
@@ -30,7 +29,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       map(params => params["id"]),
       switchMap(id => this.boardHttp.getBoard(id))
     )
-    .subscribe((board: BoardResponce) => {
+    .subscribe((board: BoardResponse) => {
       this.board = board;
       this.columns = this.board.columns;
     })
