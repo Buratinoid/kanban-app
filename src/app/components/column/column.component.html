@@ -1,6 +1,6 @@
-<div *ngFor="let column of columns" >
-  Column: {{column?.title}} [Order: {{column?.order}}]
-  <app-task
-  [board]="board"
-  [column]="column"></app-task>
+<div>
+  Column: {{column.title}} [Order: {{column.order}}]
+  
+  <app-task *ngFor="let task of tasks" 
+  [task]="task"></app-task>
 </div>

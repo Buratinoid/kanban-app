@@ -1,6 +1,7 @@
 <div>
-  Board: {{board.title}}<br>
-  Description: {{board.description}}<br>
-  <app-column
-  [board]="board"></app-column>
+  Board: {{board?.title}}<br>
+  Description: {{board?.description}}<br>
+  
+  <app-column *ngFor="let column of columns" 
+  [column]="column"></app-column>
 </div>

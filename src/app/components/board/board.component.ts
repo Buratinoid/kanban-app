@@ -1,3 +1,5 @@
+import { TaskResponce } from './../../models/task-responce';
+import { ColumnResponce } from './../../models/column-responce';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +14,8 @@ import { BoardResponce } from '../../models/board-responce';
 export class BoardComponent implements OnInit, OnDestroy {
 
   board!: BoardResponce;
-  boards!: BoardResponce[]
+  columns!: ColumnResponce[];
+  column!: ColumnResponce;
 
   boardSubscription: Subscription = new Subscription;
 
@@ -27,7 +30,10 @@ export class BoardComponent implements OnInit, OnDestroy {
       map(params => params["id"]),
       switchMap(id => this.boardHttp.getBoard(id))
     )
-    .subscribe((board: BoardResponce) => this.board = board)
+    .subscribe((board: BoardResponce) => {
+      this.board = board;
+      this.columns = this.board.columns;
+    })
   }
   
   ngOnDestroy(): void {

@@ -1,8 +1,6 @@
-import { Subscription } from 'rxjs';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ColumnService } from 'src/app/services/column.service';
-import { BoardResponce } from '../../models/board-responce';
 import { ColumnResponce } from '../../models/column-responce';
+import { TaskResponce } from './../../models/task-responce';
 
 @Component({
   selector: 'app-column',
@@ -12,21 +10,17 @@ import { ColumnResponce } from '../../models/column-responce';
 export class ColumnComponent implements OnInit, OnDestroy {
   
   @Input()
-  board!: BoardResponce;
-
-  columns!: ColumnResponce[];
-
-  columnSubscription: Subscription = new Subscription
-
-  constructor(private columnHttp: ColumnService) { }
-
+  column!: ColumnResponce;
+  
+  tasks!: TaskResponce[];
+  task!: TaskResponce;
+  
+  constructor() { }
+  
   ngOnInit(): void {
-    this.columnSubscription = this.columnHttp
-    .getAllColumns(this.board.id)
-    .subscribe((columns: ColumnResponce[]) => this.columns = columns)
+    this.tasks = this.column.tasks;
   }
 
   ngOnDestroy(): void {
-    this.columnSubscription.unsubscribe()
   }
 }
