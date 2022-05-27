@@ -3,7 +3,6 @@ import { Subscription, map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { BoardService } from './../../services/board.service';
 import { Board } from '../../models/board';
-import { Column } from 'src/app/models/column';
 
 @Component({
   selector: 'app-board',
@@ -17,7 +16,10 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   boardSubscription: Subscription = new Subscription;
 
-  constructor(private route: ActivatedRoute, private boardHttp: BoardService) { }
+  constructor(
+              private route: ActivatedRoute, 
+              private boardHttp: BoardService,
+              ) { }
 
   ngOnInit(): void {
     this.boardSubscription = this.route.params

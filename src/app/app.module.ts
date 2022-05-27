@@ -10,7 +10,6 @@ const routes: Routes = [
   { path: 'board/:id', component: BoardComponent}
 ];
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,6 +23,8 @@ import { BoardComponent } from './components/board/board.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 
+import { BoardModalComponent } from './modals/board-modal/board-modal.component';
+
 import { RequestService } from './services/request.service';
 import { BoardService } from './services/board.service';
 import { ColumnService } from './services/column.service';
@@ -31,8 +32,10 @@ import { TaskService } from './services/task.service';
 import { UserService } from './services/user.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [									
@@ -44,24 +47,35 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       HomeComponent,
       BoardComponent,
       ColumnComponent,
-      TaskComponent
+      TaskComponent,
+      BoardModalComponent
+      
    ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule 
   ],
   providers: [
     RequestService,
     BoardService,
     ColumnService,
     TaskService,
-    UserService
+    UserService,
+    {provide: MatDialogRef, useValue: {}},
+    {provide: MAT_DIALOG_DATA, useValue: []}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    BoardModalComponent
+  ]
 })
 export class AppModule { }
 

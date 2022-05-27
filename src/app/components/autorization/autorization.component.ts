@@ -32,10 +32,7 @@ export class AutorizationComponent implements OnInit, OnDestroy {
 
   signIn() {
     if(this.autorizationForm.valid) {
-      const value: {
-         login: string,
-         password: string   
-      } = this.autorizationForm.value;
+      const value = this.autorizationForm.value;
     
 
     this.userSignUp.login = value.login

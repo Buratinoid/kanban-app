@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Создать доску</h2>
+
+<mat-dialog-content [formGroup]="newBoardForm">
+  <mat-form-field>
+    <input  matInput
+            placeholder="Название доски"
+            formControlName="title">
+  </mat-form-field>
+  <br>  
+  <mat-form-field>
+    <input  matInput
+            placeholder="Описание доски"
+            formControlName="description">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button mat-dialog-close>Отмена</button>
+  <button mat-raised-button [mat-dialog-close]="true" (click)="createBoard()">Создать</button>
+</mat-dialog-actions>

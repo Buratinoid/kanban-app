@@ -1,5 +1,6 @@
 import { Board } from './../models/board';
-import { Injectable, Input } from '@angular/core';
+import { BoardAPI } from './../APImodels/boardAPI';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from './request.service';
 
@@ -12,7 +13,7 @@ public getAllBoards(): Observable<Board[]> {
   return this.http.getRequest('/boards');
 }
 
-public createBoard(board: Board): Observable<Board> {
+public createBoard(board: BoardAPI): Observable<Board> {
   return this.http.postRequest('/boards', board)
 }
 

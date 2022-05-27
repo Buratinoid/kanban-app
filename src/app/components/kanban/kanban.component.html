@@ -1,5 +1,4 @@
+<button mat-raised-button (click)="openNewBoardModal()">+</button>
 <div *ngFor="let board of boards">
   <a [routerLink]="['/', 'board', board.id]">{{board.title}} - {{board.description}}</a>
 </div>
-<!-- <app-board
-[board]="board"></app-board> -->
