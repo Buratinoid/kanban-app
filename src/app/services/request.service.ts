@@ -5,7 +5,7 @@ import { catchError, Observable, throwError, map } from 'rxjs';
 @Injectable()
 export class RequestService {
     
-    private url: string = 'http://localhost:8010/proxy';
+    private readonly url: string = 'http://localhost:8010/proxy';
     private token: string = 'no token';
     
     constructor(private request: HttpClient) { }

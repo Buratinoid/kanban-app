@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, map, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { BoardService } from './../../services/board.service';
-import { Board } from '../../models/board';
+import { BoardResponce } from '../../models/board-responce';
 
 @Component({
   selector: 'app-board',
@@ -11,8 +11,8 @@ import { Board } from '../../models/board';
 })
 export class BoardComponent implements OnInit, OnDestroy {
 
-  board!: Board;
-  boards!: Board[]
+  board!: BoardResponce;
+  boards!: BoardResponce[]
 
   boardSubscription: Subscription = new Subscription;
 
@@ -27,7 +27,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       map(params => params["id"]),
       switchMap(id => this.boardHttp.getBoard(id))
     )
-    .subscribe((board: Board) => this.board = board)
+    .subscribe((board: BoardResponce) => this.board = board)
   }
   
   ngOnDestroy(): void {

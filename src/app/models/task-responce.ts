@@ -1,4 +1,4 @@
-export class Task {
+export class TaskResponce {
 
     id: string;
     title: string;

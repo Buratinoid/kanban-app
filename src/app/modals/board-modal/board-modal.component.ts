@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
-import { BoardAPI } from '../../APImodels/boardAPI';
+import { BoardRequest } from '../../models/board-request';
 import { BoardService } from 'src/app/services/board.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class BoardModalComponent implements OnInit {
   constructor(
               private newBoardHttp: BoardService,
               private newBoardDialogRef: MatDialogRef<BoardModalComponent>,
-              @Inject(MAT_DIALOG_DATA) data: BoardAPI 
+              @Inject(MAT_DIALOG_DATA) data: BoardRequest
               ) 
               { 
                 this.newBoardForm = new FormGroup({
@@ -34,7 +34,7 @@ export class BoardModalComponent implements OnInit {
   createBoard(): void {
     if(this.newBoardForm.valid) {
       const value = this.newBoardForm.value;
-      const board: BoardAPI = {
+      const board: BoardRequest = {
         title: value.title,
         description: value.description
       }

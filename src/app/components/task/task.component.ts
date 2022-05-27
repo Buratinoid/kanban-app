@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Board } from '../../models/board';
-import { Column } from '../../models/column';
-import { Task } from '../../models/task';
+import { BoardResponce } from '../../models/board-responce';
+import { ColumnResponce } from '../../models/column-responce';
+import { TaskResponce } from '../../models/task-responce';
 import { TaskService } from '../../services/task.service';
 
 @Component({
@@ -13,12 +13,12 @@ import { TaskService } from '../../services/task.service';
 export class TaskComponent implements OnInit, OnDestroy {
 
   @Input()
-  column!: Column;
+  column!: ColumnResponce;
 
   @Input()
-  board!: Board;
+  board!: BoardResponce;
 
-  tasks!: Task[];
+  tasks!: TaskResponce[];
 
   taskSubscription: Subscription = new Subscription;
 
@@ -27,7 +27,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.taskSubscription = this.taskHttp
     .getAllTasks(this.board.id, this.column.id)
-    .subscribe((tasks: Task[]) => this.tasks = tasks)
+    .subscribe((tasks: TaskResponce[]) => this.tasks = tasks)
   }
 
   ngOnDestroy(): void {

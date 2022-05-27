@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ColumnService } from 'src/app/services/column.service';
-import { Board } from '../../models/board';
-import { Column } from '../../models/column';
+import { BoardResponce } from '../../models/board-responce';
+import { ColumnResponce } from '../../models/column-responce';
 
 @Component({
   selector: 'app-column',
@@ -12,9 +12,9 @@ import { Column } from '../../models/column';
 export class ColumnComponent implements OnInit, OnDestroy {
   
   @Input()
-  board!: Board;
+  board!: BoardResponce;
 
-  columns!: Column[];
+  columns!: ColumnResponce[];
 
   columnSubscription: Subscription = new Subscription
 
@@ -23,7 +23,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.columnSubscription = this.columnHttp
     .getAllColumns(this.board.id)
-    .subscribe((columns: Column[]) => this.columns = columns)
+    .subscribe((columns: ColumnResponce[]) => this.columns = columns)
   }
 
   ngOnDestroy(): void {
