@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   registrationForm: FormGroup;
 
-  subscription: Subscription = new Subscription;
+  signUpSubscription: Subscription = new Subscription;
 
   userSignIn = {
     name: '',
@@ -21,7 +21,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     password: ''
   }
 
-  constructor(private router: Router, private http: UserService) { 
+  constructor(
+              private router: Router, 
+              private http: UserService
+              ) { 
     this.registrationForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       login: new FormControl('', [Validators.required]),
@@ -29,23 +32,18 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  signUp() {
+  signUp(): void {
     if (this.registrationForm.valid) {
-      const value: {
-        name: string,
-        login: string,
-        password: string
-      } = this.registrationForm.value;
+      const value = this.registrationForm.value;
 
       this.userSignIn.name = value.name
       this.userSignIn.login = value.login
       this.userSignIn.password = value.password
-
       
-      this.subscription = this.http
+      this.signUpSubscription = this.http
       .signUpUser(this.userSignIn)
       .subscribe(
         () => {
@@ -55,7 +53,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    // this.subscription.unsubscribe() //Почему ошибки, если включить??? Хз
+  ngOnDestroy(): void {
+    this.signUpSubscription.unsubscribe() //Почему ошибки, если включить??? Хз
   }
 }

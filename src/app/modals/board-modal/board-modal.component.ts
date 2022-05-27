@@ -28,10 +28,10 @@ export class BoardModalComponent implements OnInit {
                 })
               }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  createBoard() {
+  createBoard(): void {
     if(this.newBoardForm.valid) {
       const value = this.newBoardForm.value;
       const board: BoardAPI = {
@@ -46,6 +46,6 @@ export class BoardModalComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // this.newBoardSubscription.unsubscribe()  //Почему если включить, то запрос в консоли не отражает время отклика?  
+    this.newBoardSubscription.unsubscribe()  //Почему если включить, то запрос в консоли не отражает время отклика?  
   }
 }

@@ -13,7 +13,7 @@ export class AutorizationComponent implements OnInit, OnDestroy {
 
   autorizationForm: FormGroup;
 
-  subscription: Subscription = new Subscription;
+  signInSubscription: Subscription = new Subscription;
 
   userSignUp = {
     login: '',
@@ -27,10 +27,10 @@ export class AutorizationComponent implements OnInit, OnDestroy {
     })
    }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  signIn() {
+  signIn(): void {
     if(this.autorizationForm.valid) {
       const value = this.autorizationForm.value;
     
@@ -38,7 +38,7 @@ export class AutorizationComponent implements OnInit, OnDestroy {
     this.userSignUp.login = value.login
     this.userSignUp.password = value.password
 
-    this.subscription = this.http
+    this.signInSubscription = this.http
     .signInUser(this.userSignUp)
     .subscribe(
       () => {
@@ -48,7 +48,7 @@ export class AutorizationComponent implements OnInit, OnDestroy {
     }
   }
   
-  ngOnDestroy() {
-    // this.subscription.unsubscribe() //Почему ошибки, если включить??? Хз
+  ngOnDestroy(): void {
+    this.signInSubscription.unsubscribe() //Почему ошибки, если включить??? Хз
   }
 }
