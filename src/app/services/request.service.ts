@@ -23,7 +23,7 @@ public getRequest(path: string) {
     return this.request.get<any>(this.url + path, { headers: header })
     .pipe(
         catchError((error: HttpErrorResponse) => {
-            console.log('Error: '+ error.status + ' ' + error.message)
+            console.log('Error: '+ error.status + ' ' + error.statusText)
             return throwError(error)
         })
     )
@@ -34,7 +34,7 @@ public postRequest(path: string, body: any) {
     return this.request.post<any>(this.url + path, body, { headers: header })
     .pipe(
         catchError((error: HttpErrorResponse) => {
-            console.log('Error: '+ error.status + ' ' + error.message)
+            console.log('Error: '+ error.status + ' ' + error.statusText)
             return throwError(error)            
         })
     )
@@ -45,7 +45,7 @@ public putRequest(path: string, body: any) {
     return this.request.put<any>(this.url + path, body, { headers: header })
     .pipe(
         catchError((error: HttpErrorResponse) => {
-            console.log('Error: '+ error.status + ' ' + error.message)
+            console.log('Error: '+ error.status + ' ' + error.statusText)
             return throwError(error)            
         })
     )
@@ -56,7 +56,7 @@ public deleteRequest(path: string) {
     return this.request.delete<any>(this.url + path, { headers: header })
     .pipe(
         catchError((error: HttpErrorResponse) => {
-            console.log('Error: '+ error.status + ' ' + error.message)
+            console.log('Error: '+ error.status + ' ' + error.statusText)
             return throwError(error)            
         })
     )
@@ -65,11 +65,7 @@ public deleteRequest(path: string) {
 public signInUser(user: UserRequest): Observable<string> {
     return this.postRequest('/signin', user)
     .pipe(
-        map(value => this.setToken(value.token)),
-        catchError((error: HttpErrorResponse) => {
-            console.log('Error: '+ error.status + ' ' + error.message)
-            return throwError(error)            
-        })
+        map(value => this.setToken(value.token))
     )
 }
 
