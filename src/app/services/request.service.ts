@@ -9,10 +9,10 @@ export class RequestService {
     private readonly url: string = 'http://localhost:8010/proxy';
     
     private token$: string = 'no token';
-    private setToken(token: string): string {
+    public setToken(token: string): string {
         return this.token$ = token;
     }
-    private getToken(): string {
+    public getToken(): string {
         return this.token$;
     }
     
@@ -60,20 +60,5 @@ public deleteRequest(path: string) {
             return throwError(error)            
         })
     )
-}
-
-public signInUser(user: UserRequest): Observable<string> {
-    return this.postRequest('/signin', user)
-    .pipe(
-        map(value => this.setToken(value.token))
-    )
-}
-
-public logOut(): void {
-    this.setToken('no token');
-}
-
-public showToken(): void {
-    console.log(this.getToken());
 }
 }

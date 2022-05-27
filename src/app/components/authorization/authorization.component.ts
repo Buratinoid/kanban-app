@@ -1,9 +1,9 @@
-import { UserRequest } from './../../models/user-request';
 import { Router } from '@angular/router';
-import { RequestService } from '../../services/request.service';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { UserService } from './../../services/user.service';
+import { UserRequest } from './../../models/user-request';
 
 @Component({
   selector: 'app-authorization',
@@ -16,7 +16,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   signInSubscription: Subscription = new Subscription;
 
-  constructor(private router:Router, private http: RequestService) {
+  constructor(private router:Router, private http: UserService) {
     this.authorizationForm = new FormGroup({
         login: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required])
