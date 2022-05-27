@@ -21,7 +21,7 @@ public getTask(boardId: string, columnId: string, taskId: string): Observable<Ta
   return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
 }
 
-public deleteTask(boardId: string, columnId: string, taskId: string): Observable<TaskResponce> {
+public deleteTask(boardId: string, columnId: string, taskId: string): Observable<void> {
   return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
 }
 

@@ -21,7 +21,7 @@ public getColumn(boardId: string, columnId: string): Observable<ColumnResponce> 
   return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId)
 }
 
-public deleteColumn(boardId: string, columnId: string): Observable<ColumnResponce> {
+public deleteColumn(boardId: string, columnId: string): Observable<void> {
   return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId)
 }
 

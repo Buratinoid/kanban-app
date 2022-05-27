@@ -21,7 +21,7 @@ public getUser(userId: string): Observable<UserResponce> {
   return this.http.getRequest('/users/' + userId)
 }
 
-public deleteUser(userId: string) {
+public deleteUser(userId: string): Observable<void> {
   return this.http.deleteRequest('/users/' + userId)
 }
 
