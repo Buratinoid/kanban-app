@@ -37,6 +37,7 @@ public signUpUser(user: UserRequest): Observable<UserRequest> {
 }
 
 public logOut(): void {
-  this.http.setToken('no token');
+  const emptyToken: string = '';
+  this.http.setToken(emptyToken);
 }
 }
