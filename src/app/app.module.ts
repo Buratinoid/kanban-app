@@ -1,18 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Routes, RouterModule } from '@angular/router';
-
-const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'kanban', component: KanbanComponent},
-  { path: 'signup', component: RegistrationComponent},
-  { path: 'signin', component: AuthorizationComponent},
-  { path: 'board/:id', component: BoardComponent}
-];
 
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { HomeComponent } from './components/home/home.component';
 import { RegistrationComponent } from './components/registration/registration.component';
@@ -49,13 +42,12 @@ import { MatButtonModule } from '@angular/material/button';
       ColumnComponent,
       TaskComponent,
       BoardModalComponent
-      
    ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    AppRoutingModule,
     BrowserAnimationsModule,
     
     MatDialogModule,
