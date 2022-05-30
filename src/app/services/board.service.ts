@@ -13,7 +13,7 @@ public getAllBoards(): Observable<BoardResponse[]> {
   return this.http.getRequest('/boards');
 }
 
-public createBoard(board: BoardRequest): Observable<BoardRequest> {
+public createBoard(board: BoardRequest): Observable<BoardResponse> {
   return this.http.postRequest('/boards', board)
 }
 

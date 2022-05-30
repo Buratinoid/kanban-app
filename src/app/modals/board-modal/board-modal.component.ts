@@ -1,3 +1,4 @@
+import { BoardResponse } from './../../models/board-response';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -13,6 +14,8 @@ import { BoardService } from 'src/app/services/board.service';
 export class BoardModalComponent implements OnInit {
 
   newBoardForm: FormGroup;
+
+  response!: BoardResponse;
 
   newBoardSubscription: Subscription = new Subscription;
 
@@ -31,7 +34,7 @@ export class BoardModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  createBoard(): void {
+  createBoard(): BoardResponse {
     if(this.newBoardForm.valid) {
       const value = this.newBoardForm.value;
       const board: BoardRequest = {
@@ -40,11 +43,10 @@ export class BoardModalComponent implements OnInit {
       }
       this.newBoardSubscription = this.newBoardHttp
       .createBoard(board)
-      .subscribe((data) => console.log(data)
-      )
-
+      .subscribe((data) => this.response = data)
       this.newBoardForm.reset()
     }
+    return this.response
   }
 
   ngOnDestroy(): void {
