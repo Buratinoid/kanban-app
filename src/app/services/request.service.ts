@@ -1,7 +1,6 @@
-import { UserRequest } from './../models/user-request';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError, Observable, throwError, map } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable()
 export class RequestService {
