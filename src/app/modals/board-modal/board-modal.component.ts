@@ -15,13 +15,12 @@ export class BoardModalComponent implements OnInit {
 
   newBoardForm: FormGroup;
 
-  response!: BoardResponse;
-
   newBoardSubscription: Subscription = new Subscription;
 
   constructor(
               private newBoardHttp: BoardService,
               private newBoardDialogRef: MatDialogRef<BoardModalComponent>,
+
               @Inject(MAT_DIALOG_DATA) data: BoardRequest
               ) 
               { 
@@ -34,7 +33,9 @@ export class BoardModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  createBoard(): BoardResponse {
+  save() {
+    const newBoard: BoardResponse = new BoardResponse();
+
     if(this.newBoardForm.valid) {
       const value = this.newBoardForm.value;
       const board: BoardRequest = {
@@ -43,10 +44,18 @@ export class BoardModalComponent implements OnInit {
       }
       this.newBoardSubscription = this.newBoardHttp
       .createBoard(board)
-      .subscribe((data) => this.response = data)
-      this.newBoardForm.reset()
+      .subscribe((response: BoardResponse) => {
+          newBoard.id = response.id,
+          newBoard.title = response.title,
+          newBoard.description = response.description,
+          newBoard.columns = [],
+          this.newBoardDialogRef.close(newBoard)
+      })
     }
-    return this.response
+  }
+
+  close(): void {
+    this.newBoardDialogRef.close()
   }
 
   ngOnDestroy(): void {

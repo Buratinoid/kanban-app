@@ -43,7 +43,10 @@ export class KanbanComponent implements OnInit, OnDestroy {
     const dialogRef = this.newBoardDialog.open(BoardModalComponent, newBoardDialogConfig)
   
     dialogRef.afterClosed().subscribe(
-      data => this.boards.push(data)     
-    )
+      data => {
+        if(data !== undefined) {
+          this.boards.push(data);
+        }
+      })
   }
 }
