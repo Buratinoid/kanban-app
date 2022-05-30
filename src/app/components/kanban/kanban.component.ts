@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { BoardModalComponent } from 'src/app/modals/board-modal/board-modal.component';
 import { BoardResponse } from '../../models/board-response';
+import { BoardRequest } from './../../models/board-request';
 
 @Component({
   selector: 'app-kanban',
@@ -39,7 +40,23 @@ export class KanbanComponent implements OnInit, OnDestroy {
     newBoardDialogConfig.data = {
     
     }
-
-    this.newBoardDialog.open(BoardModalComponent, newBoardDialogConfig)
+    const dialogRef = this.newBoardDialog.open(BoardModalComponent, newBoardDialogConfig)
+  
+    dialogRef.afterClosed().subscribe(
+      data => console.log(data)
+      
+    )
   }
+
+  // addBoard() {
+  //   const tempBoard: BoardRequest = {
+  //     title: '5',
+  //     description: '6'
+  //   }
+  //   const board: BoardResponse = new BoardResponse(
+  //     'AAAAAAAA', tempBoard.title, tempBoard.description, []
+  //   )
+  //   this.boards.push(board)
+  // }
+
 }

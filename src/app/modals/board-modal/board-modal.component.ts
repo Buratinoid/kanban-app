@@ -40,7 +40,9 @@ export class BoardModalComponent implements OnInit {
       }
       this.newBoardSubscription = this.newBoardHttp
       .createBoard(board)
-      .subscribe()
+      .subscribe((data) => console.log(data)
+      )
+
       this.newBoardForm.reset()
     }
   }
