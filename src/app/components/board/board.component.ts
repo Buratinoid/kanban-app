@@ -1,7 +1,7 @@
 import { ColumnResponse } from '../../models/column-response';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, map, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { Subscription, map, switchMap, Subject, takeUntil } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
 import { BoardService } from './../../services/board.service';
 import { BoardResponse } from '../../models/board-response';
 
@@ -17,6 +17,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   boardSubscription: Subscription = new Subscription;
 
+  notifier: Subject<void> = new Subject();
+
   constructor(
               private route: ActivatedRoute, 
               private boardHttp: BoardService,
@@ -25,7 +27,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.boardSubscription = this.route.params
     .pipe(
-      map(params => params["id"]),
+      takeUntil(this.notifier),
+      map((params: Params) => params["id"]),
       switchMap(id => this.boardHttp.getBoard(id))
     )
     .subscribe((board: BoardResponse) => {
@@ -35,6 +38,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    this.boardSubscription.unsubscribe()
+    this.notifier.next();
+    this.notifier.complete();
+    this.boardSubscription.unsubscribe();
   }
 }
