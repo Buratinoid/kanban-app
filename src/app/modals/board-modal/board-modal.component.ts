@@ -33,7 +33,7 @@ export class BoardModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save() {
+  newBoard() {
     const newBoard: BoardResponse = new BoardResponse();
 
     if(this.newBoardForm.valid) {
