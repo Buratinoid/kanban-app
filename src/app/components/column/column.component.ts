@@ -12,7 +12,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   @Input()
   column!: ColumnResponse;
   
-  tasks!: TaskResponse[];
+  tasks: TaskResponse[] = [];
   task!: TaskResponse;
   
   constructor() { }

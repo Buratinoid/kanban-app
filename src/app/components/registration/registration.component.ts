@@ -1,3 +1,4 @@
+import { UserRequest } from './../../models/user-request';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -14,12 +15,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   registrationForm: FormGroup;
 
   signUpSubscription: Subscription = new Subscription;
-
-  userSignIn = {
-    name: '',
-    login: '',
-    password: ''
-  }
 
   constructor(
               private router: Router, 
@@ -39,12 +34,14 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     if (this.registrationForm.valid) {
       const value = this.registrationForm.value;
 
-      this.userSignIn.name = value.name
-      this.userSignIn.login = value.login
-      this.userSignIn.password = value.password
+      const user: UserRequest = {
+        name: value.name,
+        login: value.login,
+        password: value.password
+      }
       
       this.signUpSubscription = this.http
-      .signUpUser(this.userSignIn)
+      .signUpUser(user)
       .subscribe(
         () => {
           console.log('Sign Up Complete')

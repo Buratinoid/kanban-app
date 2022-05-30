@@ -13,7 +13,7 @@ import { BoardRequest } from './../../models/board-request';
 })
 export class KanbanComponent implements OnInit, OnDestroy {
 
-  boards!: BoardResponse[];
+  boards: BoardResponse[] = [];
 
   boardSubscription: Subscription = new Subscription;
 

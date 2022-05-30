@@ -13,8 +13,7 @@ import { BoardResponse } from '../../models/board-response';
 export class BoardComponent implements OnInit, OnDestroy {
 
   board: BoardResponse = new BoardResponse('','','',[]);
-  columns!: ColumnResponse[];
-  column!: ColumnResponse;
+  columns: ColumnResponse[] = [];
 
   boardSubscription: Subscription = new Subscription;
 
