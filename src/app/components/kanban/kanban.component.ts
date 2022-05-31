@@ -57,17 +57,17 @@ export class KanbanComponent implements OnInit, OnDestroy {
       })
   }
 
-  updateBoard(boardId: string, board: BoardRequest): void {
-    this.boardSubscription = this.boardHttp
-      .updateBoard(boardId, board)
-      .pipe(
-        takeUntil(this.boardNotifier)
-      )
-      .subscribe(() => {
-        console.log(`Board ${boardId} updated!`);
-        this.getAllBoards();
-      })
-  }
+  // updateBoard(boardId: string, board: BoardRequest): void {
+  //   this.boardSubscription = this.boardHttp
+  //     .updateBoard(boardId, board)
+  //     .pipe(
+  //       takeUntil(this.boardNotifier)
+  //     )
+  //     .subscribe(() => {
+  //       console.log(`Board ${boardId} updated!`);
+  //       this.getAllBoards();
+  //     })
+  // }
 
   openNewBoardModal(): void {
     const newBoardDialogConfig = new MatDialogConfig();

@@ -1,3 +1,4 @@
+import { ColumnUpdateComponent } from './../../modals/column-update/column-update.component';
 import {ColumnAddComponent} from '../../modals/column-add/column-add.component';
 import {ColumnService} from '../../services/column.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -49,13 +50,36 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardSubscription.unsubscribe();
   }
 
-  getAllColumns(boardId: string): void {
+  getAllColumns(): void {
     this.boardSubscription = this.columnHttp
-      .getAllColumns(boardId)
+      .getAllColumns(this.board.id)
       .pipe(
         takeUntil(this.boardNotifier)
       )
       .subscribe((columns: ColumnResponse[]) => this.columns = columns)
+  }
+
+  deleteColumn(columnId: string): void {
+    this.boardSubscription = this.columnHttp
+    .deleteColumn(this.board.id, columnId)
+    .pipe(
+      takeUntil(this.boardNotifier)
+    )
+    .subscribe(() => {
+      console.log(`Column ${columnId} deleted!`)
+      this.getAllColumns()
+    })
+  }
+
+  updateColumn(columnId: string, column: ColumnResponse): void {
+    this.boardSubscription = this.columnHttp
+    .updateColumn(this.board.id, columnId, column)
+    .pipe(
+      takeUntil(this.boardNotifier)
+    )
+    .subscribe(() => {
+      this.getAllColumns()
+    })
   }
 
   newColumnModal(boardId: string): void {
@@ -71,7 +95,26 @@ export class BoardComponent implements OnInit, OnDestroy {
     newColumnDialogRef.afterClosed().subscribe(
       data => {
         if (data !== undefined) {
-          this.getAllColumns(this.board.id)
+          this.getAllColumns()
+        }
+      }
+    )
+  }
+
+  updateColumnModal(column: ColumnResponse, columnId: string) {
+    const updateColumnDialogConfig = new MatDialogConfig();
+
+    updateColumnDialogConfig.disableClose = true;
+    updateColumnDialogConfig.autoFocus = false;
+
+    updateColumnDialogConfig.data = column
+
+    const updateColumnDialogRef = this.newColumnDialog.open(ColumnUpdateComponent, updateColumnDialogConfig)
+  
+    updateColumnDialogRef.afterClosed().subscribe(
+      data => {
+        if(data !== undefined) {
+          this.updateColumn(columnId, data)
         }
       }
     )

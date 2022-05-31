@@ -5,5 +5,7 @@
   <div *ngFor="let column of columns">
     <app-column
       [column]="column"></app-column>
+      <button (click)="deleteColumn(column.id)">DELETE</button>
+      <button (click)="updateColumnModal(column, column.id)">EDIT</button>
   </div>
 </div>
