@@ -4,7 +4,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { BoardAddComponent } from 'src/app/modals/board-add/board-add.component';
 import { BoardResponse } from '../../models/board-response';
-import { BoardRequest } from './../../models/board-request';
 
 @Component({
   selector: 'app-kanban',
@@ -12,12 +11,13 @@ import { BoardRequest } from './../../models/board-request';
   styleUrls: ['./kanban.component.css']
 })
 export class KanbanComponent implements OnInit, OnDestroy {
-
+  
   boards: BoardResponse[] = [];
 
   boardSubscription: Subscription = new Subscription;
 
   boardNotifier: Subject<void> = new Subject();
+
 
   constructor(
               private newBoardDialog: MatDialog,
@@ -40,6 +40,18 @@ export class KanbanComponent implements OnInit, OnDestroy {
       takeUntil(this.boardNotifier)
     )
     .subscribe((boards: BoardResponse[]) => this.boards = boards)
+  }
+
+  deleteBoard(boardId: string): void {
+    this.boardSubscription = this.boardHttp
+    .deleteBoard(boardId)
+    .pipe(
+      takeUntil(this.boardNotifier)
+    )
+    .subscribe(() => {
+      console.log(`Board ${boardId} deleted!`);
+      this.getAllBoards();
+    })
   }
 
   openNewBoardModal(): void {

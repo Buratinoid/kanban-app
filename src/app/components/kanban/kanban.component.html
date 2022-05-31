@@ -2,4 +2,5 @@
 
 <div *ngFor="let board of boards">
   <a [routerLink]="['/', 'board', board.id]">{{board.title}} - {{board.description}}</a>
+  <button (click)="deleteBoard(board.id)">Delete</button>
 </div>
