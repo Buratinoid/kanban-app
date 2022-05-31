@@ -1,3 +1,43 @@
-<p>
-  task-update works!
-</p>
+<h2 mat-dialog-title>Новая задача</h2>
+
+<mat-dialog-content [formGroup]="updateTaskForm">
+  <mat-form-field>
+    <mat-label>Название задачи</mat-label>
+    <input  matInput
+            placeholder="Название задачи"
+            formControlName="title">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Состояние задачи</mat-label>
+    <input  matInput
+            placeholder="Состояние задачи"
+            formControlName="done">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Порядок задачи</mat-label>
+    <input  matInput
+            placeholder="Порядок задачи"
+            formControlName="order">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Описание задачи</mat-label>
+    <input  matInput
+            placeholder="Описание задачи"
+            formControlName="description">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Ответственный</mat-label>
+    <input  matInput
+            placeholder="Ответственный"
+            formControlName="userId">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Отмена</button>
+  <button mat-raised-button (click)="updateTask()">Создать</button>
+</mat-dialog-actions>
