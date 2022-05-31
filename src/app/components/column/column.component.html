@@ -1,5 +1,6 @@
 <div>
   Column: {{column.title}} [Order: {{column.order}}]
+  <button (click)="newTaskModal()">+</button>
   <div *ngFor="let task of tasks">
     <app-task
       [task]="task"></app-task>

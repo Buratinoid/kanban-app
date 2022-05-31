@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>Новая задача</h2>
+
+<mat-dialog-content [formGroup]="newTaskForm">
+  <mat-form-field>
+    <input  matInput
+            placeholder="Название задачи"
+            formControlName="title">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input  matInput
+            placeholder="Состояние задачи"
+            formControlName="done">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input  matInput
+            placeholder="Порядок задачи"
+            formControlName="order">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input  matInput
+            placeholder="Описание задачи"
+            formControlName="description">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input  matInput
+            placeholder="Ответственный"
+            formControlName="userId">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Отмена</button>
+  <button mat-raised-button (click)="newTask()">Создать</button>
+</mat-dialog-actions>

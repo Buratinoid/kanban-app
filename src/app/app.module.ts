@@ -20,6 +20,7 @@ import {BoardAddComponent} from 'src/app/modals/board-add/board-add.component';
 import {BoardUpdateComponent} from './modals/board-update/board-update.component';
 import {ColumnAddComponent} from './modals/column-add/column-add.component';
 import { ColumnUpdateComponent } from './modals/column-update/column-update.component';
+import { TaskAddComponent } from './modals/task-add/task-add.component';
 
 import {RequestService} from './services/request.service';
 import {BoardService} from './services/board.service';
@@ -49,7 +50,8 @@ import {MatButtonModule} from '@angular/material/button';
     BoardAddComponent,
     BoardUpdateComponent,
     ColumnAddComponent,
-    ColumnUpdateComponent
+    ColumnUpdateComponent,
+    TaskAddComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,8 @@ import {MatButtonModule} from '@angular/material/button';
     BoardAddComponent,
     BoardUpdateComponent,
     ColumnAddComponent,
-    ColumnUpdateComponent
+    ColumnUpdateComponent,
+    TaskAddComponent
   ]
 })
 export class AppModule {

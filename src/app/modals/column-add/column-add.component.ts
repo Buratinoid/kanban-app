@@ -1,32 +1,20 @@
-import {ColumnResponse} from '../../models/column-response';
 import {ColumnRequest} from '../../models/column-request';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {ColumnService} from '../../services/column.service';
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {Subscription, Subject, takeUntil} from 'rxjs';
+import {MatDialogRef} from '@angular/material/dialog';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-column-add',
   templateUrl: './column-add.component.html',
   styleUrls: ['./column-add.component.css']
 })
-export class ColumnAddComponent implements OnInit, OnDestroy {
-
-  boardId: string;
+export class ColumnAddComponent implements OnInit {
 
   newColumnForm: FormGroup;
 
-  newColumnSubscription: Subscription = new Subscription;
-
-  columnAddNotifier: Subject<void> = new Subject();
-
   constructor(
-    private newColumnHttp: ColumnService,
     private newColumnDialogRef: MatDialogRef<ColumnAddComponent>,
-    @Inject(MAT_DIALOG_DATA) data: string
   ) {
-    this.boardId = data
     this.newColumnForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
       order: new FormControl('', [Validators.pattern(/[0-9]/)])
@@ -43,25 +31,11 @@ export class ColumnAddComponent implements OnInit, OnDestroy {
         title: value.title,
         order: Number(value.order)
       }
-      this.newColumnSubscription = this.newColumnHttp
-        .createColumn(this.boardId, column)
-        .pipe(
-          takeUntil(this.columnAddNotifier)
-        )
-        .subscribe((response: ColumnResponse) => {
-          this.newColumnDialogRef.close(response)
-        })
+      this.newColumnDialogRef.close(column)
     }
   }
 
   close(): void {
     this.newColumnDialogRef.close()
   }
-
-  ngOnDestroy(): void {
-    this.columnAddNotifier.next();
-    this.columnAddNotifier.complete();
-    this.newColumnSubscription.unsubscribe();
-  }
-
 }

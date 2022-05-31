@@ -1,3 +1,4 @@
+import { ColumnRequest } from 'src/app/models/column-request';
 import { ColumnUpdateComponent } from './../../modals/column-update/column-update.component';
 import {ColumnAddComponent} from '../../modals/column-add/column-add.component';
 import {ColumnService} from '../../services/column.service';
@@ -59,6 +60,17 @@ export class BoardComponent implements OnInit, OnDestroy {
       .subscribe((columns: ColumnResponse[]) => this.columns = columns)
   }
 
+  createColumn(column: ColumnRequest) {
+    this.boardSubscription = this.columnHttp
+    .createColumn(this.board.id, column)
+    .pipe(
+      takeUntil(this.boardNotifier)
+    )
+    .subscribe(() => {
+      this.getAllColumns()
+    })
+  }
+
   deleteColumn(columnId: string): void {
     this.boardSubscription = this.columnHttp
     .deleteColumn(this.board.id, columnId)
@@ -82,20 +94,18 @@ export class BoardComponent implements OnInit, OnDestroy {
     })
   }
 
-  newColumnModal(boardId: string): void {
+  newColumnModal(): void {
     const newColumnDialogConfig = new MatDialogConfig();
 
     newColumnDialogConfig.disableClose = true;
     newColumnDialogConfig.autoFocus = false;
-
-    newColumnDialogConfig.data = boardId;
 
     const newColumnDialogRef = this.newColumnDialog.open(ColumnAddComponent, newColumnDialogConfig)
 
     newColumnDialogRef.afterClosed().subscribe(
       data => {
         if (data !== undefined) {
-          this.getAllColumns()
+          this.createColumn(data)
         }
       }
     )

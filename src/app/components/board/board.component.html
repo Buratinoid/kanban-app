@@ -1,10 +1,11 @@
 <div>
   Board: {{board?.title}}<br>
   Description: {{board?.description}}<br>
-  <button (click)="newColumnModal(board.id)">+</button>
+  <button (click)="newColumnModal()">+</button>
   <div *ngFor="let column of columns">
     <app-column
-      [column]="column"></app-column>
+      [column]="column"
+      [board]="board"></app-column>
       <button (click)="deleteColumn(column.id)">DELETE</button>
       <button (click)="updateColumnModal(column, column.id)">EDIT</button>
   </div>
