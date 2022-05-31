@@ -1,3 +1,4 @@
+import { TaskUpdateComponent } from './../../modals/task-update/task-update.component';
 import { TaskAddComponent } from './../../modals/task-add/task-add.component';
 import { Subscription, Subject, takeUntil } from 'rxjs';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -99,6 +100,29 @@ export class ColumnComponent implements OnInit, OnDestroy {
       data => {
         if (data !== undefined) {
           this.createTask(data)
+        }
+      }
+    )
+  }
+
+  updateTaskModal(taskId: string, task: TaskResponse): void {
+    const updateTaskDialogConfig = new MatDialogConfig();
+
+    updateTaskDialogConfig.disableClose = true;
+    updateTaskDialogConfig.autoFocus = false;
+
+    updateTaskDialogConfig.data = task
+
+    const updateTaskDialogRef = this.newTaskDialog.open(TaskUpdateComponent, updateTaskDialogConfig)
+
+    updateTaskDialogRef.afterClosed().subscribe(
+      data => {
+        if (data !== undefined) {
+          
+            data.boardId = this.board.id,
+            data.columnId = this.column.id
+          
+          this.updateTask(taskId, data)
         }
       }
     )

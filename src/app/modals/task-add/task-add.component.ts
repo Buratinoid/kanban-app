@@ -17,7 +17,7 @@ export class TaskAddComponent implements OnInit {
   ) { 
     this.newTaskForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
-      done: new FormControl('', [Validators.required]),
+      done: new FormControl('', [Validators.pattern(/[0-1]/)]),
       order: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       userId: new FormControl('', [Validators.required])
@@ -32,7 +32,7 @@ export class TaskAddComponent implements OnInit {
       const value: TaskRequest = this.newTaskForm.value
       const task: TaskRequest = {
         title: value.title,
-        done: Boolean(value.done),
+        done: Boolean(Number(value.done)),
         order: Number(value.order),
         description: value.description,
         userId: value.userId

@@ -111,7 +111,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     )
   }
 
-  updateColumnModal(column: ColumnResponse, columnId: string) {
+  updateColumnModal(columnId: string, column: ColumnResponse) {
     const updateColumnDialogConfig = new MatDialogConfig();
 
     updateColumnDialogConfig.disableClose = true;

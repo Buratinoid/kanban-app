@@ -19,7 +19,7 @@ export class TaskUpdateComponent implements OnInit {
   ) { 
     this.updateTaskForm = new FormGroup({
       title: new FormControl(data.title, [Validators.required]),
-      done: new FormControl(data.done, [Validators.required]),
+      done: new FormControl(data.done, [Validators.pattern(/[0-1]/)]),
       order: new FormControl(data.order, [Validators.required]),
       description: new FormControl(data.description, [Validators.required]),
       userId: new FormControl(data.userId, [Validators.required])
@@ -34,7 +34,7 @@ export class TaskUpdateComponent implements OnInit {
       const value: TaskRequest = this.updateTaskForm.value
       const task: TaskRequest = {
         title: value.title,
-        done: Boolean(value.done),
+        done: Boolean(Number(value.done)),
         order: Number(value.order),
         description: value.description,
         userId: value.userId
