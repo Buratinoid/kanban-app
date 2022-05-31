@@ -1,12 +1,12 @@
-import { ColumnAddComponent } from './../../modals/column-add/column-add.component';
-import { ColumnService } from './../../services/column.service';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ColumnResponse } from '../../models/column-response';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription, map, switchMap, Subject, takeUntil } from 'rxjs';
-import { ActivatedRoute, Params } from '@angular/router';
-import { BoardService } from './../../services/board.service';
-import { BoardResponse } from '../../models/board-response';
+import {ColumnAddComponent} from '../../modals/column-add/column-add.component';
+import {ColumnService} from '../../services/column.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {ColumnResponse} from '../../models/column-response';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Subscription, map, switchMap, Subject, takeUntil} from 'rxjs';
+import {ActivatedRoute, Params} from '@angular/router';
+import {BoardService} from '../../services/board.service';
+import {BoardResponse} from '../../models/board-response';
 
 @Component({
   selector: 'app-board',
@@ -23,25 +23,26 @@ export class BoardComponent implements OnInit, OnDestroy {
   boardNotifier: Subject<void> = new Subject();
 
   constructor(
-              private route: ActivatedRoute, 
-              private boardHttp: BoardService,
-              private newColumndialog: MatDialog,
-              private columnHttp: ColumnService
-              ) { }
+    private route: ActivatedRoute,
+    private boardHttp: BoardService,
+    private newColumnDialog: MatDialog,
+    private columnHttp: ColumnService
+  ) {
+  }
 
   ngOnInit(): void {
     this.boardSubscription = this.route.params
-    .pipe(
-      takeUntil(this.boardNotifier),
-      map((params: Params) => params["id"]),
-      switchMap(id => this.boardHttp.getBoard(id))
-    )
-    .subscribe((board: BoardResponse) => {
-      this.board = board;
-      this.columns = this.board.columns;
-    })
+      .pipe(
+        takeUntil(this.boardNotifier),
+        map((params: Params) => params["id"]),
+        switchMap(id => this.boardHttp.getBoard(id))
+      )
+      .subscribe((board: BoardResponse) => {
+        this.board = board;
+        this.columns = this.board.columns;
+      })
   }
-  
+
   ngOnDestroy(): void {
     this.boardNotifier.next();
     this.boardNotifier.complete();
@@ -50,26 +51,26 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   getAllColumns(boardId: string): void {
     this.boardSubscription = this.columnHttp
-    .getAllColumns(boardId)
-    .pipe(
-      takeUntil(this.boardNotifier)
-    )
-    .subscribe((columns: ColumnResponse[]) => this.columns = columns)
+      .getAllColumns(boardId)
+      .pipe(
+        takeUntil(this.boardNotifier)
+      )
+      .subscribe((columns: ColumnResponse[]) => this.columns = columns)
   }
 
   newColumnModal(boardId: string): void {
-    const newColumndialogConfig = new MatDialogConfig();
+    const newColumnDialogConfig = new MatDialogConfig();
 
-    newColumndialogConfig.disableClose = true;
-    newColumndialogConfig.autoFocus = false;
+    newColumnDialogConfig.disableClose = true;
+    newColumnDialogConfig.autoFocus = false;
 
-    newColumndialogConfig.data = boardId;
+    newColumnDialogConfig.data = boardId;
 
-    const newColumnDialogRef = this.newColumndialog.open(ColumnAddComponent)
-  
+    const newColumnDialogRef = this.newColumnDialog.open(ColumnAddComponent)
+
     newColumnDialogRef.afterClosed().subscribe(
       data => {
-        if(data !== undefined) {
+        if (data !== undefined) {
           this.getAllColumns(this.board.id)
         }
       }

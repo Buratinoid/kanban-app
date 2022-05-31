@@ -1,8 +1,8 @@
-import { Url } from './../models/url';
-import { AuthService } from './auth.service';
+import {AuthService} from './auth.service';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, throwError} from 'rxjs';
+import {Url} from '../models/url';
 
 @Injectable()
 export class RequestService {
@@ -10,9 +10,10 @@ export class RequestService {
   url: Url = new Url();
 
   constructor(
-              private request: HttpClient,
-              private auth: AuthService
-              ) { }
+    private request: HttpClient,
+    private auth: AuthService
+  ) {
+  }
 
   public getRequest(path: string) {
     const header = {'Authorization': 'Bearer ' + this.auth.getToken()}

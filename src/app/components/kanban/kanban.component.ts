@@ -1,11 +1,11 @@
-import { BoardUpdateComponent } from './../../modals/board-update/board-update.component';
-import { BoardRequest } from './../../models/board-request';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Subscription, Subject, takeUntil } from 'rxjs';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BoardService } from '../../services/board.service';
-import { BoardAddComponent } from 'src/app/modals/board-add/board-add.component';
-import { BoardResponse } from '../../models/board-response';
+import {BoardUpdateComponent} from '../../modals/board-update/board-update.component';
+import {BoardRequest} from '../../models/board-request';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {Subscription, Subject, takeUntil} from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {BoardService} from '../../services/board.service';
+import {BoardAddComponent} from 'src/app/modals/board-add/board-add.component';
+import {BoardResponse} from '../../models/board-response';
 
 @Component({
   selector: 'app-kanban',
@@ -13,7 +13,7 @@ import { BoardResponse } from '../../models/board-response';
   styleUrls: ['./kanban.component.css']
 })
 export class KanbanComponent implements OnInit, OnDestroy {
-  
+
   boards: BoardResponse[] = [];
 
   boardSubscription: Subscription = new Subscription;
@@ -22,8 +22,9 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
 
   constructor(
-              private newBoardDialog: MatDialog,
-              private boardHttp: BoardService) { }
+    private newBoardDialog: MatDialog,
+    private boardHttp: BoardService) {
+  }
 
   ngOnInit(): void {
     this.getAllBoards()
@@ -34,38 +35,38 @@ export class KanbanComponent implements OnInit, OnDestroy {
     this.boardNotifier.complete();
     this.boardSubscription.unsubscribe();
   }
-  
+
   getAllBoards(): void {
     this.boardSubscription = this.boardHttp
-    .getAllBoards()
-    .pipe(
-      takeUntil(this.boardNotifier)
-    )
-    .subscribe((boards: BoardResponse[]) => this.boards = boards)
+      .getAllBoards()
+      .pipe(
+        takeUntil(this.boardNotifier)
+      )
+      .subscribe((boards: BoardResponse[]) => this.boards = boards)
   }
 
   deleteBoard(boardId: string): void {
     this.boardSubscription = this.boardHttp
-    .deleteBoard(boardId)
-    .pipe(
-      takeUntil(this.boardNotifier)
-    )
-    .subscribe(() => {
-      console.log(`Board ${boardId} deleted!`);
-      this.getAllBoards();
-    })
+      .deleteBoard(boardId)
+      .pipe(
+        takeUntil(this.boardNotifier)
+      )
+      .subscribe(() => {
+        console.log(`Board ${boardId} deleted!`);
+        this.getAllBoards();
+      })
   }
 
   updateBoard(boardId: string, board: BoardRequest): void {
     this.boardSubscription = this.boardHttp
-    .updateBoard(boardId, board)
-    .pipe(
-      takeUntil(this.boardNotifier)
-    )
-    .subscribe(() => {
-      console.log(`Board ${boardId} updated!`);
-      this.getAllBoards();
-    })
+      .updateBoard(boardId, board)
+      .pipe(
+        takeUntil(this.boardNotifier)
+      )
+      .subscribe(() => {
+        console.log(`Board ${boardId} updated!`);
+        this.getAllBoards();
+      })
   }
 
   openNewBoardModal(): void {
@@ -75,10 +76,10 @@ export class KanbanComponent implements OnInit, OnDestroy {
     newBoardDialogConfig.autoFocus = false;
 
     const newBoardDialogRef = this.newBoardDialog.open(BoardAddComponent, newBoardDialogConfig)
-  
+
     newBoardDialogRef.afterClosed().subscribe(
       data => {
-        if(data !== undefined) {
+        if (data !== undefined) {
           this.getAllBoards()
         }
       })
@@ -96,7 +97,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
     updateBoardDialogRef.afterClosed().subscribe(
       data => {
-        if(data !== undefined) {
+        if (data !== undefined) {
           this.getAllBoards()
         }
       }

@@ -1,7 +1,7 @@
 export interface TaskRequest {
-    title: string;
-    done: boolean;
-    order: number;
-    description: string;
-    userId: string;
+  title: string;
+  done: boolean;
+  order: number;
+  description: string;
+  userId: string;
 }

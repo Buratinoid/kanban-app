@@ -1,4 +1,4 @@
 export interface BoardRequest {
-    title: string;
-    description: string;
+  title: string;
+  description: string;
 }

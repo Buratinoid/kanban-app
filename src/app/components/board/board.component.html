@@ -2,8 +2,8 @@
   Board: {{board?.title}}<br>
   Description: {{board?.description}}<br>
   <button (click)="newColumnModal(board.id)">+</button>
- <div *ngFor="let column of columns">
-   <app-column  
-   [column]="column"></app-column>
- </div> 
+  <div *ngFor="let column of columns">
+    <app-column
+      [column]="column"></app-column>
+  </div>
 </div>

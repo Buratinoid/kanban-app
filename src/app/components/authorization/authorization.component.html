@@ -1,13 +1,13 @@
-<form [formGroup]="authorizationForm" (submit)="signIn()"> 
+<form [formGroup]="authorizationForm" (submit)="signIn()">
   <label i18n="Login field name in signin page | @@signInLoginField">
     <p>Логин:</p>
     <input formControlName="login">
   </label>
   <label i18n="Password field name in signin page | @@signInPasswordField">
-    <p>Пароль:</p> 
+    <p>Пароль:</p>
     <input formControlName="password">
   </label>
-    <p>
+  <p>
     <button type="submit" i18n="SignIn button in signin page | @@signInButton">Войти</button>
-    </p>
+  </p>
 </form>

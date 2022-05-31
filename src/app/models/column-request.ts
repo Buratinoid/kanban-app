@@ -1,4 +1,4 @@
 export interface ColumnRequest {
-    title: string;
-    order: number;
+  title: string;
+  order: number;
 }

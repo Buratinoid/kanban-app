@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { ColumnResponse } from '../../models/column-response';
-import { TaskResponse } from '../../models/task-response';
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {ColumnResponse} from '../../models/column-response';
+import {TaskResponse} from '../../models/task-response';
 
 @Component({
   selector: 'app-column',
@@ -8,15 +8,16 @@ import { TaskResponse } from '../../models/task-response';
   styleUrls: ['./column.component.css']
 })
 export class ColumnComponent implements OnInit, OnDestroy {
-  
+
   @Input()
   column!: ColumnResponse;
-  
+
   tasks: TaskResponse[] = [];
   task!: TaskResponse;
-  
-  constructor() { }
-  
+
+  constructor() {
+  }
+
   ngOnInit(): void {
     this.tasks = this.column.tasks;
   }

@@ -1,9 +1,9 @@
-import { Router } from '@angular/router';
-import { Subscription, pipe, takeUntil, Subject } from 'rxjs';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from './../../services/auth.service';
-import { UserRequest } from './../../models/user-request';
+import {Router} from '@angular/router';
+import {Subscription, takeUntil, Subject} from 'rxjs';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AuthService} from '../../services/auth.service';
+import {UserRequest} from '../../models/user-request';
 
 @Component({
   selector: 'app-authorization',
@@ -18,37 +18,37 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   signInNotifier: Subject<void> = new Subject();
 
-  constructor(private router:Router, private http: AuthService) {
+  constructor(private router: Router, private http: AuthService) {
     this.authorizationForm = new FormGroup({
-        login: new FormControl('', [Validators.required]),
-        password: new FormControl('', [Validators.required])
+      login: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
     })
-   }
+  }
 
   ngOnInit(): void {
   }
 
   signIn(): void {
-    if(this.authorizationForm.valid) {
+    if (this.authorizationForm.valid) {
       const value = this.authorizationForm.value;
       const sigInUser: UserRequest = {
         login: value.login,
         password: value.password
       }
 
-    this.signInSubscription = this.http
-    .signInUser(sigInUser)
-    .pipe(
-      takeUntil(this.signInNotifier)
-    )
-    .subscribe(
-      () => {
-        console.log('Sign In Complete!')
-        this.router.navigate(['kanban'])
-      })
+      this.signInSubscription = this.http
+        .signInUser(sigInUser)
+        .pipe(
+          takeUntil(this.signInNotifier)
+        )
+        .subscribe(
+          () => {
+            console.log('Sign In Complete!')
+            this.router.navigate(['kanban'])
+          })
     }
   }
-  
+
   ngOnDestroy(): void {
     this.signInNotifier.next();
     this.signInNotifier.complete();

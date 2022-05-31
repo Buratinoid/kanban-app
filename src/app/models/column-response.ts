@@ -1,16 +1,17 @@
-import { TaskResponse } from './task-response';
+import {TaskResponse} from './task-response';
+
 export class ColumnResponse {
 
-    id: string;
-    title: string;
-    order: number;
-    tasks: TaskResponse[];
+  id: string;
+  title: string;
+  order: number;
+  tasks: TaskResponse[];
 
-    constructor(id: string, title: string, order: number, tasks: TaskResponse[]) {
-        this.id = id
-        this.title = title
-        this.order = order
-        this.tasks = []
-    }
-    
+  constructor(id: string, title: string, order: number, tasks: TaskResponse[]) {
+    this.id = id
+    this.title = title
+    this.order = order
+    this.tasks = []
+  }
+
 }
