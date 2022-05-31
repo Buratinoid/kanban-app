@@ -27,7 +27,7 @@ export class TaskAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  newTask() {
+  newTask(): void {
     if(this.newTaskForm.valid) {
       const value: TaskRequest = this.newTaskForm.value
       const task: TaskRequest = {

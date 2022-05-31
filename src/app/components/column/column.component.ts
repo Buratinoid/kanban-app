@@ -17,13 +17,13 @@ import { TaskRequest } from 'src/app/models/task-request';
 export class ColumnComponent implements OnInit, OnDestroy {
 
   @Input()
-  column!: ColumnResponse;
+  column: ColumnResponse = new ColumnResponse();
 
   @Input()
-  board!: BoardResponse;
+  board: BoardResponse = new BoardResponse();
 
   tasks: TaskResponse[] = [];
-  task!: TaskResponse;
+  task: TaskResponse = new TaskResponse();
 
   columnSubscription: Subscription = new Subscription;
 
@@ -77,7 +77,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateTask(taskId: string, task: TaskResponse): void {
+  updateTask(taskId: string, task: TaskRequest): void {
     this.columnSubscription = this.taskHttp
     .updateTask(this.board.id, this.column.id, taskId, task)
     .pipe(
@@ -97,9 +97,9 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const newTaskDialogRef = this.newTaskDialog.open(TaskAddComponent, newTaskDialogConfig)
 
     newTaskDialogRef.afterClosed().subscribe(
-      data => {
-        if (data !== undefined) {
-          this.createTask(data)
+      (task: TaskRequest) => {
+        if (task !== undefined) {
+          this.createTask(task)
         }
       }
     )
@@ -116,13 +116,13 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const updateTaskDialogRef = this.newTaskDialog.open(TaskUpdateComponent, updateTaskDialogConfig)
 
     updateTaskDialogRef.afterClosed().subscribe(
-      data => {
-        if (data !== undefined) {
+      (task: TaskRequest) => {
+        if (task !== undefined) {
           
-            data.boardId = this.board.id,
-            data.columnId = this.column.id
+            task.boardId = this.board.id,
+            task.columnId = this.column.id
           
-          this.updateTask(taskId, data)
+          this.updateTask(taskId, task)
         }
       }
     )

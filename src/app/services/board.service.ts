@@ -14,19 +14,28 @@ export class BoardService {
     return this.http.getRequest('/boards');
   }
 
-  public createBoard(board: BoardRequest): Observable<BoardResponse> {
+  public createBoard(
+    board: BoardRequest): Observable<BoardResponse> {
+
     return this.http.postRequest('/boards', board)
   }
 
-  public getBoard(boardId: string): Observable<BoardResponse> {
+  public getBoard(
+    boardId: string): Observable<BoardResponse> {
+
     return this.http.getRequest('/boards/' + boardId)
   }
 
-  public deleteBoard(boardId: string): Observable<void> {
+  public deleteBoard(
+    boardId: string): Observable<void> {
+
     return this.http.deleteRequest('/boards/' + boardId)
   }
 
-  public updateBoard(boardId: string, board: BoardRequest): Observable<BoardResponse> {
+  public updateBoard(
+    boardId: string, 
+    board: BoardRequest): Observable<BoardResponse> {
+      
     return this.http.putRequest('/boards/' + boardId, board)
   }
 }

@@ -30,7 +30,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   signIn(): void {
     if (this.authorizationForm.valid) {
-      const value = this.authorizationForm.value;
+      const value: UserRequest = this.authorizationForm.value;
       const sigInUser: UserRequest = {
         login: value.login,
         password: value.password
@@ -52,6 +52,6 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.signInNotifier.next();
     this.signInNotifier.complete();
-    this.signInSubscription.unsubscribe(); //Почему ошибки, если включить??? Хз
+    this.signInSubscription.unsubscribe();
   }
 }

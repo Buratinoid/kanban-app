@@ -9,7 +9,7 @@ import { TaskResponse } from '../../models/task-response';
 export class TaskComponent implements OnInit, OnDestroy {
 
   @Input()
-  task!: TaskResponse;
+  task: TaskResponse = new TaskResponse();
 
   constructor() { }
 

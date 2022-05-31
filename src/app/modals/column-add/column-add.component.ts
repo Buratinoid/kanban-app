@@ -24,7 +24,7 @@ export class ColumnAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  newColumn() {
+  newColumn(): void {
     if (this.newColumnForm.valid) {
       const value: ColumnRequest = this.newColumnForm.value
       const column: ColumnRequest = {

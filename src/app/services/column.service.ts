@@ -10,23 +10,38 @@ export class ColumnService {
   constructor(private http: RequestService) {
   }
 
-  public getAllColumns(boardId: string): Observable<ColumnResponse[]> {
+  public getAllColumns(
+    boardId: string): Observable<ColumnResponse[]> {
+      
     return this.http.getRequest('/boards/' + boardId + '/columns')
   }
 
-  public createColumn(boardId: string, column: ColumnRequest): Observable<ColumnResponse> {
+  public createColumn(
+    boardId: string, 
+    column: ColumnRequest): Observable<ColumnResponse> {
+
     return this.http.postRequest('/boards/' + boardId + '/columns', column)
   }
 
-  public getColumn(boardId: string, columnId: string): Observable<ColumnResponse> {
+  public getColumn(
+    boardId: string, 
+    columnId: string): Observable<ColumnResponse> {
+
     return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId)
   }
 
-  public deleteColumn(boardId: string, columnId: string): Observable<void> {
+  public deleteColumn(
+    boardId: string, 
+    columnId: string): Observable<void> {
+
     return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId)
   }
 
-  public updateColumn(boardId: string, columnId: string, column: ColumnRequest): Observable<ColumnRequest> {
+  public updateColumn(
+    boardId: string, 
+    columnId: string, 
+    column: ColumnRequest): Observable<ColumnResponse> {
+
     return this.http.putRequest('/boards/' + boardId + '/columns/' + columnId, column)
   }
 }

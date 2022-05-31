@@ -23,10 +23,10 @@ export class ColumnUpdateComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  updateColumn() {
+  updateColumn(): void {
     if(this.updateColumnForm.valid) {
       const value: ColumnRequest = this.updateColumnForm.value
       const column: ColumnRequest = {
@@ -37,7 +37,7 @@ export class ColumnUpdateComponent implements OnInit {
     }
   }
 
-  close() {
+  close(): void {
     this.updateColumnDialogRef.close()
   }
 }

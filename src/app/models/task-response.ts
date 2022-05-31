@@ -9,15 +9,16 @@ export class TaskResponse {
   boardId: string;
   columnId: string;
 
-  constructor(id: string,
-              title: string,
-              done: boolean,
-              order: number,
-              description: string,
-              userId: string,
-              boardId: string,
-              columnId: string
-  ) {
+  constructor(
+    id: string = '',
+    title: string = '',
+    done: boolean = false,
+    order: number = 1,
+    description: string = '',
+    userId: string = '',
+    boardId: string = '',
+    columnId: string = ''
+    ) {
 
     this.id = id
     this.title = title

@@ -34,7 +34,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   signUp(): void {
     if (this.registrationForm.valid) {
-      const value = this.registrationForm.value;
+      const value: UserRequest = this.registrationForm.value;
 
       const user: UserRequest = {
         name: value.name,

@@ -50,5 +50,4 @@ export class AuthService {
     this.setToken(emptyToken);
     this.setLoggedIn(false);
   }
-
 }

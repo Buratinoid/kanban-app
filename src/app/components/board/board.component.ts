@@ -60,7 +60,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       .subscribe((columns: ColumnResponse[]) => this.columns = columns)
   }
 
-  createColumn(column: ColumnRequest) {
+  createColumn(column: ColumnRequest): void {
     this.boardSubscription = this.columnHttp
     .createColumn(this.board.id, column)
     .pipe(
@@ -83,7 +83,7 @@ export class BoardComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateColumn(columnId: string, column: ColumnResponse): void {
+  updateColumn(columnId: string, column: ColumnRequest): void {
     this.boardSubscription = this.columnHttp
     .updateColumn(this.board.id, columnId, column)
     .pipe(
@@ -103,15 +103,15 @@ export class BoardComponent implements OnInit, OnDestroy {
     const newColumnDialogRef = this.newColumnDialog.open(ColumnAddComponent, newColumnDialogConfig)
 
     newColumnDialogRef.afterClosed().subscribe(
-      data => {
-        if (data !== undefined) {
-          this.createColumn(data)
+      (column: ColumnRequest) => {
+        if (column !== undefined) {
+          this.createColumn(column)
         }
       }
     )
   }
 
-  updateColumnModal(columnId: string, column: ColumnResponse) {
+  updateColumnModal(columnId: string, column: ColumnResponse): void {
     const updateColumnDialogConfig = new MatDialogConfig();
 
     updateColumnDialogConfig.disableClose = true;
@@ -122,9 +122,9 @@ export class BoardComponent implements OnInit, OnDestroy {
     const updateColumnDialogRef = this.newColumnDialog.open(ColumnUpdateComponent, updateColumnDialogConfig)
   
     updateColumnDialogRef.afterClosed().subscribe(
-      data => {
-        if(data !== undefined) {
-          this.updateColumn(columnId, data)
+      (column: ColumnRequest) => {
+        if(column !== undefined) {
+          this.updateColumn(columnId, column)
         }
       }
     )

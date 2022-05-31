@@ -16,9 +16,9 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
   boards: BoardResponse[] = [];
 
-  boardSubscription: Subscription = new Subscription;
+  kanbanSubscription: Subscription = new Subscription;
 
-  boardNotifier: Subject<void> = new Subject();
+  kanbanNotifier: Subject<void> = new Subject();
 
 
   constructor(
@@ -31,25 +31,36 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.boardNotifier.next();
-    this.boardNotifier.complete();
-    this.boardSubscription.unsubscribe();
+    this.kanbanNotifier.next();
+    this.kanbanNotifier.complete();
+    this.kanbanSubscription.unsubscribe();
   }
 
   getAllBoards(): void {
-    this.boardSubscription = this.boardHttp
+    this.kanbanSubscription = this.boardHttp
       .getAllBoards()
       .pipe(
-        takeUntil(this.boardNotifier)
+        takeUntil(this.kanbanNotifier)
       )
       .subscribe((boards: BoardResponse[]) => this.boards = boards)
   }
 
+  createBoard(board: BoardRequest): void {
+    this.kanbanSubscription = this.boardHttp
+    .createBoard(board)
+    .pipe(
+      takeUntil(this.kanbanNotifier)
+    )
+    .subscribe(() => {
+      this.getAllBoards();
+    })
+  }
+
   deleteBoard(boardId: string): void {
-    this.boardSubscription = this.boardHttp
+    this.kanbanSubscription = this.boardHttp
       .deleteBoard(boardId)
       .pipe(
-        takeUntil(this.boardNotifier)
+        takeUntil(this.kanbanNotifier)
       )
       .subscribe(() => {
         console.log(`Board ${boardId} deleted!`);
@@ -57,19 +68,18 @@ export class KanbanComponent implements OnInit, OnDestroy {
       })
   }
 
-  // updateBoard(boardId: string, board: BoardRequest): void {
-  //   this.boardSubscription = this.boardHttp
-  //     .updateBoard(boardId, board)
-  //     .pipe(
-  //       takeUntil(this.boardNotifier)
-  //     )
-  //     .subscribe(() => {
-  //       console.log(`Board ${boardId} updated!`);
-  //       this.getAllBoards();
-  //     })
-  // }
+  updateBoard(boardId: string, board: BoardRequest): void {
+    this.kanbanSubscription = this.boardHttp
+      .updateBoard(boardId, board)
+      .pipe(
+        takeUntil(this.kanbanNotifier)
+      )
+      .subscribe(() => {
+        this.getAllBoards();
+      })
+  }
 
-  openNewBoardModal(): void {
+  newBoardModal(): void {
     const newBoardDialogConfig = new MatDialogConfig();
 
     newBoardDialogConfig.disableClose = true;
@@ -78,14 +88,15 @@ export class KanbanComponent implements OnInit, OnDestroy {
     const newBoardDialogRef = this.newBoardDialog.open(BoardAddComponent, newBoardDialogConfig)
 
     newBoardDialogRef.afterClosed().subscribe(
-      data => {
-        if (data !== undefined) {
-          this.getAllBoards()
+      (board: BoardRequest) => {
+        if (board !== undefined) {
+          this.createBoard(board)
         }
-      })
+      }
+    )
   }
 
-  openUpdateBoardModal(board: BoardResponse) {
+  updateBoardModal(boardId: string, board: BoardResponse): void {
     const updateBoardDialogConfig = new MatDialogConfig();
 
     updateBoardDialogConfig.disableClose = true;
@@ -96,9 +107,9 @@ export class KanbanComponent implements OnInit, OnDestroy {
     const updateBoardDialogRef = this.newBoardDialog.open(BoardUpdateComponent, updateBoardDialogConfig)
 
     updateBoardDialogRef.afterClosed().subscribe(
-      data => {
-        if (data !== undefined) {
-          this.getAllBoards()
+      (board: BoardRequest) => {
+        if (board !== undefined) {
+          this.updateBoard(boardId, board)
         }
       }
     )
