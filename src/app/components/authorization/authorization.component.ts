@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Subscription, pipe, takeUntil, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from './../../services/user.service';
+import { AuthService } from './../../services/auth.service';
 import { UserRequest } from './../../models/user-request';
 
 @Component({
@@ -18,7 +18,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   signInNotifier: Subject<void> = new Subject();
 
-  constructor(private router:Router, private http: UserService) {
+  constructor(private router:Router, private http: AuthService) {
     this.authorizationForm = new FormGroup({
         login: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required])

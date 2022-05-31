@@ -24,6 +24,7 @@ import { RequestService } from './services/request.service';
 import { BoardService } from './services/board.service';
 import { ColumnService } from './services/column.service';
 import { TaskService } from './services/task.service';
+import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -66,6 +67,7 @@ import { MatButtonModule } from '@angular/material/button';
     ColumnService,
     TaskService,
     UserService,
+    AuthService,
     {provide: MatDialogRef, useValue: {}},
     {provide: MAT_DIALOG_DATA, useValue: []}
   ],

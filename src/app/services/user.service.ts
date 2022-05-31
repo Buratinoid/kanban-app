@@ -25,19 +25,7 @@ public updateUser(userId: string, user: UserRequest): Observable<UserRequest> {
   return this.http.putRequest('/users/' + userId, user)
 }
 
-public signInUser(user: UserRequest): Observable<string> {
-  return this.http.postRequest('/signin', user)
-  .pipe(
-      map(value => this.http.setToken(value.token))
-  )
-}
-
 public signUpUser(user: UserRequest): Observable<UserRequest> {
   return this.http.postRequest('/signup', user)
-}
-
-public logOut(): void {
-  const emptyToken: string = '';
-  this.http.setToken(emptyToken);
 }
 }

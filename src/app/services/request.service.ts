@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {catchError, throwError} from 'rxjs';
@@ -7,30 +8,13 @@ export class RequestService {
 
   private readonly url: string = 'http://localhost:8010/proxy';
 
-  private token$: string = 'no token';
-  private isLoggedIn$: boolean = true;
-
-  public isLoggedIn(): boolean {
-    return this.isLoggedIn$;
-  }
-
-  public setLoggedIn(isLoggedIn: boolean): void {
-    this.isLoggedIn$ = isLoggedIn;
-  }
-
-  public setToken(token: string): string {
-    return this.token$ = token;             //AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!!!!!!!!!!!!!!!!
-  }
-
-  public getToken(): string {
-    return this.token$;
-  }
-
-  constructor(private request: HttpClient) {
-  }
+  constructor(
+              private request: HttpClient,
+              private auth: AuthService
+              ) { }
 
   public getRequest(path: string) {
-    const header = {'Authorization': 'Bearer ' + this.getToken()}
+    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
     return this.request.get<any>(this.url + path, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -41,7 +25,7 @@ export class RequestService {
   }
 
   public postRequest(path: string, body: any) {
-    const header = {'Authorization': 'Bearer ' + this.getToken()}
+    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
     return this.request.post<any>(this.url + path, body, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -52,7 +36,7 @@ export class RequestService {
   }
 
   public putRequest(path: string, body: any) {
-    const header = {'Authorization': 'Bearer ' + this.getToken()}
+    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
     return this.request.put<any>(this.url + path, body, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -63,7 +47,7 @@ export class RequestService {
   }
 
   public deleteRequest(path: string) {
-    const header = {'Authorization': 'Bearer ' + this.getToken()}
+    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
     return this.request.delete<any>(this.url + path, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
