@@ -10,6 +10,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './components/home/home.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {AuthorizationComponent} from './components/authorization/authorization.component';
+import { UsersComponent } from './components/users/users.component';
 import {HeaderComponent} from './components/header/header.component';
 import {KanbanComponent} from './components/kanban/kanban.component';
 import {BoardComponent} from './components/board/board.component';
@@ -41,6 +42,7 @@ import {MatButtonModule} from '@angular/material/button';
     AppComponent,
     RegistrationComponent,
     AuthorizationComponent,
+    UsersComponent,
     HeaderComponent,
     KanbanComponent,
     HomeComponent,
