@@ -42,9 +42,4 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardNotifier.complete();
     this.boardSubscription.unsubscribe();
   }
-
-  deleteBoard(): void {
-    this.boardHttp.deleteBoard(this.board.id)
-    .subscribe(() => console.log(`Board ${this.board.id} deleted!`))
-  }
 }
