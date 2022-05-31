@@ -4,5 +4,6 @@
   <div *ngFor="let task of tasks">
     <app-task
       [task]="task"></app-task>
+      <button (click)="deleteTask(task.id)">DELETE</button>
   </div>
 </div>
