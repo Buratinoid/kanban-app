@@ -1,3 +1,6 @@
+import { ColumnAddComponent } from './../../modals/column-add/column-add.component';
+import { ColumnService } from './../../services/column.service';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ColumnResponse } from '../../models/column-response';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, map, switchMap, Subject, takeUntil } from 'rxjs';
@@ -22,6 +25,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   constructor(
               private route: ActivatedRoute, 
               private boardHttp: BoardService,
+              private newColumndialog: MatDialog,
+              private columnHttp: ColumnService
               ) { }
 
   ngOnInit(): void {
@@ -41,5 +46,33 @@ export class BoardComponent implements OnInit, OnDestroy {
     this.boardNotifier.next();
     this.boardNotifier.complete();
     this.boardSubscription.unsubscribe();
+  }
+
+  getAllColumns(boardId: string): void {
+    this.boardSubscription = this.columnHttp
+    .getAllColumns(boardId)
+    .pipe(
+      takeUntil(this.boardNotifier)
+    )
+    .subscribe((columns: ColumnResponse[]) => this.columns = columns)
+  }
+
+  newColumnModal(boardId: string): void {
+    const newColumndialogConfig = new MatDialogConfig();
+
+    newColumndialogConfig.disableClose = true;
+    newColumndialogConfig.autoFocus = false;
+
+    newColumndialogConfig.data = boardId;
+
+    const newColumnDialogRef = this.newColumndialog.open(ColumnAddComponent)
+  
+    newColumnDialogRef.afterClosed().subscribe(
+      data => {
+        if(data !== undefined) {
+          this.getAllColumns(this.board.id)
+        }
+      }
+    )
   }
 }

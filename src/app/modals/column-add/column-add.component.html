@@ -1,3 +1,20 @@
-<p>
-  column-add works!
-</p>
+<h2 mat-dialog-title>Новая колонка</h2>
+
+<mat-dialog-content [formGroup]="newColumnForm">
+  <mat-form-field>
+    <input  matInput
+            placeholder="Название колнки"
+            formControlName="title">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input  matInput
+            placeholder="Порядок колонки"
+            formControlName="order">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Отмена</button>
+  <button mat-raised-button (click)="newColumn()">Создать</button>
+</mat-dialog-actions>

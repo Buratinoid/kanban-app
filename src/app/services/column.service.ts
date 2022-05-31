@@ -13,7 +13,7 @@ public getAllColumns(boardId: string): Observable<ColumnResponse[]> {
   return this.http.getRequest('/boards/' + boardId + '/columns')
 }
 
-public createColumn(boardId: string, column: ColumnRequest): Observable<ColumnRequest> {
+public createColumn(boardId: string, column: ColumnRequest): Observable<ColumnResponse> {
   return this.http.postRequest('/boards/' + boardId + '/columns', column)
 }
 
