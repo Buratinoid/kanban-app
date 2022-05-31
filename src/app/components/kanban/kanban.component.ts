@@ -1,5 +1,5 @@
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject, takeUntil } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
 import { BoardAddComponent } from 'src/app/modals/board-add/board-add.component';
@@ -17,6 +17,8 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
   boardSubscription: Subscription = new Subscription;
 
+  boardNotifier: Subject<void> = new Subject();
+
   constructor(
               private newBoardDialog: MatDialog,
               private boardHttp: BoardService) { }
@@ -26,12 +28,17 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.boardSubscription.unsubscribe()
+    this.boardNotifier.next();
+    this.boardNotifier.complete();
+    this.boardSubscription.unsubscribe();
   }
   
   getAllBoards(): void {
     this.boardSubscription = this.boardHttp
     .getAllBoards()
+    .pipe(
+      takeUntil(this.boardNotifier)
+    )
     .subscribe((boards: BoardResponse[]) => this.boards = boards)
   }
 

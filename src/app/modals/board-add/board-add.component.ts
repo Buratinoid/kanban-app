@@ -1,5 +1,5 @@
 import { BoardResponse } from '../../models/board-response';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Component, Inject, OnInit } from '@angular/core';
@@ -16,6 +16,8 @@ export class BoardAddComponent implements OnInit {
   newBoardForm: FormGroup;
 
   newBoardSubscription: Subscription = new Subscription;
+
+  boardAddNotifier: Subject<void> = new Subject();
 
   constructor(
               private newBoardHttp: BoardService,
@@ -44,12 +46,11 @@ export class BoardAddComponent implements OnInit {
       }
       this.newBoardSubscription = this.newBoardHttp
       .createBoard(board)
+      .pipe(
+        takeUntil(this.boardAddNotifier)
+      )
       .subscribe((response: BoardResponse) => {
-          newBoard.id = response.id,
-          newBoard.title = response.title,
-          newBoard.description = response.description,
-          newBoard.columns = [],
-          this.newBoardDialogRef.close(newBoard)
+          this.newBoardDialogRef.close(response)
       })
     }
   }
@@ -59,6 +60,8 @@ export class BoardAddComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.newBoardSubscription.unsubscribe()  //Почему если включить, то запрос в консоли не отражает время отклика?  
+    this.boardAddNotifier.next();
+    this.boardAddNotifier.complete();
+    this.newBoardSubscription.unsubscribe();  //Почему если включить, то запрос в консоли не отражает время отклика?  
   }
 }

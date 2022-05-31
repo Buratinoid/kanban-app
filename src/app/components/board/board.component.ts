@@ -17,7 +17,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   boardSubscription: Subscription = new Subscription;
 
-  notifier: Subject<void> = new Subject();
+  boardNotifier: Subject<void> = new Subject();
 
   constructor(
               private route: ActivatedRoute, 
@@ -27,7 +27,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.boardSubscription = this.route.params
     .pipe(
-      takeUntil(this.notifier),
+      takeUntil(this.boardNotifier),
       map((params: Params) => params["id"]),
       switchMap(id => this.boardHttp.getBoard(id))
     )
@@ -38,8 +38,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    this.notifier.next();
-    this.notifier.complete();
+    this.boardNotifier.next();
+    this.boardNotifier.complete();
     this.boardSubscription.unsubscribe();
   }
 

@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, pipe, takeUntil, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from './../../services/user.service';
@@ -15,6 +15,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   authorizationForm: FormGroup;
 
   signInSubscription: Subscription = new Subscription;
+
+  signInNotifier: Subject<void> = new Subject();
 
   constructor(private router:Router, private http: UserService) {
     this.authorizationForm = new FormGroup({
@@ -36,6 +38,9 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
     this.signInSubscription = this.http
     .signInUser(sigInUser)
+    .pipe(
+      takeUntil(this.signInNotifier)
+    )
     .subscribe(
       () => {
         console.log('Sign In Complete!')
@@ -45,6 +50,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    this.signInSubscription.unsubscribe() //Почему ошибки, если включить??? Хз
+    this.signInNotifier.next();
+    this.signInNotifier.complete();
+    this.signInSubscription.unsubscribe(); //Почему ошибки, если включить??? Хз
   }
 }

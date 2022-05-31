@@ -1,7 +1,7 @@
 import { UserRequest } from './../../models/user-request';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, takeUntil, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
@@ -15,6 +15,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   registrationForm: FormGroup;
 
   signUpSubscription: Subscription = new Subscription;
+
+  signUpNotifier: Subject<void> = new Subject();
 
   constructor(
               private router: Router, 
@@ -42,6 +44,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       
       this.signUpSubscription = this.http
       .signUpUser(user)
+      .pipe(
+        takeUntil(this.signUpNotifier)
+      )
       .subscribe(
         () => {
           console.log('Sign Up Complete')
@@ -51,6 +56,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.signUpSubscription.unsubscribe() //Почему ошибки, если включить??? Хз
+    this.signUpNotifier.next();
+    this.signUpNotifier.complete();
+    this.signUpSubscription.unsubscribe();
   }
 }
