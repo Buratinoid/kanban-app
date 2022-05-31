@@ -8,7 +8,7 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class AuthService {
 
-  url: Url = new Url();
+  readonly url: Url = new Url();
 
   private token$: Token = new Token();
   private isLoggedIn$: boolean = false;

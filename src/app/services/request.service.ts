@@ -7,7 +7,7 @@ import {Url} from '../models/url';
 @Injectable()
 export class RequestService {
 
-  url: Url = new Url();
+  readonly url: Url = new Url();
 
   constructor(
     private request: HttpClient,
