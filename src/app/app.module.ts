@@ -16,7 +16,8 @@ import { BoardComponent } from './components/board/board.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 
-import { BoardModalComponent } from './modals/board-modal/board-modal.component';
+import { BoardAddComponent } from 'src/app/modals/board-add/board-add.component';
+import { BoardUpdateComponent } from './modals/board-update/board-update.component';
 
 import { RequestService } from './services/request.service';
 import { BoardService } from './services/board.service';
@@ -41,7 +42,9 @@ import { MatButtonModule } from '@angular/material/button';
       BoardComponent,
       ColumnComponent,
       TaskComponent,
-      BoardModalComponent
+
+      BoardAddComponent,
+      BoardUpdateComponent
    ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    BoardModalComponent
+    BoardAddComponent,
+    BoardUpdateComponent
   ]
 })
 export class AppModule { }

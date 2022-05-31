@@ -2,7 +2,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BoardService } from '../../services/board.service';
-import { BoardModalComponent } from 'src/app/modals/board-modal/board-modal.component';
+import { BoardAddComponent } from 'src/app/modals/board-add/board-add.component';
 import { BoardResponse } from '../../models/board-response';
 import { BoardRequest } from './../../models/board-request';
 
@@ -22,13 +22,17 @@ export class KanbanComponent implements OnInit, OnDestroy {
               private boardHttp: BoardService) { }
 
   ngOnInit(): void {
-    this.boardSubscription = this.boardHttp
-    .getAllBoards()
-    .subscribe((boards: BoardResponse[]) => this.boards = boards)
+    this.getAllBoards()
   }
 
   ngOnDestroy(): void {
     this.boardSubscription.unsubscribe()
+  }
+  
+  getAllBoards(): void {
+    this.boardSubscription = this.boardHttp
+    .getAllBoards()
+    .subscribe((boards: BoardResponse[]) => this.boards = boards)
   }
 
   openNewBoardModal(): void {
@@ -37,15 +41,12 @@ export class KanbanComponent implements OnInit, OnDestroy {
     newBoardDialogConfig.disableClose = true;
     newBoardDialogConfig.autoFocus = false;
 
-    newBoardDialogConfig.data = {
-    
-    }
-    const dialogRef = this.newBoardDialog.open(BoardModalComponent, newBoardDialogConfig)
+    const dialogRef = this.newBoardDialog.open(BoardAddComponent, newBoardDialogConfig)
   
     dialogRef.afterClosed().subscribe(
       data => {
         if(data !== undefined) {
-          this.boards.push(data);
+          this.getAllBoards()
         }
       })
   }

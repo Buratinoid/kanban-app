@@ -1,4 +1,4 @@
-import { BoardResponse } from './../../models/board-response';
+import { BoardResponse } from '../../models/board-response';
 import { Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -7,11 +7,11 @@ import { BoardRequest } from '../../models/board-request';
 import { BoardService } from 'src/app/services/board.service';
 
 @Component({
-  selector: 'app-board-modal',
-  templateUrl: './board-modal.component.html',
-  styleUrls: ['./board-modal.component.css']
+  selector: 'app-board-add',
+  templateUrl: './board-add.component.html',
+  styleUrls: ['./board-add.component.css']
 })
-export class BoardModalComponent implements OnInit {
+export class BoardAddComponent implements OnInit {
 
   newBoardForm: FormGroup;
 
@@ -19,7 +19,7 @@ export class BoardModalComponent implements OnInit {
 
   constructor(
               private newBoardHttp: BoardService,
-              private newBoardDialogRef: MatDialogRef<BoardModalComponent>,
+              private newBoardDialogRef: MatDialogRef<BoardAddComponent>,
 
               @Inject(MAT_DIALOG_DATA) data: BoardRequest
               ) 

@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { BoardModalComponent } from './board-modal.component';
+import { BoardUpdateComponent } from './board-update.component';
 
-describe('BoardModalComponent', () => {
-  let component: BoardModalComponent;
-  let fixture: ComponentFixture<BoardModalComponent>;
+describe('BoardUpdateComponent', () => {
+  let component: BoardUpdateComponent;
+  let fixture: ComponentFixture<BoardUpdateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BoardModalComponent ]
+      declarations: [ BoardUpdateComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BoardModalComponent);
+    fixture = TestBed.createComponent(BoardUpdateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
