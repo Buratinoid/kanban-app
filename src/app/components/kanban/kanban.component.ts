@@ -1,3 +1,5 @@
+import { BoardUpdateComponent } from './../../modals/board-update/board-update.component';
+import { BoardRequest } from './../../models/board-request';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription, Subject, takeUntil } from 'rxjs';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -54,19 +56,50 @@ export class KanbanComponent implements OnInit, OnDestroy {
     })
   }
 
+  updateBoard(boardId: string, board: BoardRequest): void {
+    this.boardSubscription = this.boardHttp
+    .updateBoard(boardId, board)
+    .pipe(
+      takeUntil(this.boardNotifier)
+    )
+    .subscribe(() => {
+      console.log(`Board ${boardId} updated!`);
+      this.getAllBoards();
+    })
+  }
+
   openNewBoardModal(): void {
     const newBoardDialogConfig = new MatDialogConfig();
 
     newBoardDialogConfig.disableClose = true;
     newBoardDialogConfig.autoFocus = false;
 
-    const dialogRef = this.newBoardDialog.open(BoardAddComponent, newBoardDialogConfig)
+    const newBoardDialogRef = this.newBoardDialog.open(BoardAddComponent, newBoardDialogConfig)
   
-    dialogRef.afterClosed().subscribe(
+    newBoardDialogRef.afterClosed().subscribe(
       data => {
         if(data !== undefined) {
           this.getAllBoards()
         }
       })
+  }
+
+  openUpdateBoardModal(board: BoardResponse) {
+    const updateBoardDialogConfig = new MatDialogConfig();
+
+    updateBoardDialogConfig.disableClose = true;
+    updateBoardDialogConfig.autoFocus = false;
+
+    updateBoardDialogConfig.data = board;
+
+    const updateBoardDialogRef = this.newBoardDialog.open(BoardUpdateComponent, updateBoardDialogConfig)
+
+    updateBoardDialogRef.afterClosed().subscribe(
+      data => {
+        if(data !== undefined) {
+          this.getAllBoards()
+        }
+      }
+    )
   }
 }

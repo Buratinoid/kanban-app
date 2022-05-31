@@ -25,7 +25,7 @@ public deleteBoard(boardId: string): Observable<void> {
   return this.http.deleteRequest('/boards/' + boardId)
 }
 
-public updateBoard(boardId: string, board: BoardRequest): Observable<BoardRequest> {
+public updateBoard(boardId: string, board: BoardRequest): Observable<BoardResponse> {
   return this.http.putRequest('/boards/' + boardId, board)
 }
 }

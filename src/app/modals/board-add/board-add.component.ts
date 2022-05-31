@@ -1,8 +1,8 @@
 import { BoardResponse } from '../../models/board-response';
 import { Subscription, takeUntil, Subject } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import { BoardRequest } from '../../models/board-request';
 import { BoardService } from 'src/app/services/board.service';
 
@@ -21,9 +21,7 @@ export class BoardAddComponent implements OnInit {
 
   constructor(
               private newBoardHttp: BoardService,
-              private newBoardDialogRef: MatDialogRef<BoardAddComponent>,
-
-              @Inject(MAT_DIALOG_DATA) data: BoardRequest
+              private newBoardDialogRef: MatDialogRef<BoardAddComponent>
               ) 
               { 
                 this.newBoardForm = new FormGroup({
@@ -36,8 +34,6 @@ export class BoardAddComponent implements OnInit {
   }
 
   newBoard() {
-    const newBoard: BoardResponse = new BoardResponse();
-
     if(this.newBoardForm.valid) {
       const value = this.newBoardForm.value;
       const board: BoardRequest = {

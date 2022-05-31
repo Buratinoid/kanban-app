@@ -1,3 +1,20 @@
-<p>
-  board-update works!
-</p>
+<h2 mat-dialog-title>Редактировать доску</h2>
+
+<mat-dialog-content [formGroup]="updateBoardForm">
+  <mat-form-field>
+    <mat-label>Название доски</mat-label>
+    <input  matInput
+            formControlName="title">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Описание доски</mat-label>
+    <input  matInput
+            formControlName="description">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="close()">Отмена</button>
+  <button mat-raised-button (click)="updateBoard()">Сохранить</button>
+</mat-dialog-actions>
