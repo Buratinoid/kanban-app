@@ -1,9 +1,9 @@
 <div>
   Column: {{column.title}} [Order: {{column.order}}]
-  <button (click)="newTaskModal()">+</button>
+  <button (click)="newTaskModal()">ADD TASK</button>
   <div *ngFor="let task of tasks">
     <app-task
       [task]="task"></app-task>
-      <button (click)="deleteTask(task.id)">DELETE</button>
+      <button (click)="deleteTask(task.id)">DELETE TASK</button>
   </div>
 </div>
