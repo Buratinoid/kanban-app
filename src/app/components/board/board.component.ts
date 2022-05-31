@@ -66,7 +66,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     newColumnDialogConfig.data = boardId;
 
-    const newColumnDialogRef = this.newColumnDialog.open(ColumnAddComponent)
+    const newColumnDialogRef = this.newColumnDialog.open(ColumnAddComponent, newColumnDialogConfig)
 
     newColumnDialogRef.afterClosed().subscribe(
       data => {

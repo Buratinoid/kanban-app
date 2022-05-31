@@ -13,7 +13,7 @@ import {Subscription, Subject, takeUntil} from 'rxjs';
 })
 export class ColumnAddComponent implements OnInit, OnDestroy {
 
-  boardId!: string;
+  boardId: string;
 
   newColumnForm: FormGroup;
 
@@ -29,7 +29,7 @@ export class ColumnAddComponent implements OnInit, OnDestroy {
     this.boardId = data
     this.newColumnForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
-      order: new FormControl('', [Validators.required])
+      order: new FormControl('', [Validators.pattern(/[0-9]/)])
     })
   }
 
@@ -38,10 +38,10 @@ export class ColumnAddComponent implements OnInit, OnDestroy {
 
   newColumn() {
     if (this.newColumnForm.valid) {
-      const value = this.newColumnForm.value
+      const value: ColumnRequest = this.newColumnForm.value
       const column: ColumnRequest = {
         title: value.title,
-        order: value.order
+        order: Number(value.order)
       }
       this.newColumnSubscription = this.newColumnHttp
         .createColumn(this.boardId, column)
