@@ -1,3 +1,4 @@
+import { Url } from './../models/url';
 import { AuthService } from './auth.service';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
@@ -6,7 +7,7 @@ import {catchError, throwError} from 'rxjs';
 @Injectable()
 export class RequestService {
 
-  private readonly url: string = 'http://localhost:8010/proxy';
+  url: Url = new Url();
 
   constructor(
               private request: HttpClient,
@@ -15,7 +16,7 @@ export class RequestService {
 
   public getRequest(path: string) {
     const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.get<any>(this.url + path, {headers: header})
+    return this.request.get<any>(this.url.url + path, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)
@@ -26,7 +27,7 @@ export class RequestService {
 
   public postRequest(path: string, body: any) {
     const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.post<any>(this.url + path, body, {headers: header})
+    return this.request.post<any>(this.url.url + path, body, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)
@@ -37,7 +38,7 @@ export class RequestService {
 
   public putRequest(path: string, body: any) {
     const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.put<any>(this.url + path, body, {headers: header})
+    return this.request.put<any>(this.url.url + path, body, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)
@@ -48,7 +49,7 @@ export class RequestService {
 
   public deleteRequest(path: string) {
     const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.delete<any>(this.url + path, {headers: header})
+    return this.request.delete<any>(this.url.url + path, {headers: header})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)

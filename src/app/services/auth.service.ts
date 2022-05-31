@@ -1,3 +1,4 @@
+import { Url } from './../models/url';
 import { Token } from './../models/token';
 import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
@@ -7,7 +8,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AuthService {
 
-  private readonly url: string = 'http://localhost:8010/proxy';
+  url: Url = new Url();
   
   private token$: Token = new Token();
   private isLoggedIn$: boolean = false;
@@ -33,7 +34,7 @@ export class AuthService {
   }
   
   public signInUser(user: UserRequest): Observable<void> {
-    return this.http.post<Token>(this.url + '/signin', user)
+    return this.http.post<Token>(this.url.url + '/signin', user)
     .pipe(
         map((value: Token) => {
           this.setLoggedIn(true)
