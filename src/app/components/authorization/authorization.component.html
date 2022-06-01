@@ -10,4 +10,11 @@
   <p>
     <button type="submit" i18n="SignIn button in signin page | @@signInButton">Войти</button>
   </p>
+  <div>
+    Code: {{authorizationStatus.errorCode}}<br>
+    Text: {{authorizationStatus.errorText}}<br>
+    Status: {{authorizationStatus.isSuccessful.toString()}}
+  </div>
 </form>
+
+

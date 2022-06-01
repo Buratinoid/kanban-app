@@ -1,53 +1,56 @@
-import {Url} from '../models/url';
-import {Token} from '../models/token';
 import {HttpClient} from '@angular/common/http';
-import {Observable, map} from 'rxjs';
-import {UserRequest} from '../models/user-request';
+import {Observable} from 'rxjs';
+import {SingInRequest} from '../models/sing-in-request';
 import {Injectable} from '@angular/core';
+import {SingUpRequest} from "../models/sing-up-request";
+import {UserResponse} from "../models/user-response";
 
 @Injectable()
 export class AuthService {
 
-  readonly url: Url = new Url();
+  private readonly url: string = 'http://localhost:8010/proxy/';
 
-  private token$: Token = new Token();
-  private isLoggedIn$: boolean = false;
+  private _token = '';
+  private _isLoggedIn = false;
+  private _userId = '';
 
-  constructor(
-    private http: HttpClient
-  ) {
+  constructor(private httpClient: HttpClient) {
   }
 
-  private setToken(token: string): void {
-    this.token$.token = token;
+  public signUpUser(singUpRequest: SingUpRequest): Observable<UserResponse> {
+    return this.httpClient.post<UserResponse>(this.url + 'signup', singUpRequest)
   }
 
-  public getToken(): string {
-    return this.token$.token;
-  }
-
-  public isLoggedIn(): boolean {
-    return this.isLoggedIn$;
-  }
-
-  private setLoggedIn(isLoggedIn: boolean): void {
-    this.isLoggedIn$ = isLoggedIn;
-  }
-
-  public signInUser(user: UserRequest): Observable<void> {
-    return this.http.post<Token>(this.url.url + '/signin', user)
-      .pipe(
-        map((value: Token) => {
-            this.setLoggedIn(true)
-            return this.setToken(value.token)
-          }
-        )
-      )
+  getUserToken(singInRequest: SingInRequest): Observable<string> {
+    return this.httpClient.post<string>(this.url + 'signin', singInRequest);
   }
 
   public logOut(): void {
-    const emptyToken: string = '';
-    this.setToken(emptyToken);
-    this.setLoggedIn(false);
+    this.token = '';
+    this.isLoggedIn = false;
+  }
+
+  public get token(): string {
+    return this._token;
+  }
+
+  public set token(value: string) {
+    this._token = value;
+  }
+
+  public get isLoggedIn(): boolean {
+    return this._isLoggedIn;
+  }
+
+  public set isLoggedIn(value: boolean) {
+    this._isLoggedIn = value;
+  }
+
+  public get userId(): string {
+    return this._userId;
+  }
+
+  public set userId(value: string) {
+    this._userId = value;
   }
 }

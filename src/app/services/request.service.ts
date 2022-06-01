@@ -1,23 +1,18 @@
 import {AuthService} from './auth.service';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {catchError, throwError} from 'rxjs';
-import {Url} from '../models/url';
 
 @Injectable()
 export class RequestService {
 
-  readonly url: Url = new Url();
+  private readonly url: string = 'http://localhost:8010/proxy';
 
-  constructor(
-    private request: HttpClient,
-    private auth: AuthService
-  ) {
+  constructor(private httpClient: HttpClient, private authService: AuthService) {
   }
 
   public getRequest(path: string) {
-    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.get<any>(this.url.url + path, {headers: header})
+    return this.httpClient.get<any>(this.url + path, {headers: this.getHeaders()})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)
@@ -27,8 +22,7 @@ export class RequestService {
   }
 
   public postRequest(path: string, body: any) {
-    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.post<any>(this.url.url + path, body, {headers: header})
+    return this.httpClient.post<any>(this.url + path, body, {headers: this.getHeaders()})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)
@@ -38,8 +32,7 @@ export class RequestService {
   }
 
   public putRequest(path: string, body: any) {
-    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.put<any>(this.url.url + path, body, {headers: header})
+    return this.httpClient.put<any>(this.url + path, body, {headers: this.getHeaders()})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)
@@ -49,13 +42,16 @@ export class RequestService {
   }
 
   public deleteRequest(path: string) {
-    const header = {'Authorization': 'Bearer ' + this.auth.getToken()}
-    return this.request.delete<any>(this.url.url + path, {headers: header})
+    return this.httpClient.delete<any>(this.url + path, {headers: this.getHeaders()})
       .pipe(
         catchError((error: HttpErrorResponse) => {
           console.log('Error: ' + error.status + ' ' + error.statusText)
           return throwError(error)
         })
       )
+  }
+
+  private getHeaders(): HttpHeaders {
+    return new HttpHeaders({'Authorization': 'Bearer ' + this.authService.token});
   }
 }
