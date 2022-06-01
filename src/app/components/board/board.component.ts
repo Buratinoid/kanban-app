@@ -1,3 +1,4 @@
+import { DeleteConfirmComponent } from './../../modals/delete-confirm/delete-confirm.component';
 import { ColumnRequest } from 'src/app/models/column-request';
 import { ColumnUpdateComponent } from './../../modals/column-update/column-update.component';
 import {ColumnAddComponent} from '../../modals/column-add/column-add.component';
@@ -27,7 +28,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private boardService: BoardService,
-    private newColumnDialog: MatDialog,
+    private matDialog: MatDialog,
     private columnService: ColumnService
   ) {
   }
@@ -95,14 +96,14 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   newColumnModal(): void {
-    const newColumnDialogConfig = new MatDialogConfig();
+    const matDialogConfig = new MatDialogConfig();
 
-    newColumnDialogConfig.disableClose = true;
-    newColumnDialogConfig.autoFocus = false;
+    matDialogConfig.disableClose = true;
+    matDialogConfig.autoFocus = false;
 
-    const newColumnDialogRef = this.newColumnDialog.open(ColumnAddComponent, newColumnDialogConfig)
+    const matDialogRef = this.matDialog.open(ColumnAddComponent, matDialogConfig)
 
-    newColumnDialogRef.afterClosed().subscribe(
+    matDialogRef.afterClosed().subscribe(
       (column: ColumnRequest) => {
         if (column !== undefined) {
           this.createColumn(column)
@@ -119,12 +120,29 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     updateColumnDialogConfig.data = column
 
-    const updateColumnDialogRef = this.newColumnDialog.open(ColumnUpdateComponent, updateColumnDialogConfig)
+    const updateColumnDialogRef = this.matDialog.open(ColumnUpdateComponent, updateColumnDialogConfig)
   
     updateColumnDialogRef.afterClosed().subscribe(
       (column: ColumnRequest) => {
         if(column !== undefined) {
           this.updateColumn(columnId, column)
+        }
+      }
+    )
+  }
+
+  deleteColumnModal(columnId: string): void {
+    const deleteColumnDialogConfig = new MatDialogConfig();
+
+    deleteColumnDialogConfig.disableClose = true;
+    deleteColumnDialogConfig.autoFocus = false;
+
+    const deleteColumnDialogRef = this.matDialog.open(DeleteConfirmComponent, deleteColumnDialogConfig)
+
+    deleteColumnDialogRef.afterClosed().subscribe(
+      (confirm: boolean) => {
+        if (confirm === true) {
+          this.deleteColumn(columnId)
         }
       }
     )

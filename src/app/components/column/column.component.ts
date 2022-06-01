@@ -1,3 +1,4 @@
+import { DeleteConfirmComponent } from './../../modals/delete-confirm/delete-confirm.component';
 import { TaskUpdateComponent } from './../../modals/task-update/task-update.component';
 import { TaskAddComponent } from './../../modals/task-add/task-add.component';
 import { Subscription, Subject, takeUntil } from 'rxjs';
@@ -31,7 +32,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   constructor(
     private taskService: TaskService,
-    private newTaskDialog: MatDialog
+    private matDialog: MatDialog
   ) {
   }
 
@@ -89,14 +90,14 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   newTaskModal(): void {
-    const newTaskDialogConfig = new MatDialogConfig();
+    const matDialogConfig = new MatDialogConfig();
 
-    newTaskDialogConfig.disableClose = true;
-    newTaskDialogConfig.autoFocus = false;
+    matDialogConfig.disableClose = true;
+    matDialogConfig.autoFocus = false;
 
-    const newTaskDialogRef = this.newTaskDialog.open(TaskAddComponent, newTaskDialogConfig)
+    const matDialogRef = this.matDialog.open(TaskAddComponent, matDialogConfig)
 
-    newTaskDialogRef.afterClosed().subscribe(
+    matDialogRef.afterClosed().subscribe(
       (task: TaskRequest) => {
         if (task !== undefined) {
           this.createTask(task)
@@ -113,7 +114,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
     updateTaskDialogConfig.data = task
 
-    const updateTaskDialogRef = this.newTaskDialog.open(TaskUpdateComponent, updateTaskDialogConfig)
+    const updateTaskDialogRef = this.matDialog.open(TaskUpdateComponent, updateTaskDialogConfig)
 
     updateTaskDialogRef.afterClosed().subscribe(
       (task: TaskRequest) => {
@@ -123,6 +124,23 @@ export class ColumnComponent implements OnInit, OnDestroy {
             task.columnId = this.column.id
           
           this.updateTask(taskId, task)
+        }
+      }
+    )
+  }
+
+  deleteTaskModal(taskId: string): void {
+    const deleteColumnDialogConfig = new MatDialogConfig();
+
+    deleteColumnDialogConfig.disableClose = true;
+    deleteColumnDialogConfig.autoFocus = false;
+
+    const deleteColumnDialogRef = this.matDialog.open(DeleteConfirmComponent, deleteColumnDialogConfig)
+
+    deleteColumnDialogRef.afterClosed().subscribe(
+      (confirm: boolean) => {
+        if (confirm === true) {
+          this.deleteTask(taskId)
         }
       }
     )

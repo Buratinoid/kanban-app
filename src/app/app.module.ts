@@ -23,6 +23,7 @@ import {ColumnAddComponent} from './modals/column-add/column-add.component';
 import { ColumnUpdateComponent } from './modals/column-update/column-update.component';
 import { TaskAddComponent } from './modals/task-add/task-add.component';
 import { TaskUpdateComponent } from './modals/task-update/task-update.component';
+import { DeleteConfirmComponent } from './modals/delete-confirm/delete-confirm.component';
 
 import {RequestService} from './services/request.service';
 import {BoardService} from './services/board.service';
@@ -55,7 +56,8 @@ import {MatButtonModule} from '@angular/material/button';
     ColumnAddComponent,
     ColumnUpdateComponent,
     TaskAddComponent,
-    TaskUpdateComponent
+    TaskUpdateComponent,
+    DeleteConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -86,7 +88,8 @@ import {MatButtonModule} from '@angular/material/button';
     ColumnAddComponent,
     ColumnUpdateComponent,
     TaskAddComponent,
-    TaskUpdateComponent
+    TaskUpdateComponent,
+    DeleteConfirmComponent
   ]
 })
 export class AppModule {

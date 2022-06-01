@@ -4,7 +4,7 @@
   <div *ngFor="let task of tasks">
     <app-task
       [task]="task"></app-task>
-      <button (click)="deleteTask(task.id)">DELETE TASK</button>
       <button (click)="updateTaskModal(task.id, task)">EDIT TASK</button>
+      <button (click)="deleteTaskModal(task.id)">DELETE TASK</button>
   </div>
 </div>
