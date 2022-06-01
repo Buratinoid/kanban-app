@@ -38,8 +38,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
           take(1)
         )
         .subscribe(
-          (token: string) => {
-            this.authService.token = token;
+          (token: any) => {
+            this.authService.token = token.token;
             this.authService.isLoggedIn = true;
             this.authorizationStatus = new AuthorizationStatus(true);
             this.router.navigate(['kanban'])
