@@ -7,35 +7,35 @@ import {RequestService} from './request.service';
 @Injectable()
 export class BoardService {
 
-  constructor(private http: RequestService) {
+  constructor(private requestService: RequestService) {
   }
 
   public getAllBoards(): Observable<BoardResponse[]> {
-    return this.http.getRequest('/boards');
+    return this.requestService.getRequest('/boards');
   }
 
   public createBoard(
     board: BoardRequest): Observable<BoardResponse> {
 
-    return this.http.postRequest('/boards', board)
+    return this.requestService.postRequest('/boards', board)
   }
 
   public getBoard(
     boardId: string): Observable<BoardResponse> {
 
-    return this.http.getRequest('/boards/' + boardId)
+    return this.requestService.getRequest('/boards/' + boardId)
   }
 
   public deleteBoard(
     boardId: string): Observable<void> {
 
-    return this.http.deleteRequest('/boards/' + boardId)
+    return this.requestService.deleteRequest('/boards/' + boardId)
   }
 
   public updateBoard(
     boardId: string, 
     board: BoardRequest): Observable<BoardResponse> {
       
-    return this.http.putRequest('/boards/' + boardId, board)
+    return this.requestService.putRequest('/boards/' + boardId, board)
   }
 }

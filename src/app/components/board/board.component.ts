@@ -26,9 +26,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private boardHttp: BoardService,
+    private boardService: BoardService,
     private newColumnDialog: MatDialog,
-    private columnHttp: ColumnService
+    private columnService: ColumnService
   ) {
   }
 
@@ -37,7 +37,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.boardNotifier),
         map((params: Params) => params["id"]),
-        switchMap(id => this.boardHttp.getBoard(id))
+        switchMap(id => this.boardService.getBoard(id))
       )
       .subscribe((board: BoardResponse) => {
         this.board = board;
@@ -52,7 +52,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   getAllColumns(): void {
-    this.boardSubscription = this.columnHttp
+    this.boardSubscription = this.columnService
       .getAllColumns(this.board.id)
       .pipe(
         takeUntil(this.boardNotifier)
@@ -61,7 +61,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   createColumn(column: ColumnRequest): void {
-    this.boardSubscription = this.columnHttp
+    this.boardSubscription = this.columnService
     .createColumn(this.board.id, column)
     .pipe(
       takeUntil(this.boardNotifier)
@@ -72,7 +72,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   deleteColumn(columnId: string): void {
-    this.boardSubscription = this.columnHttp
+    this.boardSubscription = this.columnService
     .deleteColumn(this.board.id, columnId)
     .pipe(
       takeUntil(this.boardNotifier)
@@ -84,7 +84,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   updateColumn(columnId: string, column: ColumnRequest): void {
-    this.boardSubscription = this.columnHttp
+    this.boardSubscription = this.columnService
     .updateColumn(this.board.id, columnId, column)
     .pipe(
       takeUntil(this.boardNotifier)

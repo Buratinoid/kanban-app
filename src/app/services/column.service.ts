@@ -7,34 +7,34 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class ColumnService {
 
-  constructor(private http: RequestService) {
+  constructor(private requestService: RequestService) {
   }
 
   public getAllColumns(
     boardId: string): Observable<ColumnResponse[]> {
       
-    return this.http.getRequest('/boards/' + boardId + '/columns')
+    return this.requestService.getRequest('/boards/' + boardId + '/columns')
   }
 
   public createColumn(
     boardId: string, 
     column: ColumnRequest): Observable<ColumnResponse> {
 
-    return this.http.postRequest('/boards/' + boardId + '/columns', column)
+    return this.requestService.postRequest('/boards/' + boardId + '/columns', column)
   }
 
   public getColumn(
     boardId: string, 
     columnId: string): Observable<ColumnResponse> {
 
-    return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId)
+    return this.requestService.getRequest('/boards/' + boardId + '/columns/' + columnId)
   }
 
   public deleteColumn(
     boardId: string, 
     columnId: string): Observable<void> {
 
-    return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId)
+    return this.requestService.deleteRequest('/boards/' + boardId + '/columns/' + columnId)
   }
 
   public updateColumn(
@@ -42,6 +42,6 @@ export class ColumnService {
     columnId: string, 
     column: ColumnRequest): Observable<ColumnResponse> {
 
-    return this.http.putRequest('/boards/' + boardId + '/columns/' + columnId, column)
+    return this.requestService.putRequest('/boards/' + boardId + '/columns/' + columnId, column)
   }
 }

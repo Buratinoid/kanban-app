@@ -30,7 +30,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   columnNotifier: Subject<void> = new Subject();
 
   constructor(
-    private taskHttp: TaskService,
+    private taskService: TaskService,
     private newTaskDialog: MatDialog
   ) {
   }
@@ -46,7 +46,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   getAllTasks(): void {
-    this.columnSubscription = this.taskHttp
+    this.columnSubscription = this.taskService
     .getAllTasks(this.board.id, this.column.id)
     .pipe(
       takeUntil(this.columnNotifier)
@@ -55,7 +55,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   createTask(task: TaskRequest): void {
-    this.columnSubscription = this.taskHttp
+    this.columnSubscription = this.taskService
     .createTask(this.board.id, this.column.id, task)
     .pipe(
       takeUntil(this.columnNotifier)
@@ -66,7 +66,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   deleteTask(taskId: string): void {
-    this.columnSubscription = this.taskHttp
+    this.columnSubscription = this.taskService
     .deleteTask(this.board.id, this.column.id, taskId)
     .pipe(
       takeUntil(this.columnNotifier)
@@ -78,7 +78,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   updateTask(taskId: string, task: TaskRequest): void {
-    this.columnSubscription = this.taskHttp
+    this.columnSubscription = this.taskService
     .updateTask(this.board.id, this.column.id, taskId, task)
     .pipe(
       takeUntil(this.columnNotifier)

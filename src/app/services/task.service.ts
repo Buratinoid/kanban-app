@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 @Injectable()
 export class TaskService {
 
-  constructor(private http: RequestService) {
+  constructor(private requestService: RequestService) {
   }
 
   public getAllTasks(
@@ -15,7 +15,7 @@ export class TaskService {
     columnId: string
     ): Observable<TaskResponse[]> {
 
-    return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks')
+    return this.requestService.getRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks')
   }
 
   public createTask(
@@ -23,7 +23,7 @@ export class TaskService {
     columnId: string, 
     task: TaskRequest): Observable<TaskRequest> {
 
-    return this.http.postRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks', task)
+    return this.requestService.postRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks', task)
   }
 
   public getTask(
@@ -31,7 +31,7 @@ export class TaskService {
     columnId: string, 
     taskId: string): Observable<TaskResponse> {
       
-    return this.http.getRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
+    return this.requestService.getRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
   }
 
   public deleteTask(
@@ -39,7 +39,7 @@ export class TaskService {
     columnId: string, 
     taskId: string): Observable<void> {
 
-    return this.http.deleteRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
+    return this.requestService.deleteRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId)
   }
 
   public updateTask(
@@ -48,6 +48,6 @@ export class TaskService {
     taskId: string, 
     task: TaskRequest): Observable<TaskResponse> {
       
-    return this.http.putRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId, task)
+    return this.requestService.putRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId, task)
   }
 }

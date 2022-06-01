@@ -17,11 +17,11 @@ export class UsersComponent implements OnInit, OnDestroy {
   usersNotifier: Subject<void> = new Subject();
 
   constructor(
-    private userHttp: UserService
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
-    this.usersSubscription = this.userHttp
+    this.usersSubscription = this.userService
     .getAllUsers()
     .pipe(
       takeUntil(this.usersNotifier)

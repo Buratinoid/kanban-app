@@ -23,7 +23,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
   constructor(
     private newBoardDialog: MatDialog,
-    private boardHttp: BoardService) {
+    private boardService: BoardService) {
   }
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   getAllBoards(): void {
-    this.kanbanSubscription = this.boardHttp
+    this.kanbanSubscription = this.boardService
       .getAllBoards()
       .pipe(
         takeUntil(this.kanbanNotifier)
@@ -46,7 +46,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   createBoard(board: BoardRequest): void {
-    this.kanbanSubscription = this.boardHttp
+    this.kanbanSubscription = this.boardService
     .createBoard(board)
     .pipe(
       takeUntil(this.kanbanNotifier)
@@ -57,7 +57,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   deleteBoard(boardId: string): void {
-    this.kanbanSubscription = this.boardHttp
+    this.kanbanSubscription = this.boardService
       .deleteBoard(boardId)
       .pipe(
         takeUntil(this.kanbanNotifier)
@@ -69,7 +69,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   updateBoard(boardId: string, board: BoardRequest): void {
-    this.kanbanSubscription = this.boardHttp
+    this.kanbanSubscription = this.boardService
       .updateBoard(boardId, board)
       .pipe(
         takeUntil(this.kanbanNotifier)

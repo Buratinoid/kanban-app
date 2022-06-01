@@ -11,7 +11,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private http: AuthService
+    private authService: AuthService
   ) {
   }
 
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut(): void {
-    this.http.logOut()
+    this.authService.logOut()
     this.router.navigate(['signin'])
   }
 }
