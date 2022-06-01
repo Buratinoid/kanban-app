@@ -1,3 +1,4 @@
+import { AuthorizationToken } from './../../models/authorization-token';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
@@ -38,8 +39,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
           take(1)
         )
         .subscribe(
-          (token: any) => {
-            this.authService.token = token.token;
+          (authorizationToken: AuthorizationToken) => {
+            this.authService.token = authorizationToken.token;
             this.authService.isLoggedIn = true;
             this.authorizationStatus = new AuthorizationStatus(true);
             this.router.navigate(['kanban'])

@@ -1,3 +1,4 @@
+import { AuthorizationToken } from './../models/authorization-token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SingInRequest} from '../models/sing-in-request';
@@ -10,7 +11,9 @@ export class AuthService {
 
   private readonly url: string = 'http://localhost:8010/proxy/';
 
-  private _token = '';
+  private _authorizationToken: AuthorizationToken = {
+    token: ''
+  };
   private _isLoggedIn = false;
   private _userId = '';
 
@@ -21,8 +24,8 @@ export class AuthService {
     return this.httpClient.post<UserResponse>(this.url + 'signup', singUpRequest)
   }
 
-  getUserToken(singInRequest: SingInRequest): Observable<string> {
-    return this.httpClient.post<string>(this.url + 'signin', singInRequest);
+  getUserToken(singInRequest: SingInRequest): Observable<AuthorizationToken> {
+    return this.httpClient.post<AuthorizationToken>(this.url + 'signin', singInRequest);
   }
 
   public logOut(): void {
@@ -31,11 +34,11 @@ export class AuthService {
   }
 
   public get token(): string {
-    return this._token;
+    return this._authorizationToken.token;
   }
 
   public set token(value: string) {
-    this._token = value;
+    this._authorizationToken.token = value;
   }
 
   public get isLoggedIn(): boolean {
