@@ -5,7 +5,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {SingInRequest} from '../../models/sing-in-request';
 import {AuthorizationStatus} from "../../models/authorization-status";
-import {take} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Subject, Subscription, takeUntil} from 'rxjs';
 
@@ -42,7 +41,6 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         new SingInRequest(this.authorizationForm.value.login, this.authorizationForm.value.password);
       this.authService.getUserToken(singInRequest)
         .pipe(
-          take(1),
           takeUntil(this.authorizationNotifier)
         )
         .subscribe(
