@@ -2,42 +2,48 @@
   <div>
     <a  
       [routerLink]="['']" 
-      i18n="Home button  in navbar | @@navBarHomeButton"
-      >Домой</a>
+      i18n="'Home' button in navigation bar | 
+      @@header_HomeButton"
+      >Home</a>
   </div>
   <div>
     <a  
       [routerLink]="['kanban']" 
-      i18n="Kanban button in navbar | @@navBarKanbanButton"
+      i18n="'Kanban' button in navigation bar | 
+      @@header_KanbanButton"
       *ngIf="isLoggedIn" 
-      >Доска канбан</a>
+      >Kanban</a>
   </div>
   <div>
     <a  
       [routerLink]="['signin']" 
-      i18n="SignIn button in navBar | @@navBarSignInButton"
+      i18n="'SignIn' button in navigation bar | 
+      @@header_SignInButton"
       *ngIf="!isLoggedIn" 
-      >Войти</a>
+      >Sign In</a>
   </div>
   <div>
     <a  
       [routerLink]="['signup']" 
-      i18n="SignUp button in navBar | @@navBarSignUpButton"
+      i18n="'SignUp' button in navigation bar | 
+      @@header_SignUpButton"
       *ngIf="!isLoggedIn" 
-      >Регистрация</a>
+      >Sign Up</a>
   </div>
   <div>
     <a  
       [routerLink]="['profile']" 
-      i18n="Edit profile button  in navbar | @@navBarEditProfileButton"
+      i18n="'Edit profile' button in navigation bar | 
+      @@header_EditProfileButton"
       *ngIf="isLoggedIn" 
       >Edit profile</a>
   </div>
   <div>
     <button 
       (click)="logOut()" 
-      i18n="LogOut button in navBar | @@navBarLogOutButton"
+      i18n="'Log Out' button in navigation bar | 
+      @@header_LogOutButton"
       *ngIf="isLoggedIn" 
-      >Выйти</button>
+      >Log Out</button>
   </div>
 </header>

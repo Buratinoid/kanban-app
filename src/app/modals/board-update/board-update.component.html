@@ -1,20 +1,42 @@
-<h2 mat-dialog-title>Редактировать доску</h2>
+<h2 
+  mat-dialog-title
+  i18n="'Edit board' header in edit board modal | 
+  @@boardUpdate_EditBoardTitle"
+  >Edit board</h2>
 
 <mat-dialog-content [formGroup]="updateBoardForm">
   <mat-form-field>
-    <mat-label>Название доски</mat-label>
-    <input matInput
-           formControlName="title">
+    <mat-label 
+      i18n="'Board name' field name in edit board modal | 
+      @@boardUpdate_BoardNameInput"
+      >Board name</mat-label>
+    <input 
+      matInput
+      formControlName="title">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <mat-label>Описание доски</mat-label>
-    <input matInput
-           formControlName="description">
+    <mat-label
+      i18n="'Board description' field name in edit board modal | 
+      @@boardUpdate_BoardDescriptionInput"
+      >Board description</mat-label>
+    <input 
+      matInput
+      formControlName="description">
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button (click)="close()">Отмена</button>
-  <button mat-raised-button (click)="updateBoard()">Сохранить</button>
+  <button 
+    mat-raised-button 
+    (click)="close()"
+    i18n="'Cancel' button in edit board modal | 
+    @@boardUpdate_CancelButton"
+    >Cancel</button>
+  <button 
+    mat-raised-button 
+    (click)="updateBoard()"
+    i18n="'Save' button in edit board modal | 
+    @@boardUpdate_SaveButton"
+    >Save</button>
 </mat-dialog-actions>

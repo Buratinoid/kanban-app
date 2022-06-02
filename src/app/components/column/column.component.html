@@ -1,10 +1,22 @@
 <div>
   Column: {{columnResponse.title}} [Order: {{columnResponse.order}}]
-  <button (click)="newTaskModal()">ADD TASK</button>
+  <button 
+    (click)="newTaskModal()"
+    i18n="'Add task' button in column | 
+    @@column_AddTaskButton"
+    >Add task</button>
   <div *ngFor="let taskResponse of tasksResponse">
     <app-task
       [taskResponse]="taskResponse"></app-task>
-    <button (click)="updateTaskModal(taskResponse.id, taskResponse)">EDIT TASK</button>
-    <button (click)="deleteTaskModal(taskResponse.id)">DELETE TASK</button>
+    <button 
+      (click)="updateTaskModal(taskResponse.id, taskResponse)"
+      i18n="'Edit task' button in column | 
+      @@column_EditTaskButton"
+      >Edit task</button>
+    <button 
+      (click)="deleteTaskModal(taskResponse.id)"
+      i18n="'Delete task' button in column | 
+      @@column_DeleteTaskButton"
+    >Delete task</button>
   </div>
 </div>

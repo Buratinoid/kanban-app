@@ -1,12 +1,24 @@
 <div>
   Board: {{boardResponse.title}}<br>
   Description: {{boardResponse.description}}<br>
-  <button (click)="newColumnModal()">ADD COLUMN</button>
+  <button 
+    (click)="newColumnModal()"
+    i18n="'Add column' button in board | 
+    @@board_AddColumnButton"
+    >Add column</button>
   <div *ngFor="let columnResponse of columnsResponse">
     <app-column
       [columnResponse]="columnResponse"
       [boardResponse]="boardResponse"></app-column>
-    <button (click)="updateColumnModal(columnResponse.id, columnResponse)">EDIT COLUMN</button>
-    <button (click)="deleteColumnModal(columnResponse.id)">DELETE COLUMN</button>
+    <button 
+      (click)="updateColumnModal(columnResponse.id, columnResponse)"
+      i18n="'Update column' button in board | 
+      @@board_UpdateColumnButton"
+      >EDIT COLUMN</button>
+    <button 
+      (click)="deleteColumnModal(columnResponse.id)"
+      i18n="'Delete column' button in board | 
+      @@board_DeleteColumnButton"
+      >Delete column</button>
   </div>
 </div>

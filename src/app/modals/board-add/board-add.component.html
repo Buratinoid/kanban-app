@@ -1,20 +1,44 @@
-<h2 mat-dialog-title>Создать доску</h2>
+<h2 
+  mat-dialog-title
+  i18n="'Add board' header in add board modal | 
+  @@boardAdd_AddBoardTitle"
+  >Add board</h2>
 
 <mat-dialog-content [formGroup]="newBoardForm">
   <mat-form-field>
-    <input matInput
-           placeholder="Название доски"
-           formControlName="title">
+    <mat-label
+      i18n="'Board name' field in add board modal | 
+      @@boardAdd_BoardNameLabel"
+    >Board name</mat-label>
+    <input 
+      matInput
+      placeholder="Board name"
+      formControlName="title">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput
-           placeholder="Описание доски"
-           formControlName="description">
+    <mat-label
+      i18n="'Board description' field in add board modal | 
+      @@boardAdd_BoardDescriptionLabel"
+    >Board description</mat-label>
+    <input 
+      matInput
+      placeholder="Board name"
+      formControlName="description">
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-raised-button (click)="close()">Отмена</button>
-  <button mat-raised-button (click)="newBoard()">Создать</button>
+  <button 
+    mat-raised-button 
+    (click)="close()"
+    i18n="'Cancel' button in add board modal | 
+    @@boardAdd_CancelButton"
+    >Cancel</button>
+  <button 
+    mat-raised-button 
+    (click)="newBoard()"
+    i18n="'Add' button in add board modal | 
+    @@boardAdd_AddButton"
+    >Add</button>
 </mat-dialog-actions>

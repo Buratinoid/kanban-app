@@ -1,14 +1,24 @@
 <form [formGroup]="authorizationForm" (submit)="signIn()">
-  <label i18n="Login field name in signin page | @@signInLoginField">
-    <p>Логин:</p>
+  <label>
+    <p
+    i18n="'Login' field name in authorization | 
+    @@authorization_LoginInput"
+    >Login:</p>
     <input formControlName="login">
   </label>
-  <label i18n="Password field name in signin page | @@signInPasswordField">
-    <p>Пароль:</p>
+  <label>
+    <p
+    i18n="'Password' field name in authorization | 
+    @@authorization_PasswordInput"
+    >Password:</p>
     <input formControlName="password">
   </label>
   <p>
-    <button type="submit" i18n="SignIn button in signin page | @@signInButton">Войти</button>
+    <button 
+    type="submit" 
+    i18n="'SignIn' button in authorization | 
+    @@authorization_SignInButton"
+    >Sign In</button>
   </p>
   <div>
     Code: {{authorizationStatus.errorCode}}<br>
