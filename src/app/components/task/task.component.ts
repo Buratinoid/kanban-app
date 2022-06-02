@@ -11,19 +11,19 @@ import { TaskResponse } from '../../models/task-response';
 export class TaskComponent implements OnInit, OnDestroy {
 
   @Input()
-  task: TaskResponse = new TaskResponse();
+  taskResponse: TaskResponse = new TaskResponse();
 
-  users: UserResponse[] = [];
+  usersResponse: UserResponse[] = [];
 
-  user: any; //??? Ошибка с типами из-за .find (говорит про | undefined)
-  // user: UserResponse = new UserResponse(); 
+  userResponse: any; //??? Ошибка с типами из-за .find (говорит про | undefined)
+  // userResponse: UserResponse = new UserResponse(); 
 
   constructor(
     private userService: UserService
   ) { }
 
   ngOnInit(): void {
-    this.users = this.userService.users
+    this.usersResponse = this.userService.users
     this.getUser()
   }
 
@@ -31,6 +31,6 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   getUser() {
-    this.user = this.userService.users.find((user: UserResponse) => user.id === this.task.userId)
+    this.userResponse = this.userService.users.find((userResponse: UserResponse) => userResponse.id === this.taskResponse.userId)
   }
 }

@@ -15,11 +15,11 @@ export class ColumnUpdateComponent implements OnInit {
 
   constructor(
     private updateColumnDialogRef: MatDialogRef<ColumnUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) data: ColumnResponse
+    @Inject(MAT_DIALOG_DATA) columnResponse: ColumnResponse
   ) { 
     this.updateColumnForm = new FormGroup({
-      title: new FormControl(data.title, [Validators.required]),
-      order: new FormControl(data.order, [Validators.pattern(/[0-9]/)])
+      title: new FormControl(columnResponse.title, [Validators.required]),
+      order: new FormControl(columnResponse.order, [Validators.pattern(/[0-9]/)])
     })
   }
 
@@ -29,11 +29,11 @@ export class ColumnUpdateComponent implements OnInit {
   updateColumn(): void {
     if(this.updateColumnForm.valid) {
       const value: ColumnRequest = this.updateColumnForm.value
-      const column: ColumnRequest = {
+      const columnRequest: ColumnRequest = {
         title: value.title,
         order: Number(value.order)
       }
-      this.updateColumnDialogRef.close(column)
+      this.updateColumnDialogRef.close(columnRequest)
     }
   }
 

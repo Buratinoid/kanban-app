@@ -27,11 +27,11 @@ export class ColumnAddComponent implements OnInit {
   newColumn(): void {
     if (this.newColumnForm.valid) {
       const value: ColumnRequest = this.newColumnForm.value
-      const column: ColumnRequest = {
+      const columnRequest: ColumnRequest = {
         title: value.title,
         order: Number(value.order)
       }
-      this.newColumnDialogRef.close(column)
+      this.newColumnDialogRef.close(columnRequest)
     }
   }
 

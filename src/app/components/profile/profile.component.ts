@@ -16,7 +16,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
-  users: UserResponse[] = [];
+  usersResponse: UserResponse[] = [];
 
   userResponse: any //??? Ошибка с типами из-за .find (говорит про | undefined)
   // userResponse: UserResponse = new UserResponse(); 
@@ -46,9 +46,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     .getAllUsers()
     .pipe(
       takeUntil(this.userNotifier),
-      map((users: UserResponse[]) => {
-        this.users = users
-        this.userResponse = this.users.find((user: UserResponse) => user.login === userLogin)
+      map((usersResponse: UserResponse[]) => {
+        this.usersResponse = usersResponse
+        this.userResponse = this.usersResponse.find((userResponse: UserResponse) => userResponse.login === userLogin)
         this.userForm.setValue({
           name: this.userResponse.name,
           login: this.userResponse.login,
@@ -111,8 +111,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const deleteUserDialogRef = this.matDialog.open(DeleteConfirmComponent, deleteUserDialogConfig)
 
     deleteUserDialogRef.afterClosed().subscribe(
-      (confirm: boolean) => {
-        if (confirm === true) {
+      (deleteConfirm: boolean) => {
+        if (deleteConfirm === true) {
           this.deleteUser(this.userResponse.id)
         }
       }

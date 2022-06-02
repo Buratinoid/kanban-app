@@ -18,13 +18,13 @@ import { TaskRequest } from 'src/app/models/task-request';
 export class ColumnComponent implements OnInit, OnDestroy {
 
   @Input()
-  column: ColumnResponse = new ColumnResponse();
+  columnResponse: ColumnResponse = new ColumnResponse();
 
   @Input()
-  board: BoardResponse = new BoardResponse();
+  boardResponse: BoardResponse = new BoardResponse();
 
-  tasks: TaskResponse[] = [];
-  task: TaskResponse = new TaskResponse();
+  tasksResponse: TaskResponse[] = [];
+  taskResponse: TaskResponse = new TaskResponse();
 
   columnSubscription: Subscription = new Subscription;
 
@@ -37,7 +37,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.tasks = this.column.tasks;
+    this.tasksResponse = this.columnResponse.tasks;
   }
 
   ngOnDestroy(): void {
@@ -48,16 +48,16 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   getAllTasks(): void {
     this.columnSubscription = this.taskService
-    .getAllTasks(this.board.id, this.column.id)
+    .getAllTasks(this.boardResponse.id, this.columnResponse.id)
     .pipe(
       takeUntil(this.columnNotifier)
     )
-    .subscribe((tasks: TaskResponse[]) => this.tasks = tasks)
+    .subscribe((tasks: TaskResponse[]) => this.tasksResponse = tasks)
   }
 
-  createTask(task: TaskRequest): void {
+  createTask(taskRequest: TaskRequest): void {
     this.columnSubscription = this.taskService
-    .createTask(this.board.id, this.column.id, task)
+    .createTask(this.boardResponse.id, this.columnResponse.id, taskRequest)
     .pipe(
       takeUntil(this.columnNotifier)
     )
@@ -68,7 +68,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   deleteTask(taskId: string): void {
     this.columnSubscription = this.taskService
-    .deleteTask(this.board.id, this.column.id, taskId)
+    .deleteTask(this.boardResponse.id, this.columnResponse.id, taskId)
     .pipe(
       takeUntil(this.columnNotifier)
     )
@@ -78,9 +78,9 @@ export class ColumnComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateTask(taskId: string, task: TaskRequest): void {
+  updateTask(taskId: string, taskRequest: TaskRequest): void {
     this.columnSubscription = this.taskService
-    .updateTask(this.board.id, this.column.id, taskId, task)
+    .updateTask(this.boardResponse.id, this.columnResponse.id, taskId, taskRequest)
     .pipe(
       takeUntil(this.columnNotifier)
     )
@@ -90,40 +90,40 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   newTaskModal(): void {
-    const matDialogConfig = new MatDialogConfig();
+    const newTaskMatDialogConfig = new MatDialogConfig();
 
-    matDialogConfig.disableClose = true;
-    matDialogConfig.autoFocus = false;
+    newTaskMatDialogConfig.disableClose = true;
+    newTaskMatDialogConfig.autoFocus = false;
 
-    const matDialogRef = this.matDialog.open(TaskAddComponent, matDialogConfig)
+    const newTaskMatDialogRef = this.matDialog.open(TaskAddComponent, newTaskMatDialogConfig)
 
-    matDialogRef.afterClosed().subscribe(
-      (task: TaskRequest) => {
-        if (task !== undefined) {
-          this.createTask(task)
+    newTaskMatDialogRef.afterClosed().subscribe(
+      (taskRequest: TaskRequest) => {
+        if (taskRequest !== undefined) {
+          this.createTask(taskRequest)
         }
       }
     )
   }
 
-  updateTaskModal(taskId: string, task: TaskResponse): void {
+  updateTaskModal(taskId: string, taskResponse: TaskResponse): void {
     const updateTaskDialogConfig = new MatDialogConfig();
 
     updateTaskDialogConfig.disableClose = true;
     updateTaskDialogConfig.autoFocus = false;
 
-    updateTaskDialogConfig.data = task
+    updateTaskDialogConfig.data = taskResponse
 
     const updateTaskDialogRef = this.matDialog.open(TaskUpdateComponent, updateTaskDialogConfig)
 
     updateTaskDialogRef.afterClosed().subscribe(
-      (task: TaskRequest) => {
-        if (task !== undefined) {
+      (taskRequest: TaskRequest) => {
+        if (taskRequest !== undefined) {
           
-            task.boardId = this.board.id,
-            task.columnId = this.column.id
+            taskRequest.boardId = this.boardResponse.id,
+            taskRequest.columnId = this.columnResponse.id
           
-          this.updateTask(taskId, task)
+          this.updateTask(taskId, taskRequest)
         }
       }
     )
@@ -138,8 +138,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const deleteColumnDialogRef = this.matDialog.open(DeleteConfirmComponent, deleteColumnDialogConfig)
 
     deleteColumnDialogRef.afterClosed().subscribe(
-      (confirm: boolean) => {
-        if (confirm === true) {
+      (deleteConfirm: boolean) => {
+        if (deleteConfirm === true) {
           this.deleteTask(taskId)
         }
       }

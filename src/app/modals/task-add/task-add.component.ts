@@ -16,7 +16,7 @@ export class TaskAddComponent implements OnInit {
 
   taskCondition = new TaskCondition();
 
-  users: UserResponse[] = [];
+  usersResponse: UserResponse[] = [];
 
   newTaskForm: FormGroup;
 
@@ -44,21 +44,21 @@ export class TaskAddComponent implements OnInit {
       takeUntil(this.newTaskNotifier)
     )
     .subscribe(
-      (users: UserResponse[]) => this.users = users
+      (usersResponse: UserResponse[]) => this.usersResponse = usersResponse
     )
   }
 
   newTask(): void {
     if(this.newTaskForm.valid) {
       const value: TaskRequest = this.newTaskForm.value
-      const task: TaskRequest = {
+      const taskRequest: TaskRequest = {
         title: value.title,
         done: Boolean(Number(value.done)),
         order: Number(value.order),
         description: value.description,
         userId: value.userId
       }
-      this.newTaskDialogRef.close(task)
+      this.newTaskDialogRef.close(taskRequest)
     }
   }
 

@@ -1,12 +1,12 @@
 <div>
-  Board: {{board?.title}}<br>
-  Description: {{board?.description}}<br>
+  Board: {{boardResponse.title}}<br>
+  Description: {{boardResponse.description}}<br>
   <button (click)="newColumnModal()">ADD COLUMN</button>
-  <div *ngFor="let column of columns">
+  <div *ngFor="let columnResponse of columnsResponse">
     <app-column
-      [column]="column"
-      [board]="board"></app-column>
-      <button (click)="updateColumnModal(column.id, column)">EDIT COLUMN</button>
-      <button (click)="deleteColumnModal(column.id)">DELETE COLUMN</button>
+      [columnResponse]="columnResponse"
+      [boardResponse]="boardResponse"></app-column>
+      <button (click)="updateColumnModal(columnResponse.id, columnResponse)">EDIT COLUMN</button>
+      <button (click)="deleteColumnModal(columnResponse.id)">DELETE COLUMN</button>
   </div>
 </div>

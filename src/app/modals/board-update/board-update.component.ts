@@ -15,11 +15,11 @@ export class BoardUpdateComponent implements OnInit {
 
   constructor(
     private updateBoardDialogRef: MatDialogRef<BoardUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) data: BoardResponse
+    @Inject(MAT_DIALOG_DATA) boardResponse: BoardResponse
   ) {
     this.updateBoardForm = new FormGroup({
-      title: new FormControl(data.title, [Validators.required]),
-      description: new FormControl(data.description, [Validators.required])
+      title: new FormControl(boardResponse.title, [Validators.required]),
+      description: new FormControl(boardResponse.description, [Validators.required])
     })
   }
 
@@ -29,11 +29,11 @@ export class BoardUpdateComponent implements OnInit {
   updateBoard(): void {
     if (this.updateBoardForm.valid) {
       const value: BoardRequest = this.updateBoardForm.value
-      const board: BoardRequest = {
+      const boardRequest: BoardRequest = {
         title: value.title,
         description: value.description
       }
-      this.updateBoardDialogRef.close(board)
+      this.updateBoardDialogRef.close(boardRequest)
     }
   }
 

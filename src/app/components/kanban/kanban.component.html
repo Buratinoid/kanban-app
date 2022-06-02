@@ -1,7 +1,7 @@
 <button mat-raised-button (click)="newBoardModal()">ADD BOARD</button>
 
-<div *ngFor="let board of boards">
-  <a [routerLink]="['/', 'board', board.id]">{{board.title}} - {{board.description}}</a>
-  <button (click)="updateBoardModal(board.id, board)">EDIT BOARD</button>
-  <button (click)="deleteBoardModal(board.id)">DELETE BOARD</button>
+<div *ngFor="let boardResponse of boardsResponse">
+  <a [routerLink]="['/', 'board', boardResponse.id]">{{boardResponse.title}} - {{boardResponse.description}}</a>
+  <button (click)="updateBoardModal(boardResponse.id, boardResponse)">EDIT BOARD</button>
+  <button (click)="deleteBoardModal(boardResponse.id)">DELETE BOARD</button>
 </div>

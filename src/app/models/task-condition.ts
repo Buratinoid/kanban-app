@@ -1,4 +1,4 @@
 export class TaskCondition {
-    true: number = 0
-    false: number = 1
+    true: number = 1
+    false: number = 0
 }

@@ -15,7 +15,7 @@ import {BoardResponse} from '../../models/board-response';
 })
 export class KanbanComponent implements OnInit, OnDestroy {
 
-  boards: BoardResponse[] = [];
+  boardsResponse: BoardResponse[] = [];
 
   kanbanSubscription: Subscription = new Subscription;
 
@@ -43,12 +43,12 @@ export class KanbanComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.kanbanNotifier)
       )
-      .subscribe((boards: BoardResponse[]) => this.boards = boards)
+      .subscribe((boardsResponse: BoardResponse[]) => this.boardsResponse = boardsResponse)
   }
 
-  createBoard(board: BoardRequest): void {
+  createBoard(boardRequest: BoardRequest): void {
     this.kanbanSubscription = this.boardService
-    .createBoard(board)
+    .createBoard(boardRequest)
     .pipe(
       takeUntil(this.kanbanNotifier)
     )
@@ -69,9 +69,9 @@ export class KanbanComponent implements OnInit, OnDestroy {
       })
   }
 
-  updateBoard(boardId: string, board: BoardRequest): void {
+  updateBoard(boardId: string, boardRequest: BoardRequest): void {
     this.kanbanSubscription = this.boardService
-      .updateBoard(boardId, board)
+      .updateBoard(boardId, boardRequest)
       .pipe(
         takeUntil(this.kanbanNotifier)
       )
@@ -81,36 +81,36 @@ export class KanbanComponent implements OnInit, OnDestroy {
   }
 
   newBoardModal(): void {
-    const matDialogConfig = new MatDialogConfig();
+    const newBoardMatDialogConfig = new MatDialogConfig();
 
-    matDialogConfig.disableClose = true;
-    matDialogConfig.autoFocus = false;
+    newBoardMatDialogConfig.disableClose = true;
+    newBoardMatDialogConfig.autoFocus = false;
 
-    const matDialogRef = this.matDialog.open(BoardAddComponent, matDialogConfig)
+    const newBoardMatDialogRef = this.matDialog.open(BoardAddComponent, newBoardMatDialogConfig)
 
-    matDialogRef.afterClosed().subscribe(
-      (board: BoardRequest) => {
-        if (board !== undefined) {
-          this.createBoard(board)
+    newBoardMatDialogRef.afterClosed().subscribe(
+      (boardRequest: BoardRequest) => {
+        if (boardRequest !== undefined) {
+          this.createBoard(boardRequest)
         }
       }
     )
   }
 
-  updateBoardModal(boardId: string, board: BoardResponse): void {
+  updateBoardModal(boardId: string, boardResponse: BoardResponse): void {
     const updateBoardDialogConfig = new MatDialogConfig();
 
     updateBoardDialogConfig.disableClose = true;
     updateBoardDialogConfig.autoFocus = false;
 
-    updateBoardDialogConfig.data = board;
+    updateBoardDialogConfig.data = boardResponse;
 
     const updateBoardDialogRef = this.matDialog.open(BoardUpdateComponent, updateBoardDialogConfig)
 
     updateBoardDialogRef.afterClosed().subscribe(
-      (board: BoardRequest) => {
-        if (board !== undefined) {
-          this.updateBoard(boardId, board)
+      (boardRequest: BoardRequest) => {
+        if (boardRequest !== undefined) {
+          this.updateBoard(boardId, boardRequest)
         }
       }
     )
@@ -125,8 +125,8 @@ export class KanbanComponent implements OnInit, OnDestroy {
     const deleteColumnDialogRef = this.matDialog.open(DeleteConfirmComponent, deleteColumnDialogConfig)
 
     deleteColumnDialogRef.afterClosed().subscribe(
-      (confirm: boolean) => {
-        if (confirm === true) {
+      (deleteConfirm: boolean) => {
+        if (deleteConfirm === true) {
           this.deleteBoard(boardId)
         }
       }

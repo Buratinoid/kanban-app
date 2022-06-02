@@ -1,10 +1,10 @@
 <div>
-  Column: {{column.title}} [Order: {{column.order}}]
+  Column: {{columnResponse.title}} [Order: {{columnResponse.order}}]
   <button (click)="newTaskModal()">ADD TASK</button>
-  <div *ngFor="let task of tasks">
+  <div *ngFor="let taskResponse of tasksResponse">
     <app-task
-      [task]="task"></app-task>
-      <button (click)="updateTaskModal(task.id, task)">EDIT TASK</button>
-      <button (click)="deleteTaskModal(task.id)">DELETE TASK</button>
+      [taskResponse]="taskResponse"></app-task>
+      <button (click)="updateTaskModal(taskResponse.id, taskResponse)">EDIT TASK</button>
+      <button (click)="deleteTaskModal(taskResponse.id)">DELETE TASK</button>
   </div>
 </div>

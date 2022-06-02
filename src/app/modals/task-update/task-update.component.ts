@@ -17,7 +17,7 @@ export class TaskUpdateComponent implements OnInit {
 
   taskCondition = new TaskCondition();
   
-  users: UserResponse[] = [];
+  usersResponse: UserResponse[] = [];
 
   updateTaskForm: FormGroup;
 
@@ -28,14 +28,14 @@ export class TaskUpdateComponent implements OnInit {
   constructor(
     private userService: UserService,
     private updateColumnDialogRef: MatDialogRef<TaskUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) data: TaskResponse
+    @Inject(MAT_DIALOG_DATA) taskResponse: TaskResponse
   ) { 
     this.updateTaskForm = new FormGroup({
-      title: new FormControl(data.title, [Validators.required]),
-      done: new FormControl(data.done, [Validators.pattern(/[0-1]/)]),
-      order: new FormControl(data.order, [Validators.required]),
-      description: new FormControl(data.description, [Validators.required]),
-      userId: new FormControl(data.userId, [Validators.required])
+      title: new FormControl(taskResponse.title, [Validators.required]),
+      done: new FormControl(taskResponse.done, [Validators.pattern(/[0-1]/)]),
+      order: new FormControl(taskResponse.order, [Validators.required]),
+      description: new FormControl(taskResponse.description, [Validators.required]),
+      userId: new FormControl(taskResponse.userId, [Validators.required])
     })
   }
 
@@ -46,21 +46,21 @@ export class TaskUpdateComponent implements OnInit {
       takeUntil(this.updateTaskNotifier)
     )
     .subscribe(
-      (users: UserResponse[]) => this.users = users
+      (usersResponse: UserResponse[]) => this.usersResponse = usersResponse
     )
   }
 
   updateTask(): void {
     if(this.updateTaskForm.valid) {
       const value: TaskRequest = this.updateTaskForm.value
-      const task: TaskRequest = {
+      const taskRequest: TaskRequest = {
         title: value.title,
         done: Boolean(Number(value.done)),
         order: Number(value.order),
         description: value.description,
         userId: value.userId
       }
-      this.updateColumnDialogRef.close(task)
+      this.updateColumnDialogRef.close(taskRequest)
     }
   }
 

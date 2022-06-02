@@ -27,11 +27,11 @@ export class BoardAddComponent implements OnInit {
   newBoard(): void {
     if (this.newBoardForm.valid) {
       const value: BoardRequest = this.newBoardForm.value;
-      const board: BoardRequest = {
+      const boardRequest: BoardRequest = {
         title: value.title,
         description: value.description
       }
-      this.newBoardDialogRef.close(board)
+      this.newBoardDialogRef.close(boardRequest)
     }
   }
 

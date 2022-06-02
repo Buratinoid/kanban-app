@@ -22,9 +22,6 @@ export class UserService {
 
   public getAllUsers(): Observable<UserResponse[]> {
     return this.requestService.getRequest('/users')
-    .pipe(
-      
-    )
   }
 
   public getUser(userId: string): Observable<UserResponse> {
