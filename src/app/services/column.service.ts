@@ -12,34 +12,34 @@ export class ColumnService {
 
   public getAllColumns(
     boardId: string): Observable<ColumnResponse[]> {
-      
+
     return this.requestService.getRequest('/boards/' + boardId + '/columns')
   }
 
   public createColumn(
-    boardId: string, 
+    boardId: string,
     column: ColumnRequest): Observable<ColumnResponse> {
 
     return this.requestService.postRequest('/boards/' + boardId + '/columns', column)
   }
 
   public getColumn(
-    boardId: string, 
+    boardId: string,
     columnId: string): Observable<ColumnResponse> {
 
     return this.requestService.getRequest('/boards/' + boardId + '/columns/' + columnId)
   }
 
   public deleteColumn(
-    boardId: string, 
+    boardId: string,
     columnId: string): Observable<void> {
 
     return this.requestService.deleteRequest('/boards/' + boardId + '/columns/' + columnId)
   }
 
   public updateColumn(
-    boardId: string, 
-    columnId: string, 
+    boardId: string,
+    columnId: string,
     column: ColumnRequest): Observable<ColumnResponse> {
 
     return this.requestService.putRequest('/boards/' + boardId + '/columns/' + columnId, column)

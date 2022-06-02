@@ -13,7 +13,7 @@ export class BoardResponse {
     description: string = '',
     columns: ColumnResponse[] = []
   ) {
-    
+
     this.id = id;
     this.title = title;
     this.description = description;

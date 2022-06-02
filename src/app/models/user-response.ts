@@ -4,10 +4,10 @@ export class UserResponse {
   login: string;
 
   constructor(
-    id: string = '', 
-    name: string = '', 
+    id: string = '',
+    name: string = '',
     login: string = ''
-    ) {
+  ) {
 
     this.id = id;
     this.name = name;

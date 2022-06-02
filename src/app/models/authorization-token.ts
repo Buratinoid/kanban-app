@@ -1,3 +1,3 @@
 export interface AuthorizationToken {
-    token: string;
+  token: string;
 }

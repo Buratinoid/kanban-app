@@ -1,4 +1,4 @@
-<form [formGroup]="registrationForm" (submit)="signUp()"> 
+<form [formGroup]="registrationForm" (submit)="signUp()">
   <label i18n="Name field in sign up page | @@signUpNameField">
     <p>Имя:</p>
     <input formControlName="name">
@@ -8,10 +8,10 @@
     <input formControlName="login">
   </label>
   <label i18n="Password field in sign up page | @@signUpPasswordField">
-    <p>Пароль:</p> 
+    <p>Пароль:</p>
     <input formControlName="password">
   </label>
-    <p>
+  <p>
     <button type="submit" i18n="SignUp button in sign up page | @@signUpButton">Регистрация</button>
-    </p>
+  </p>
 </form>

@@ -8,12 +8,12 @@ export class ColumnResponse {
   tasks: TaskResponse[];
 
   constructor(
-    id: string = '', 
-    title: string = '', 
-    order: number = 1, 
+    id: string = '',
+    title: string = '',
+    order: number = 1,
     tasks: TaskResponse[] = []
-    ) {
-      
+  ) {
+
     this.id = id
     this.title = title
     this.order = order

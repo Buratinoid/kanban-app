@@ -1,11 +1,11 @@
-import { TaskCondition } from './../../models/task-condition';
-import { UserService } from './../../services/user.service';
-import { UserResponse } from './../../models/user-response';
-import { Subscription, Subject, takeUntil } from 'rxjs';
-import { MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import { TaskRequest } from 'src/app/models/task-request';
+import {TaskCondition} from '../../models/task-condition';
+import {UserService} from '../../services/user.service';
+import {UserResponse} from '../../models/user-response';
+import {Subscription, Subject, takeUntil} from 'rxjs';
+import {MatDialogRef} from '@angular/material/dialog';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {TaskRequest} from 'src/app/models/task-request';
 
 @Component({
   selector: 'app-task-add',
@@ -27,7 +27,7 @@ export class TaskAddComponent implements OnInit {
   constructor(
     private newTaskDialogRef: MatDialogRef<TaskAddComponent>,
     private userService: UserService
-  ) { 
+  ) {
     this.newTaskForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
       done: new FormControl('', [Validators.pattern(/[0-1]/)]),
@@ -39,17 +39,17 @@ export class TaskAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.newTaskSubscription = this.userService
-    .getAllUsers()
-    .pipe(
-      takeUntil(this.newTaskNotifier)
-    )
-    .subscribe(
-      (usersResponse: UserResponse[]) => this.usersResponse = usersResponse
-    )
+      .getAllUsers()
+      .pipe(
+        takeUntil(this.newTaskNotifier)
+      )
+      .subscribe(
+        (usersResponse: UserResponse[]) => this.usersResponse = usersResponse
+      )
   }
 
   newTask(): void {
-    if(this.newTaskForm.valid) {
+    if (this.newTaskForm.valid) {
       const value: TaskRequest = this.newTaskForm.value
       const taskRequest: TaskRequest = {
         title: value.title,

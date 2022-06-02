@@ -10,7 +10,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './components/home/home.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {AuthorizationComponent} from './components/authorization/authorization.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import {ProfileComponent} from './components/profile/profile.component';
 import {HeaderComponent} from './components/header/header.component';
 import {KanbanComponent} from './components/kanban/kanban.component';
 import {BoardComponent} from './components/board/board.component';
@@ -20,10 +20,10 @@ import {TaskComponent} from './components/task/task.component';
 import {BoardAddComponent} from 'src/app/modals/board-add/board-add.component';
 import {BoardUpdateComponent} from './modals/board-update/board-update.component';
 import {ColumnAddComponent} from './modals/column-add/column-add.component';
-import { ColumnUpdateComponent } from './modals/column-update/column-update.component';
-import { TaskAddComponent } from './modals/task-add/task-add.component';
-import { TaskUpdateComponent } from './modals/task-update/task-update.component';
-import { DeleteConfirmComponent } from './modals/delete-confirm/delete-confirm.component';
+import {ColumnUpdateComponent} from './modals/column-update/column-update.component';
+import {TaskAddComponent} from './modals/task-add/task-add.component';
+import {TaskUpdateComponent} from './modals/task-update/task-update.component';
+import {DeleteConfirmComponent} from './modals/delete-confirm/delete-confirm.component';
 
 import {RequestService} from './services/request.service';
 import {BoardService} from './services/board.service';
@@ -72,7 +72,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatInputModule,
     MatButtonModule,
     MatSelectModule
-    
+
   ],
   providers: [
     RequestService,

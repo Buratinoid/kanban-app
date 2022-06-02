@@ -1,13 +1,13 @@
-import { Router } from '@angular/router';
-import { DeleteConfirmComponent } from './../../modals/delete-confirm/delete-confirm.component';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { SingUpRequest } from './../../models/sing-up-request';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from './../../services/auth.service';
-import { Subscription, Subject, takeUntil, map } from 'rxjs';
-import { UserResponse } from './../../models/user-response';
-import { UserService } from './../../services/user.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {Router} from '@angular/router';
+import {DeleteConfirmComponent} from '../../modals/delete-confirm/delete-confirm.component';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {SingUpRequest} from '../../models/sing-up-request';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {Subscription, Subject, takeUntil, map} from 'rxjs';
+import {UserResponse} from '../../models/user-response';
+import {UserService} from '../../services/user.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -19,7 +19,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   usersResponse: UserResponse[] = [];
 
   userResponse: any //??? Ошибка с типами из-за .find (говорит про | undefined)
-  // userResponse: UserResponse = new UserResponse(); 
+  // userResponse: UserResponse = new UserResponse();
 
   userForm: FormGroup;
 
@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private matDialog: MatDialog,
     private router: Router
-  ) { 
+  ) {
     this.userForm = new FormGroup({
       login: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
@@ -43,20 +43,20 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const userLogin: string = this.authService.userLogin
     this.userSubscription = this.userService
-    .getAllUsers()
-    .pipe(
-      takeUntil(this.userNotifier),
-      map((usersResponse: UserResponse[]) => {
-        this.usersResponse = usersResponse
-        this.userResponse = this.usersResponse.find((userResponse: UserResponse) => userResponse.login === userLogin)
-        this.userForm.setValue({
-          name: this.userResponse.name,
-          login: this.userResponse.login,
-          password: ''
+      .getAllUsers()
+      .pipe(
+        takeUntil(this.userNotifier),
+        map((usersResponse: UserResponse[]) => {
+          this.usersResponse = usersResponse
+          this.userResponse = this.usersResponse.find((userResponse: UserResponse) => userResponse.login === userLogin)
+          this.userForm.setValue({
+            name: this.userResponse.name,
+            login: this.userResponse.login,
+            password: ''
           })
-      })
-    )
-    .subscribe()
+        })
+      )
+      .subscribe()
   }
 
   ngOnDestroy(): void {
@@ -67,39 +67,39 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   getUserById(): void {
     this.userSubscription = this.userService
-    .getUser(this.userResponse.id)
-    .pipe(
-      takeUntil(this.userNotifier)
-    )
-    .subscribe(
-      (userResponse: UserResponse) => this.userResponse = userResponse     
-    )
-  }
-
-  updateUser(): void {
-    if(this.userForm.valid) {
-    const userRequest: SingUpRequest = this.userForm.value
-    this.userSubscription = this.userService
-    .updateUser(this.userResponse.id, userRequest)
+      .getUser(this.userResponse.id)
       .pipe(
         takeUntil(this.userNotifier)
       )
       .subscribe(
-        () => this.userForm.patchValue({password: ''})
+        (userResponse: UserResponse) => this.userResponse = userResponse
       )
+  }
+
+  updateUser(): void {
+    if (this.userForm.valid) {
+      const userRequest: SingUpRequest = this.userForm.value
+      this.userSubscription = this.userService
+        .updateUser(this.userResponse.id, userRequest)
+        .pipe(
+          takeUntil(this.userNotifier)
+        )
+        .subscribe(
+          () => this.userForm.patchValue({password: ''})
+        )
     }
   }
 
   deleteUser(userId: string): void {
     this.userSubscription = this.userService
-    .deleteUser(userId)
-    .pipe(
-      takeUntil(this.userNotifier)
-    )
-    .subscribe(() => {
-      this.authService.logOut()
-      this.router.navigate([''])
-    })
+      .deleteUser(userId)
+      .pipe(
+        takeUntil(this.userNotifier)
+      )
+      .subscribe(() => {
+        this.authService.logOut()
+        this.router.navigate([''])
+      })
   }
 
   deleteUserModal(): void {
@@ -112,7 +112,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     deleteUserDialogRef.afterClosed().subscribe(
       (deleteConfirm: boolean) => {
-        if (deleteConfirm === true) {
+        if (deleteConfirm) {
           this.deleteUser(this.userResponse.id)
         }
       }

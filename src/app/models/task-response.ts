@@ -18,7 +18,7 @@ export class TaskResponse {
     userId: string = '',
     boardId: string = '',
     columnId: string = ''
-    ) {
+  ) {
 
     this.id = id
     this.title = title

@@ -1,13 +1,13 @@
-import { AuthorizationToken } from './../../models/authorization-token';
+import {AuthorizationToken} from '../../models/authorization-token';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {SingInRequest} from '../../models/sing-in-request';
 import {AuthorizationStatus} from "../../models/authorization-status";
 import {take} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import {Subject, Subscription, takeUntil} from 'rxjs';
 
 
 @Component({
@@ -23,9 +23,9 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   authorizationNotifier: Subject<void> = new Subject();
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private authService: AuthService
-    ) {
+  ) {
     this.authorizationForm = new FormGroup({
       login: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])

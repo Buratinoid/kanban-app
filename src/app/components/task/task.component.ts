@@ -1,7 +1,7 @@
-import { UserService } from 'src/app/services/user.service';
-import { UserResponse } from './../../models/user-response';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { TaskResponse } from '../../models/task-response';
+import {UserService} from 'src/app/services/user.service';
+import {UserResponse} from '../../models/user-response';
+import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {TaskResponse} from '../../models/task-response';
 
 @Component({
   selector: 'app-task',
@@ -16,11 +16,12 @@ export class TaskComponent implements OnInit, OnDestroy {
   usersResponse: UserResponse[] = [];
 
   userResponse: any; //??? Ошибка с типами из-за .find (говорит про | undefined)
-  // userResponse: UserResponse = new UserResponse(); 
+  // userResponse: UserResponse = new UserResponse();
 
   constructor(
     private userService: UserService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.usersResponse = this.userService.users

@@ -1,4 +1,4 @@
-import { DeleteConfirmComponent } from './../../modals/delete-confirm/delete-confirm.component';
+import {DeleteConfirmComponent} from '../../modals/delete-confirm/delete-confirm.component';
 import {BoardUpdateComponent} from '../../modals/board-update/board-update.component';
 import {BoardRequest} from '../../models/board-request';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -48,13 +48,13 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
   createBoard(boardRequest: BoardRequest): void {
     this.kanbanSubscription = this.boardService
-    .createBoard(boardRequest)
-    .pipe(
-      takeUntil(this.kanbanNotifier)
-    )
-    .subscribe(() => {
-      this.getAllBoards();
-    })
+      .createBoard(boardRequest)
+      .pipe(
+        takeUntil(this.kanbanNotifier)
+      )
+      .subscribe(() => {
+        this.getAllBoards();
+      })
   }
 
   deleteBoard(boardId: string): void {
@@ -126,7 +126,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
 
     deleteColumnDialogRef.afterClosed().subscribe(
       (deleteConfirm: boolean) => {
-        if (deleteConfirm === true) {
+        if (deleteConfirm) {
           this.deleteBoard(boardId)
         }
       }

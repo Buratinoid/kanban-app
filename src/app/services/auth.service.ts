@@ -1,4 +1,4 @@
-import { AuthorizationToken } from './../models/authorization-token';
+import {AuthorizationToken} from '../models/authorization-token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SingInRequest} from '../models/sing-in-request';
@@ -20,7 +20,7 @@ export class AuthService {
 
   constructor(
     private httpClient: HttpClient
-    ) {
+  ) {
   }
 
   public signUpUser(singUpRequest: SingUpRequest): Observable<UserResponse> {

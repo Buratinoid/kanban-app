@@ -33,9 +33,9 @@ export class BoardService {
   }
 
   public updateBoard(
-    boardId: string, 
+    boardId: string,
     board: BoardRequest): Observable<BoardResponse> {
-      
+
     return this.requestService.putRequest('/boards/' + boardId, board)
   }
 }

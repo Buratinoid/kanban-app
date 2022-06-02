@@ -17,9 +17,9 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   registrationForm: FormGroup;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private authService: AuthService
-    ) {
+  ) {
     this.registrationForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       login: new FormControl('', [Validators.required]),

@@ -1,8 +1,8 @@
-import { UserResponse } from './../../models/user-response';
-import { UserService } from 'src/app/services/user.service';
-import { DeleteConfirmComponent } from './../../modals/delete-confirm/delete-confirm.component';
-import { ColumnRequest } from 'src/app/models/column-request';
-import { ColumnUpdateComponent } from './../../modals/column-update/column-update.component';
+import {UserResponse} from '../../models/user-response';
+import {UserService} from 'src/app/services/user.service';
+import {DeleteConfirmComponent} from '../../modals/delete-confirm/delete-confirm.component';
+import {ColumnRequest} from 'src/app/models/column-request';
+import {ColumnUpdateComponent} from '../../modals/column-update/column-update.component';
 import {ColumnAddComponent} from '../../modals/column-add/column-add.component';
 import {ColumnService} from '../../services/column.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
@@ -44,7 +44,7 @@ export class BoardComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.boardNotifier),
         map((params: Params) => params["id"]),
-        switchMap((id: string) =>  
+        switchMap((id: string) =>
           this.boardService.getBoard(id))
       )
       .subscribe((board: BoardResponse) => {
@@ -52,15 +52,15 @@ export class BoardComponent implements OnInit, OnDestroy {
         this.columnsResponse = this.boardResponse.columns;
       })
     this.userSubscription = this.userService
-    .getAllUsers()
-    .pipe(
-      takeUntil(this.userNotifier)
-    )
-    .subscribe(
-      (users: UserResponse[]) => {
-        this.userService.users = users
-      }
-    )
+      .getAllUsers()
+      .pipe(
+        takeUntil(this.userNotifier)
+      )
+      .subscribe(
+        (users: UserResponse[]) => {
+          this.userService.users = users
+        }
+      )
   }
 
   ngOnDestroy(): void {
@@ -84,36 +84,36 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   createColumn(columnRequest: ColumnRequest): void {
     this.boardSubscription = this.columnService
-    .createColumn(this.boardResponse.id, columnRequest)
-    .pipe(
-      takeUntil(this.boardNotifier)
-    )
-    .subscribe(() => {
-      this.getAllColumns()
-    })
+      .createColumn(this.boardResponse.id, columnRequest)
+      .pipe(
+        takeUntil(this.boardNotifier)
+      )
+      .subscribe(() => {
+        this.getAllColumns()
+      })
   }
 
   deleteColumn(columnId: string): void {
     this.boardSubscription = this.columnService
-    .deleteColumn(this.boardResponse.id, columnId)
-    .pipe(
-      takeUntil(this.boardNotifier)
-    )
-    .subscribe(() => {
-      console.log(`Column ${columnId} deleted!`)
-      this.getAllColumns()
-    })
+      .deleteColumn(this.boardResponse.id, columnId)
+      .pipe(
+        takeUntil(this.boardNotifier)
+      )
+      .subscribe(() => {
+        console.log(`Column ${columnId} deleted!`)
+        this.getAllColumns()
+      })
   }
 
   updateColumn(columnId: string, columnRequest: ColumnRequest): void {
     this.boardSubscription = this.columnService
-    .updateColumn(this.boardResponse.id, columnId, columnRequest)
-    .pipe(
-      takeUntil(this.boardNotifier)
-    )
-    .subscribe(() => {
-      this.getAllColumns()
-    })
+      .updateColumn(this.boardResponse.id, columnId, columnRequest)
+      .pipe(
+        takeUntil(this.boardNotifier)
+      )
+      .subscribe(() => {
+        this.getAllColumns()
+      })
   }
 
   newColumnModal(): void {
@@ -142,10 +142,10 @@ export class BoardComponent implements OnInit, OnDestroy {
     updateColumnDialogConfig.data = columnResponse
 
     const updateColumnDialogRef = this.matDialog.open(ColumnUpdateComponent, updateColumnDialogConfig)
-  
+
     updateColumnDialogRef.afterClosed().subscribe(
       (columnRequest: ColumnRequest) => {
-        if(columnRequest !== undefined) {
+        if (columnRequest !== undefined) {
           this.updateColumn(columnId, columnRequest)
         }
       }
@@ -162,7 +162,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     deleteColumnDialogRef.afterClosed().subscribe(
       (deleteConfirm: boolean) => {
-        if (deleteConfirm === true) {
+        if (deleteConfirm) {
           this.deleteColumn(columnId)
         }
       }

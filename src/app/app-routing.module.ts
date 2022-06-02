@@ -5,7 +5,7 @@ import {HomeComponent} from './components/home/home.component';
 import {KanbanComponent} from './components/kanban/kanban.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {AuthorizationComponent} from './components/authorization/authorization.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import {ProfileComponent} from './components/profile/profile.component';
 import {BoardComponent} from './components/board/board.component';
 import {AuthGuard} from "./auth.guard";
 
