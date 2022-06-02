@@ -46,14 +46,14 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         .subscribe(
           (authorizationToken: AuthorizationToken) => {
             this.authService.token = authorizationToken.token;
-            this.authService.isLoggedIn = true;
+            this.authService.setIsLoggedIn(true);
             this.authorizationStatus = new AuthorizationStatus(true);
             this.authService.userLogin = this.authorizationForm.value.login
             this.router.navigate(['kanban'])
           },
           (error: HttpErrorResponse) => {
             this.authService.token = '';
-            this.authService.isLoggedIn = false;
+            this.authService.setIsLoggedIn(false);
             this.authorizationStatus = new AuthorizationStatus(false, error.status.toString(), error.message);
             this.authService.userLogin = '';
           }

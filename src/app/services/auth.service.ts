@@ -1,6 +1,6 @@
 import {AuthorizationToken} from '../models/authorization-token';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {SingInRequest} from '../models/sing-in-request';
 import {Injectable} from '@angular/core';
 import {SingUpRequest} from "../models/sing-up-request";
@@ -14,7 +14,7 @@ export class AuthService {
   private _authorizationToken: AuthorizationToken = {
     token: ''
   };
-  private _isLoggedIn = false;
+  private _isLoggedIn = new BehaviorSubject(false);
   private _userId = '';
   private _userLogin = '';
 
@@ -33,7 +33,7 @@ export class AuthService {
 
   public logOut(): void {
     this.token = '';
-    this.isLoggedIn = false;
+    this.setIsLoggedIn(false);
   }
 
   public get token(): string {
@@ -44,12 +44,12 @@ export class AuthService {
     this._authorizationToken.token = value;
   }
 
-  public get isLoggedIn(): boolean {
+  public getIsLoggedIn(): Observable<boolean> {
     return this._isLoggedIn;
   }
-
-  public set isLoggedIn(value: boolean) {
-    this._isLoggedIn = value;
+  
+  public setIsLoggedIn(state: boolean) {
+    this._isLoggedIn.next(state);
   }
 
   public get userId(): string {
