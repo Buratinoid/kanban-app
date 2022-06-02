@@ -1,8 +1,8 @@
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Component, OnInit, Inject} from '@angular/core';
-import {ColumnResponse} from 'src/app/models/column-response';
-import {ColumnRequest} from 'src/app/models/column-request';
+import {ColumnResponse} from '../../models/column-response';
+import {ColumnRequest} from '../../models/column-request';
 
 @Component({
   selector: 'app-column-update',

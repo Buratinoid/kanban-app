@@ -1,12 +1,12 @@
-import {DeleteConfirmComponent} from '../../modals/delete-confirm/delete-confirm.component';
-import {BoardUpdateComponent} from '../../modals/board-update/board-update.component';
-import {BoardRequest} from '../../models/board-request';
+import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
+import {BoardUpdateComponent} from '../../../modals/board-update/board-update.component';
+import {BoardRequest} from '../../../models/board-request';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Subscription, Subject, takeUntil} from 'rxjs';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BoardService} from '../../services/board.service';
-import {BoardAddComponent} from 'src/app/modals/board-add/board-add.component';
-import {BoardResponse} from '../../models/board-response';
+import {BoardService} from '../../../services/board.service';
+import {BoardAddComponent} from '../../../modals/board-add/board-add.component';
+import {BoardResponse} from '../../../models/board-response';
 
 @Component({
   selector: 'app-kanban',

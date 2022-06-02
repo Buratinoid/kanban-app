@@ -1,7 +1,7 @@
-import {UserService} from 'src/app/services/user.service';
-import {UserResponse} from '../../models/user-response';
+import {UserService} from '../../../services/user.service';
+import {UserResponse} from '../../../models/user-response';
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
-import {TaskResponse} from '../../models/task-response';
+import {TaskResponse} from '../../../models/task-response';
 
 @Component({
   selector: 'app-task',

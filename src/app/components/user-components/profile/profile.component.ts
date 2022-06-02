@@ -1,12 +1,12 @@
 import {Router} from '@angular/router';
-import {DeleteConfirmComponent} from '../../modals/delete-confirm/delete-confirm.component';
+import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {SingUpRequest} from '../../models/sing-up-request';
+import {SingUpRequest} from '../../../models/sing-up-request';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../../services/auth.service';
 import {Subscription, Subject, takeUntil, map} from 'rxjs';
-import {UserResponse} from '../../models/user-response';
-import {UserService} from '../../services/user.service';
+import {UserResponse} from '../../../models/user-response';
+import {UserService} from '../../../services/user.service';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 
 @Component({

@@ -5,7 +5,7 @@ import {Subscription, Subject, takeUntil} from 'rxjs';
 import {MatDialogRef} from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
-import {TaskRequest} from 'src/app/models/task-request';
+import {TaskRequest} from '../../models/task-request';
 
 @Component({
   selector: 'app-task-add',

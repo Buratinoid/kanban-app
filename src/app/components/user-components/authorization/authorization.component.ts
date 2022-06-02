@@ -1,10 +1,10 @@
-import {AuthorizationToken} from '../../models/authorization-token';
+import {AuthorizationToken} from '../../../models/authorization-token';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from '../../services/auth.service';
-import {SingInRequest} from '../../models/sing-in-request';
-import {AuthorizationStatus} from "../../models/authorization-status";
+import {AuthService} from '../../../services/auth.service';
+import {SingInRequest} from '../../../models/sing-in-request';
+import {AuthorizationStatus} from "../../../models/authorization-status";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Subject, Subscription, takeUntil} from 'rxjs';
 

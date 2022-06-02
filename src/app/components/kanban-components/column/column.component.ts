@@ -1,14 +1,14 @@
-import {DeleteConfirmComponent} from '../../modals/delete-confirm/delete-confirm.component';
-import {TaskUpdateComponent} from '../../modals/task-update/task-update.component';
-import {TaskAddComponent} from '../../modals/task-add/task-add.component';
+import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
+import {TaskUpdateComponent} from '../../../modals/task-update/task-update.component';
+import {TaskAddComponent} from '../../../modals/task-add/task-add.component';
 import {Subscription, Subject, takeUntil} from 'rxjs';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
-import {BoardResponse} from 'src/app/models/board-response';
-import {ColumnResponse} from '../../models/column-response';
-import {TaskResponse} from '../../models/task-response';
-import {TaskService} from 'src/app/services/task.service';
-import {TaskRequest} from 'src/app/models/task-request';
+import {BoardResponse} from '../../../models/board-response';
+import {ColumnResponse} from '../../../models/column-response';
+import {TaskResponse} from '../../../models/task-response';
+import {TaskService} from '../../../services/task.service';
+import {TaskRequest} from '../../../models/task-request';
 
 @Component({
     selector: 'app-column',

@@ -1,17 +1,17 @@
-import {UserResponse} from '../../models/user-response';
-import {UserService} from 'src/app/services/user.service';
-import {DeleteConfirmComponent} from '../../modals/delete-confirm/delete-confirm.component';
-import {ColumnRequest} from 'src/app/models/column-request';
-import {ColumnUpdateComponent} from '../../modals/column-update/column-update.component';
-import {ColumnAddComponent} from '../../modals/column-add/column-add.component';
-import {ColumnService} from '../../services/column.service';
+import {UserResponse} from '../../../models/user-response';
+import {UserService} from '../../../services/user.service';
+import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
+import {ColumnRequest} from '../../../models/column-request';
+import {ColumnUpdateComponent} from '../../../modals/column-update/column-update.component';
+import {ColumnAddComponent} from '../../../modals/column-add/column-add.component';
+import {ColumnService} from '../../../services/column.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ColumnResponse} from '../../models/column-response';
+import {ColumnResponse} from '../../../models/column-response';
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Subscription, map, switchMap, Subject, takeUntil} from 'rxjs';
 import {ActivatedRoute, Params} from '@angular/router';
-import {BoardService} from '../../services/board.service';
-import {BoardResponse} from '../../models/board-response';
+import {BoardService} from '../../../services/board.service';
+import {BoardResponse} from '../../../models/board-response';
 
 @Component({
   selector: 'app-board',
