@@ -1,6 +1,6 @@
 export class SingInRequest {
   login: string = '';
-  password: string = '';
+  password?: string = '';
 
   constructor(login: string, password: string) {
     this.login = login;

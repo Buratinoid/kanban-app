@@ -19,7 +19,10 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   authorizationForm: FormGroup;
   authorizationStatus: AuthorizationStatus = new AuthorizationStatus(false);
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(
+    private router: Router, 
+    private authService: AuthService
+    ) {
     this.authorizationForm = new FormGroup({
       login: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
@@ -43,12 +46,14 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
             this.authService.token = authorizationToken.token;
             this.authService.isLoggedIn = true;
             this.authorizationStatus = new AuthorizationStatus(true);
+            this.authService.userLogin = this.authorizationForm.value.login
             this.router.navigate(['kanban'])
           },
           (error: HttpErrorResponse) => {
             this.authService.token = '';
             this.authService.isLoggedIn = false;
-            this.authorizationStatus = new AuthorizationStatus(false, error.status.toString(), error.message)
+            this.authorizationStatus = new AuthorizationStatus(false, error.status.toString(), error.message);
+            this.authService.userLogin = '';
           }
         )
     }

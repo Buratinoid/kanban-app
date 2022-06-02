@@ -1,3 +1,4 @@
+import { UserService } from './user.service';
 import { AuthorizationToken } from './../models/authorization-token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -16,15 +17,18 @@ export class AuthService {
   };
   private _isLoggedIn = false;
   private _userId = '';
+  private _userLogin = '';
 
-  constructor(private httpClient: HttpClient) {
+  constructor(
+    private httpClient: HttpClient
+    ) {
   }
 
   public signUpUser(singUpRequest: SingUpRequest): Observable<UserResponse> {
     return this.httpClient.post<UserResponse>(this.url + 'signup', singUpRequest)
   }
 
-  getUserToken(singInRequest: SingInRequest): Observable<AuthorizationToken> {
+  public getUserToken(singInRequest: SingInRequest): Observable<AuthorizationToken> {
     return this.httpClient.post<AuthorizationToken>(this.url + 'signin', singInRequest);
   }
 
@@ -55,5 +59,13 @@ export class AuthService {
 
   public set userId(value: string) {
     this._userId = value;
+  }
+
+  public get userLogin(): string {
+    return this._userLogin
+  }
+
+  public set userLogin(value: string) {
+    this._userLogin = value;
   }
 }

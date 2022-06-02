@@ -1,0 +1,25 @@
+form {
+    display: flex;
+    background-color: rgb(137, 226, 128);
+    flex-flow: column nowrap;
+    align-items: center;
+    border: 1px solid red;
+    margin: 0 auto;
+    width: 50vw;
+}
+
+label {
+    border: 1px solid blue;
+    margin: 0.5rem auto;
+}
+
+p {
+    margin: 0;
+    /* border: 1px solid blue; */
+    text-align: center;
+}
+
+input {
+    margin: 0;
+
+}
