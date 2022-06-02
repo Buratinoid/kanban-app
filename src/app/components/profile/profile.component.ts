@@ -18,8 +18,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   usersResponse: UserResponse[] = [];
 
-  userResponse: any //??? Ошибка с типами из-за .find (говорит про | undefined)
-  // userResponse: UserResponse = new UserResponse();
+  userResponse: UserResponse = new UserResponse();
 
   userForm: FormGroup;
 
@@ -41,19 +40,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const userLogin: string = this.authService.userLogin
     this.userSubscription = this.userService
       .getAllUsers()
       .pipe(
         takeUntil(this.userNotifier),
         map((usersResponse: UserResponse[]) => {
-          this.usersResponse = usersResponse
-          this.userResponse = this.usersResponse.find((userResponse: UserResponse) => userResponse.login === userLogin)
+          this.usersResponse = usersResponse;
+          this.getUserbyName();
           this.userForm.setValue({
             name: this.userResponse.name,
             login: this.userResponse.login,
             password: ''
-          })
+          });
         })
       )
       .subscribe()
@@ -65,15 +63,14 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  getUserById(): void {
-    this.userSubscription = this.userService
-      .getUser(this.userResponse.id)
-      .pipe(
-        takeUntil(this.userNotifier)
-      )
-      .subscribe(
-        (userResponse: UserResponse) => this.userResponse = userResponse
-      )
+  getUserbyName(): void {
+    const userLogin: string = this.authService.userLogin
+    this.usersResponse
+    .find((userResponse: UserResponse) => {
+      if(userResponse.login === userLogin) {
+        this.userResponse = userResponse
+      }
+    })
   }
 
   updateUser(): void {

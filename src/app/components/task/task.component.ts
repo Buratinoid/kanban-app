@@ -15,8 +15,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   usersResponse: UserResponse[] = [];
 
-  userResponse: any; //??? Ошибка с типами из-за .find (говорит про | undefined)
-  // userResponse: UserResponse = new UserResponse();
+  userResponse: UserResponse = new UserResponse();
 
   constructor(
     private userService: UserService
@@ -24,14 +23,19 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.usersResponse = this.userService.users
-    this.getUser()
+    this.usersResponse = this.userService.users;
+    this.getUserbyId();
   }
 
   ngOnDestroy(): void {
   }
 
-  getUser() {
-    this.userResponse = this.userService.users.find((userResponse: UserResponse) => userResponse.id === this.taskResponse.userId)
+  getUserbyId(): void {
+    this.userService.users
+    .find((userResponse: UserResponse) => {
+      if(userResponse.id === this.taskResponse.userId) {
+        this.userResponse = userResponse
+      } // добавить else!!!
+    });
   }
 }
