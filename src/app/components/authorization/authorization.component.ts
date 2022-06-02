@@ -7,6 +7,7 @@ import {SingInRequest} from '../../models/sing-in-request';
 import {AuthorizationStatus} from "../../models/authorization-status";
 import {take} from "rxjs/operators";
 import {HttpErrorResponse} from "@angular/common/http";
+import { Subject, Subscription, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
 
   authorizationForm: FormGroup;
   authorizationStatus: AuthorizationStatus = new AuthorizationStatus(false);
+  authorizationSubscription: Subscription = new Subscription;
+  authorizationNotifier: Subject<void> = new Subject();
 
   constructor(
     private router: Router, 
@@ -39,7 +42,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
         new SingInRequest(this.authorizationForm.value.login, this.authorizationForm.value.password);
       this.authService.getUserToken(singInRequest)
         .pipe(
-          take(1)
+          take(1),
+          takeUntil(this.authorizationNotifier)
         )
         .subscribe(
           (authorizationToken: AuthorizationToken) => {
@@ -60,6 +64,8 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-
+    this.authorizationNotifier.next();
+    this.authorizationNotifier.complete();
+    this.authorizationSubscription.unsubscribe();
   }
 }
