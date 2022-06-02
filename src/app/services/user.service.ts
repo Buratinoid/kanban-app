@@ -9,14 +9,6 @@ export class UserService {
 
   private _users: UserResponse[] = [];
 
-  public get users(): UserResponse[] {
-    return this._users
-  }
-
-  public set users(value: UserResponse[]) {
-    this._users = value
-  }
-
   constructor(private requestService: RequestService) {
   }
 
@@ -34,5 +26,13 @@ export class UserService {
 
   public updateUser(userId: string, user: SingUpRequest): Observable<UserResponse> {
     return this.requestService.putRequest('/users/' + userId, user)
+  }
+
+  public get users(): UserResponse[] {
+    return this._users
+  }
+  
+  public set users(value: UserResponse[]) {
+    this._users = value
   }
 }
