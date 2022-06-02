@@ -1,4 +1,3 @@
-import { UserService } from './user.service';
 import { AuthorizationToken } from './../models/authorization-token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';

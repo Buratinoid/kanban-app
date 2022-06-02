@@ -10,9 +10,10 @@
   <br>
   <mat-form-field>
     <mat-label>Состояние задачи</mat-label>
-    <input  matInput
-            placeholder="Состояние задачи"
-            formControlName="done">
+    <mat-select formControlName="done">
+      <mat-option [value]="taskCondition.true">True</mat-option>
+      <mat-option [value]="taskCondition.false">False</mat-option>
+    </mat-select>
   </mat-form-field>
   <br>
   <mat-form-field>
@@ -31,9 +32,9 @@
   <br>
   <mat-form-field>
     <mat-label>Ответственный</mat-label>
-    <input  matInput
-            placeholder="Ответственный"
-            formControlName="userId">
+    <mat-select formControlName="userId">
+      <mat-option *ngFor="let user of users" [value]="user.id">{{user.name}}</mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 

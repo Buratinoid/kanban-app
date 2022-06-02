@@ -11,7 +11,6 @@ import {HomeComponent} from './components/home/home.component';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {AuthorizationComponent} from './components/authorization/authorization.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { UsersComponent } from './components/users/users.component';
 import {HeaderComponent} from './components/header/header.component';
 import {KanbanComponent} from './components/kanban/kanban.component';
 import {BoardComponent} from './components/board/board.component';
@@ -38,6 +37,7 @@ import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,6 @@ import {MatButtonModule} from '@angular/material/button';
     RegistrationComponent,
     AuthorizationComponent,
     ProfileComponent,
-    UsersComponent,
     HeaderComponent,
     KanbanComponent,
     HomeComponent,
@@ -71,7 +70,9 @@ import {MatButtonModule} from '@angular/material/button';
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule
+    
   ],
   providers: [
     RequestService,

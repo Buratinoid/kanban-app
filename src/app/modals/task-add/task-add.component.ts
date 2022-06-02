@@ -1,3 +1,7 @@
+import { TaskCondition } from './../../models/task-condition';
+import { UserService } from './../../services/user.service';
+import { UserResponse } from './../../models/user-response';
+import { Subscription, Subject, takeUntil } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -10,10 +14,19 @@ import { TaskRequest } from 'src/app/models/task-request';
 })
 export class TaskAddComponent implements OnInit {
 
+  taskCondition = new TaskCondition();
+
+  users: UserResponse[] = [];
+
   newTaskForm: FormGroup;
 
+  newTaskSubscription: Subscription = new Subscription;
+
+  newTaskNotifier: Subject<void> = new Subject();
+
   constructor(
-    private newTaskDialogRef: MatDialogRef<TaskAddComponent>
+    private newTaskDialogRef: MatDialogRef<TaskAddComponent>,
+    private userService: UserService
   ) { 
     this.newTaskForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -25,6 +38,14 @@ export class TaskAddComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.newTaskSubscription = this.userService
+    .getAllUsers()
+    .pipe(
+      takeUntil(this.newTaskNotifier)
+    )
+    .subscribe(
+      (users: UserResponse[]) => this.users = users
+    )
   }
 
   newTask(): void {

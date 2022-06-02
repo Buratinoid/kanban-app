@@ -1,3 +1,7 @@
+import { TaskCondition } from './../../models/task-condition';
+import { UserResponse } from './../../models/user-response';
+import { UserService } from 'src/app/services/user.service';
+import { Subscription, Subject, takeUntil } from 'rxjs';
 import { TaskRequest } from './../../models/task-request';
 import { TaskResponse } from './../../models/task-response';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
@@ -11,9 +15,18 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class TaskUpdateComponent implements OnInit {
 
+  taskCondition = new TaskCondition();
+  
+  users: UserResponse[] = [];
+
   updateTaskForm: FormGroup;
 
+  updateTaskSubscription: Subscription = new Subscription;
+
+  updateTaskNotifier: Subject<void> = new Subject();
+
   constructor(
+    private userService: UserService,
     private updateColumnDialogRef: MatDialogRef<TaskUpdateComponent>,
     @Inject(MAT_DIALOG_DATA) data: TaskResponse
   ) { 
@@ -27,6 +40,14 @@ export class TaskUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.updateTaskSubscription = this.userService
+    .getAllUsers()
+    .pipe(
+      takeUntil(this.updateTaskNotifier)
+    )
+    .subscribe(
+      (users: UserResponse[]) => this.users = users
+    )
   }
 
   updateTask(): void {
@@ -45,5 +66,11 @@ export class TaskUpdateComponent implements OnInit {
 
   close(): void {
     this.updateColumnDialogRef.close()
+  }
+
+  ngOnDestroy(): void {
+    this.updateTaskNotifier.next();
+    this.updateTaskNotifier.complete();
+    this.updateTaskSubscription.unsubscribe();    
   }
 }

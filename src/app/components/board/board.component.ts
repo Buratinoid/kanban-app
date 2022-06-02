@@ -1,3 +1,5 @@
+import { UserResponse } from './../../models/user-response';
+import { UserService } from 'src/app/services/user.service';
 import { DeleteConfirmComponent } from './../../modals/delete-confirm/delete-confirm.component';
 import { ColumnRequest } from 'src/app/models/column-request';
 import { ColumnUpdateComponent } from './../../modals/column-update/column-update.component';
@@ -20,16 +22,20 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   board: BoardResponse = new BoardResponse();
   columns: ColumnResponse[] = [];
+  users: UserResponse[] = [];
 
   boardSubscription: Subscription = new Subscription;
+  userSubscription: Subscription = new Subscription;
 
   boardNotifier: Subject<void> = new Subject();
+  userNotifier: Subject<void> = new Subject();
 
   constructor(
     private route: ActivatedRoute,
+    private userService: UserService,
     private boardService: BoardService,
-    private matDialog: MatDialog,
-    private columnService: ColumnService
+    private columnService: ColumnService,
+    private matDialog: MatDialog
   ) {
   }
 
@@ -38,18 +44,33 @@ export class BoardComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.boardNotifier),
         map((params: Params) => params["id"]),
-        switchMap(id => this.boardService.getBoard(id))
+        switchMap((id: string) =>  
+          this.boardService.getBoard(id))
       )
       .subscribe((board: BoardResponse) => {
         this.board = board;
         this.columns = this.board.columns;
       })
+    this.userSubscription = this.userService
+    .getAllUsers()
+    .pipe(
+      takeUntil(this.userNotifier)
+    )
+    .subscribe(
+      (users: UserResponse[]) => {
+        this.userService.users = users
+      }
+    )
   }
 
   ngOnDestroy(): void {
     this.boardNotifier.next();
     this.boardNotifier.complete();
     this.boardSubscription.unsubscribe();
+
+    this.userNotifier.next();
+    this.userNotifier.complete();
+    this.userSubscription.unsubscribe();
   }
 
   getAllColumns(): void {

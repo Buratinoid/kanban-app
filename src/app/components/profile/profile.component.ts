@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   users: UserResponse[] = [];
 
-  userResponse: any //??? Ошибка с типами из-за .find (говрит про | undefined)
+  userResponse: any //??? Ошибка с типами из-за .find (говорит про | undefined)
   // userResponse: UserResponse = new UserResponse(); 
 
   userForm: FormGroup;
@@ -47,7 +47,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     .pipe(
       takeUntil(this.userNotifier),
       map((users: UserResponse[]) => {
-        this.userResponse = (users.find((user: UserResponse) => user.login === userLogin))
+        this.users = users
+        this.userResponse = this.users.find((user: UserResponse) => user.login === userLogin)
         this.userForm.setValue({
           name: this.userResponse.name,
           login: this.userResponse.login,
