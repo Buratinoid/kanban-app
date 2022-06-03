@@ -1,11 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {SingUpRequest} from "../../../models/sing-up-request";
-import {AuthService} from "../../../services/auth.service";
-import {take} from "rxjs/operators";
-import {UserResponse} from "../../../models/user-response";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from "@angular/common/http";
+import {take} from "rxjs/operators";
+
+import {AuthService} from "../../../services/auth.service";
+
+import {SingUpRequest} from "../../../models/sing-up-request";
+import {UserResponse} from "../../../models/user-response";
 
 @Component({
   selector: 'app-registration',

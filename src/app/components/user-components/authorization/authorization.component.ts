@@ -1,13 +1,14 @@
-import {AuthorizationToken} from '../../../models/authorization-token';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AuthService} from '../../../services/auth.service';
-import {SingInRequest} from '../../../models/sing-in-request';
-import {AuthorizationStatus} from "../../../models/authorization-status";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Subject, Subscription, takeUntil} from 'rxjs';
 
+import {AuthService} from '../../../services/auth.service';
+
+import {AuthorizationStatus} from "../../../models/authorization-status";
+import {AuthorizationToken} from '../../../models/authorization-token';
+import {SingInRequest} from '../../../models/sing-in-request';
 
 @Component({
   selector: 'app-authorization',

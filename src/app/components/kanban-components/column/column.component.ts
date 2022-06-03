@@ -1,13 +1,18 @@
-import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
-import {TaskUpdateComponent} from '../../../modals/task-update/task-update.component';
-import {TaskAddComponent} from '../../../modals/task-add/task-add.component';
-import {Subscription, Subject, takeUntil} from 'rxjs';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {Subscription, Subject, takeUntil} from 'rxjs';
+
+import { ColumnService } from './../../../services/column.service';
+import {TaskService} from '../../../services/task.service';
+
+import { ColumnUpdateComponent } from './../../../modals/column-update/column-update.component';
+import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
+import {TaskAddComponent} from '../../../modals/task-add/task-add.component';
+
 import {BoardResponse} from '../../../models/board-response';
 import {ColumnResponse} from '../../../models/column-response';
+import { ColumnRequest } from './../../../models/column-request';
 import {TaskResponse} from '../../../models/task-response';
-import {TaskService} from '../../../services/task.service';
 import {TaskRequest} from '../../../models/task-request';
 
 @Component({
@@ -16,27 +21,28 @@ import {TaskRequest} from '../../../models/task-request';
     styleUrls: ['./column.component.css']
 })
 export class ColumnComponent implements OnInit, OnDestroy {
-
+    
+    @Input()
+    boardResponse: BoardResponse = new BoardResponse();
     @Input()
     columnResponse: ColumnResponse = new ColumnResponse();
 
-    @Input()
-    boardResponse: BoardResponse = new BoardResponse();
+    showInput: boolean = false;
 
-    tasksResponse: TaskResponse[] = [];
+    taskResponseArray: TaskResponse[] = [];
 
     columnSubscription: Subscription = new Subscription;
-
     columnNotifier: Subject<void> = new Subject();
 
     constructor(
+        private columnService: ColumnService,
         private taskService: TaskService,
         private matDialog: MatDialog
     ) {
     }
 
     ngOnInit(): void {
-        this.tasksResponse = this.columnResponse.tasks;
+        this.taskResponseArray = this.columnResponse.tasks;
     }
 
     ngOnDestroy(): void {
@@ -51,35 +57,71 @@ export class ColumnComponent implements OnInit, OnDestroy {
             .pipe(
                 takeUntil(this.columnNotifier)
             )
-            .subscribe((tasks: TaskResponse[]) => this.tasksResponse = tasks)
+            .subscribe((tasks: TaskResponse[]) => this.taskResponseArray = tasks)
+    }
+
+    deleteColumn(columnId: string): void {
+      this.columnSubscription = this.columnService
+        .deleteColumn(this.boardResponse.id, columnId)
+        .pipe(
+          takeUntil(this.columnNotifier)
+        )
+        .subscribe(() => {
+          console.log(`Column ${columnId} deleted!`)
+        //   this.getAllColumns()
+        })
+    }
+  
+    updateColumn(columnId: string, columnRequest: ColumnRequest): void {
+      this.columnSubscription = this.columnService
+        .updateColumn(this.boardResponse.id, columnId, columnRequest)
+        .pipe(
+          takeUntil(this.columnNotifier)
+        )
+        .subscribe(() => {
+        //   this.getAllColumns()
+        })
+    }
+
+    updateColumnModal(columnId: string, columnResponse: ColumnResponse): void {
+      const updateColumnDialogConfig = new MatDialogConfig();
+  
+      updateColumnDialogConfig.disableClose = true;
+      updateColumnDialogConfig.autoFocus = false;
+  
+      updateColumnDialogConfig.data = columnResponse
+  
+      const updateColumnDialogRef = this.matDialog.open(ColumnUpdateComponent, updateColumnDialogConfig)
+  
+      updateColumnDialogRef.afterClosed().subscribe(
+        (columnRequest: ColumnRequest) => {
+          if (columnRequest !== undefined) {
+            this.updateColumn(columnId, columnRequest)
+          }
+        }
+      )
+    }
+  
+    deleteColumnModal(columnId: string): void {
+      const deleteColumnDialogConfig = new MatDialogConfig();
+  
+      deleteColumnDialogConfig.disableClose = true;
+      deleteColumnDialogConfig.autoFocus = false;
+  
+      const deleteColumnDialogRef = this.matDialog.open(DeleteConfirmComponent, deleteColumnDialogConfig)
+  
+      deleteColumnDialogRef.afterClosed().subscribe(
+        (deleteConfirm: boolean) => {
+          if (deleteConfirm) {
+            this.deleteColumn(columnId)
+          }
+        }
+      )
     }
 
     createTask(taskRequest: TaskRequest): void {
         this.columnSubscription = this.taskService
             .createTask(this.boardResponse.id, this.columnResponse.id, taskRequest)
-            .pipe(
-                takeUntil(this.columnNotifier)
-            )
-            .subscribe(() => {
-                this.getAllTasks()
-            })
-    }
-
-    deleteTask(taskId: string): void {
-        this.columnSubscription = this.taskService
-            .deleteTask(this.boardResponse.id, this.columnResponse.id, taskId)
-            .pipe(
-                takeUntil(this.columnNotifier)
-            )
-            .subscribe(() => {
-                console.log(`Task ${taskId} deleted`)
-                this.getAllTasks()
-            })
-    }
-
-    updateTask(taskId: string, taskRequest: TaskRequest): void {
-        this.columnSubscription = this.taskService
-            .updateTask(this.boardResponse.id, this.columnResponse.id, taskId, taskRequest)
             .pipe(
                 takeUntil(this.columnNotifier)
             )
@@ -100,46 +142,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
             (taskRequest: TaskRequest) => {
                 if (taskRequest !== undefined) {
                     this.createTask(taskRequest)
-                }
-            }
-        )
-    }
-
-    updateTaskModal(taskId: string, taskResponse: TaskResponse): void {
-        const updateTaskDialogConfig = new MatDialogConfig();
-
-        updateTaskDialogConfig.disableClose = true;
-        updateTaskDialogConfig.autoFocus = false;
-
-        updateTaskDialogConfig.data = taskResponse
-
-        const updateTaskDialogRef = this.matDialog.open(TaskUpdateComponent, updateTaskDialogConfig)
-
-        updateTaskDialogRef.afterClosed().subscribe(
-            (taskRequest: TaskRequest) => {
-                if (taskRequest !== undefined) {
-
-                    taskRequest.boardId = this.boardResponse.id
-                    taskRequest.columnId = this.columnResponse.id
-
-                    this.updateTask(taskId, taskRequest)
-                }
-            }
-        )
-    }
-
-    deleteTaskModal(taskId: string): void {
-        const deleteColumnDialogConfig = new MatDialogConfig();
-
-        deleteColumnDialogConfig.disableClose = true;
-        deleteColumnDialogConfig.autoFocus = false;
-
-        const deleteColumnDialogRef = this.matDialog.open(DeleteConfirmComponent, deleteColumnDialogConfig)
-
-        deleteColumnDialogRef.afterClosed().subscribe(
-            (deleteConfirm: boolean) => {
-                if (deleteConfirm) {
-                    this.deleteTask(taskId)
                 }
             }
         )

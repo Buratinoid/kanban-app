@@ -1,12 +1,15 @@
-import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
-import {BoardUpdateComponent} from '../../../modals/board-update/board-update.component';
-import {BoardRequest} from '../../../models/board-request';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Subscription, Subject, takeUntil} from 'rxjs';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+
 import {BoardService} from '../../../services/board.service';
+
 import {BoardAddComponent} from '../../../modals/board-add/board-add.component';
+import {BoardUpdateComponent} from '../../../modals/board-update/board-update.component';
+import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
+
 import {BoardResponse} from '../../../models/board-response';
+import {BoardRequest} from '../../../models/board-request';
 
 @Component({
   selector: 'app-kanban',
@@ -15,12 +18,10 @@ import {BoardResponse} from '../../../models/board-response';
 })
 export class KanbanComponent implements OnInit, OnDestroy {
 
-  boardsResponse: BoardResponse[] = [];
+  boardResponseArray: BoardResponse[] = [];
 
   kanbanSubscription: Subscription = new Subscription;
-
   kanbanNotifier: Subject<void> = new Subject();
-
 
   constructor(
     private matDialog: MatDialog,
@@ -43,7 +44,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.kanbanNotifier)
       )
-      .subscribe((boardsResponse: BoardResponse[]) => this.boardsResponse = boardsResponse)
+      .subscribe((boardResponseArray: BoardResponse[]) => this.boardResponseArray = boardResponseArray)
   }
 
   createBoard(boardRequest: BoardRequest): void {

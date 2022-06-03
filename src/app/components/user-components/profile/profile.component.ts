@@ -1,13 +1,16 @@
-import {Router} from '@angular/router';
-import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
-import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {SingUpRequest} from '../../../models/sing-up-request';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {AuthService} from '../../../services/auth.service';
-import {Subscription, Subject, takeUntil, map} from 'rxjs';
-import {UserResponse} from '../../../models/user-response';
-import {UserService} from '../../../services/user.service';
 import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Router} from '@angular/router';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {Subscription, Subject, takeUntil, map} from 'rxjs';
+
+import {AuthService} from '../../../services/auth.service';
+import {UserService} from '../../../services/user.service';
+
+import {DeleteConfirmComponent} from '../../../modals/delete-confirm/delete-confirm.component';
+
+import {SingUpRequest} from '../../../models/sing-up-request';
+import {UserResponse} from '../../../models/user-response';
 
 @Component({
   selector: 'app-profile',
@@ -46,7 +49,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         takeUntil(this.userNotifier),
         map((usersResponse: UserResponse[]) => {
           this.usersResponse = usersResponse;
-          this.getUserbyName();
+          this.findUserByName();
           this.userForm.setValue({
             name: this.userResponse.name,
             login: this.userResponse.login,
@@ -63,7 +66,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.userSubscription.unsubscribe();
   }
 
-  getUserbyName(): void {
+  findUserByName(): void {
     const userLogin: string = this.authService.userLogin
     this.usersResponse
     .find((userResponse: UserResponse) => {

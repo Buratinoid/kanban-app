@@ -5,7 +5,7 @@
   @@kanban_AddBoardButton"
   >Add board</button>
 
-<div *ngFor="let boardResponse of boardsResponse">
+<div *ngFor="let boardResponse of boardResponseArray">
   <a [routerLink]="['/', 'board', boardResponse.id]">{{boardResponse.title}} - {{boardResponse.description}}</a>
   <button 
     (click)="updateBoardModal(boardResponse.id, boardResponse)"

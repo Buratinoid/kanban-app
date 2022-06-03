@@ -6,19 +6,10 @@
     i18n="'Add column' button in board | 
     @@board_AddColumnButton"
     >Add column</button>
-  <div *ngFor="let columnResponse of columnsResponse">
+  <div *ngFor="let columnResponse of columnResponseArray">
     <app-column
+      [boardResponse]="boardResponse"
       [columnResponse]="columnResponse"
-      [boardResponse]="boardResponse"></app-column>
-    <button 
-      (click)="updateColumnModal(columnResponse.id, columnResponse)"
-      i18n="'Update column' button in board | 
-      @@board_UpdateColumnButton"
-      >Edit column</button>
-    <button 
-      (click)="deleteColumnModal(columnResponse.id)"
-      i18n="'Delete column' button in board | 
-      @@board_DeleteColumnButton"
-      >Delete column</button>
+      ></app-column>
   </div>
 </div>
