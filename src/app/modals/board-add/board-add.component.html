@@ -1,42 +1,46 @@
-<h2 
+<h2
   mat-dialog-title
-  i18n="'Add board' header in add board modal | 
+  i18n="'Add board' header in add board modal |
   @@boardAdd_AddBoardTitle"
-  >Add board</h2>
+>Add board</h2>
 
 <mat-dialog-content [formGroup]="newBoardForm">
   <mat-form-field>
     <mat-label
-      i18n="'Board name' field in add board modal | 
+      i18n="'Board name' field in add board modal |
       @@boardAdd_BoardNameLabel"
-    >Board name</mat-label>
-    <input 
+    >Board name
+    </mat-label>
+    <input
       matInput
       formControlName="title">
   </mat-form-field>
   <br>
   <mat-form-field>
     <mat-label
-      i18n="'Board description' field in add board modal | 
+      i18n="'Board description' field in add board modal |
       @@boardAdd_BoardDescriptionLabel"
-    >Board description</mat-label>
-    <input 
+    >Board description
+    </mat-label>
+    <input
       matInput
       formControlName="description">
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button 
-    mat-raised-button 
+  <button
+    mat-raised-button
     (click)="close()"
-    i18n="'Cancel' button in add board modal | 
+    i18n="'Cancel' button in add board modal |
     @@boardAdd_CancelButton"
-    >Cancel</button>
-  <button 
-    mat-raised-button 
+  >Cancel
+  </button>
+  <button
+    mat-raised-button
     (click)="newBoard()"
-    i18n="'Add' button in add board modal | 
+    i18n="'Add' button in add board modal |
     @@boardAdd_AddButton"
-    >Add</button>
+  >Add
+  </button>
 </mat-dialog-actions>

@@ -1,10 +1,10 @@
-<div>
-<div 
+<div
   class="mainTask"
-  >
-  <!-- (click)="updateTaskModal(taskResponse)" -->
+  (click)="updateTaskModal(taskResponse)">
   <p>
-    Task: {{taskResponse.title}} [Done: {{taskResponse.done}}, Order: {{taskResponse.order}}]
+    {{taskResponse.id}}<br>
+    Task: {{taskResponse.title}}<br>
+    <b>Order: {{taskResponse.order}}</b>
   </p>
   <p>
     Task description:<br>
@@ -13,11 +13,12 @@
   <p>{{userResponse?.name}}</p>
 </div>
 <div>
-  <button 
-  class="delete"
-  (click)="deleteTaskModal()"
-  i18n="'Delete task' button in column | 
+  <button
+    class="delete"
+    (click)="deleteTaskModal()"
+    i18n="'Delete task' button in column |
   @@column_DeleteTaskButton"
-  >Delete task</button>
-</div>
+  >Delete task
+  </button>
+
 </div>

@@ -1,20 +1,23 @@
-<button 
-  mat-raised-button 
-  (click)="newBoardModal()"
-  i18n="'Add board' button in kanban | 
+<button
+  mat-raised-button
+  (click)="addBoardModal()"
+  i18n="'Add board' button in kanban |
   @@kanban_AddBoardButton"
-  >Add board</button>
+>Add board
+</button>
 
 <div *ngFor="let boardResponse of boardResponseArray">
   <a [routerLink]="['/', 'board', boardResponse.id]">{{boardResponse.title}} - {{boardResponse.description}}</a>
-  <button 
+  <button
     (click)="updateBoardModal(boardResponse.id, boardResponse)"
-    i18n="'Edit board' button in kanban | 
+    i18n="'Edit board' button in kanban |
     @@kanban_EditBoardButton"
-    >Edit board</button>
-  <button 
-    (click)="deleteBoardModal(boardResponse.id)"
-    i18n="'Delete board' button in kanban | 
+  >Edit board
+  </button>
+  <button
+    (click)="deleteBoardModal(boardResponse.id, boardResponse)"
+    i18n="'Delete board' button in kanban |
     @@kanban_DeleteBoardButton"
-    >Delete board</button>
+  >Delete board
+  </button>
 </div>

@@ -53,35 +53,41 @@ export class KanbanComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.kanbanNotifier)
       )
-      .subscribe(() => {
-        this.getAllBoards();
+      .subscribe((boardResponse: BoardResponse) => {
+        this.boardResponseArray.push(boardResponse)
       })
   }
 
-  deleteBoard(boardId: string): void {
+  deleteBoard(deletedBoardId: string, deletedBoard: BoardResponse): void {
+    const deletedBoardIndex = this.boardResponseArray.indexOf(deletedBoard)
     this.kanbanSubscription = this.boardService
-      .deleteBoard(boardId)
+      .deleteBoard(deletedBoardId)
       .pipe(
         takeUntil(this.kanbanNotifier)
       )
       .subscribe(() => {
-        console.log(`Board ${boardId} deleted!`);
-        this.getAllBoards();
-      })
+          this.boardResponseArray.splice(deletedBoardIndex, 1)
+        }
+      )
   }
 
-  updateBoard(boardId: string, boardRequest: BoardRequest): void {
+  updateBoard(updatedBoardId: string, updatedBoardRequest: BoardRequest): void {
     this.kanbanSubscription = this.boardService
-      .updateBoard(boardId, boardRequest)
+      .updateBoard(updatedBoardId, updatedBoardRequest)
       .pipe(
         takeUntil(this.kanbanNotifier)
       )
-      .subscribe(() => {
-        this.getAllBoards();
+      .subscribe((updatedBoardResponse: BoardResponse) => {
+        this.boardResponseArray.find((boardResponse: BoardResponse) => {
+          if (boardResponse.id === updatedBoardId) {
+            boardResponse.title = updatedBoardResponse.title
+            boardResponse.description = updatedBoardResponse.description
+          }
+        })
       })
   }
 
-  newBoardModal(): void {
+  addBoardModal(): void {
     const newBoardMatDialogConfig = new MatDialogConfig();
 
     newBoardMatDialogConfig.disableClose = true;
@@ -117,7 +123,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
     )
   }
 
-  deleteBoardModal(boardId: string): void {
+  deleteBoardModal(deletedBoardId: string, deletedBoard: BoardResponse): void {
     const deleteColumnDialogConfig = new MatDialogConfig();
 
     deleteColumnDialogConfig.disableClose = true;
@@ -128,7 +134,7 @@ export class KanbanComponent implements OnInit, OnDestroy {
     deleteColumnDialogRef.afterClosed().subscribe(
       (deleteConfirm: boolean) => {
         if (deleteConfirm) {
-          this.deleteBoard(boardId)
+          this.deleteBoard(deletedBoardId, deletedBoard)
         }
       }
     )

@@ -6,4 +6,5 @@ export interface TaskRequest {
   userId: string;
   boardId?: string;
   columnId?: string;
+  files?: [];
 }

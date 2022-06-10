@@ -1,36 +1,38 @@
 <!-- Добавить i18n и прочую лабуду -->
 <form [formGroup]="userForm" (submit)="updateUser()">
   <label>
-    <p 
-      i18n="'Name' field name in profile | 
+    <p
+      i18n="'Name' field name in profile |
       @@profile_NameInput"
     >Name</p>
     <input formControlName="name">
   </label>
   <label>
     <p
-      i18n="'Login' field name in profile | 
+      i18n="'Login' field name in profile |
       @@profile_LoginInput"
     >Login</p>
     <input formControlName="login">
   </label>
   <label>
     <p
-      i18n="'Password' field name in profile | 
+      i18n="'Password' field name in profile |
       @@profile_PasswordInput"
     >Password</p>
     <input formControlName="password">
   </label>
   <p>
-    <button 
+    <button
       type="submit"
-      i18n="'Save' button in profile | 
+      i18n="'Save' button in profile |
       @@profile_SaveButton"
-    >Save</button>
+    >Save
+    </button>
   </p>
 </form>
-<button 
-    (click)="deleteUserModal()"
-    i18n="'Delete user' button in profile | 
+<button
+  (click)="deleteUserModal()"
+  i18n="'Delete user' button in profile |
     @@profile_DeleteUserButton"
-  >Delete user</button>
+>Delete user
+</button>

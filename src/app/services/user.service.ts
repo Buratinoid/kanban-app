@@ -31,7 +31,7 @@ export class UserService {
   public get users(): UserResponse[] {
     return this._users
   }
-  
+
   public set users(value: UserResponse[]) {
     this._users = value
   }

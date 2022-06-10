@@ -1,3 +1,5 @@
 .mainTask {
-    border: 1px dotted black; 
+  border: 1px dotted black;
+  margin: 2px;
+  background-color: aliceblue;
 }

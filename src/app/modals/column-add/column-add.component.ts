@@ -17,7 +17,6 @@ export class ColumnAddComponent implements OnInit {
   ) {
     this.newColumnForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
-      order: new FormControl('', [Validators.pattern(/[0-9]/)])
     })
   }
 
@@ -29,7 +28,7 @@ export class ColumnAddComponent implements OnInit {
       const value: ColumnRequest = this.newColumnForm.value
       const columnRequest: ColumnRequest = {
         title: value.title,
-        order: Number(value.order)
+        order: 0
       }
       this.newColumnDialogRef.close(columnRequest)
     }

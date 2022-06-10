@@ -1,33 +1,60 @@
 <div class="mainColumn">
-  Column:  [Order: {{columnResponse.order}}]
-  
-  <mat-drawer-container>
-    <mat-drawer #editColumn mode="side">
-      <input>
-    </mat-drawer>
-    <button mat-raised-button (click)="editColumn.toggle()">{{columnResponse.title}}</button>
-  </mat-drawer-container>
-  
-  <button 
-    (click)="updateColumnModal(columnResponse.id, columnResponse)"
-    i18n="'Update column' button in board | 
-    @@board_UpdateColumnButton"
-    >Edit column</button>
-  <button 
-    (click)="deleteColumnModal(columnResponse.id)"
-    i18n="'Delete column' button in board | 
+  <form [formGroup]="editColumnTitleForm">
+    <input
+      formControlName="title"
+      *ngIf="!getEditColumnCondition()"
+    >
+    <button
+      (click)="changeEditColumnCondition(); updateColumnTitle();"
+      *ngIf="!getEditColumnCondition()"
+    >V
+    </button>
+    <button
+      (click)="changeEditColumnCondition()"
+      *ngIf="!getEditColumnCondition()"
+    >X
+    </button>
+    <button
+      (click)="changeEditColumnCondition(); editColumnTitle();"
+      *ngIf="getEditColumnCondition()"
+    >{{columnResponse.title}}</button>
+  </form>
+
+  <br>
+  Column: {{columnResponse.title}} [Order: {{columnResponse.order}}]<br>
+  {{columnResponse.id}}
+
+  <button
+    (click)="deleteColumnModal()"
+    i18n="'Delete column' button in board |
     @@board_DeleteColumnButton"
-    >Delete column</button>
-  <button 
-    (click)="newTaskModal()"
-    i18n="'Add task' button in column | 
+  >Delete column
+  </button>
+  <button
+    (click)="addTaskModal()"
+    i18n="'Add task' button in column |
     @@column_AddTaskButton"
-    >Add task</button>
-  <div *ngFor="let taskResponse of taskResponseArray">
-    <app-task
-      [boardResponse]="boardResponse"
-      [columnResponse]="columnResponse"
-      [taskResponse]="taskResponse"
+  >Add task
+  </button>
+</div>
+<div>
+  <div
+    cdkDropList
+    [cdkDropListData]="taskResponseArray"
+    (cdkDropListDropped)="dropTask($event)"
+    class="task-list"
+  >
+    <div
+      *ngFor="let taskResponse of taskResponseArray"
+      cdkDrag
+      class="task-box"
+    >
+      <app-task
+        [boardResponse]="boardResponse"
+        [columnResponse]="columnResponse"
+        [taskResponseArray]="taskResponseArray"
+        [taskResponse]="taskResponse"
       ></app-task>
+    </div>
   </div>
 </div>

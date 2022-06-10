@@ -21,7 +21,7 @@ export class TaskService {
   public createTask(
     boardId: string,
     columnId: string,
-    task: TaskRequest): Observable<TaskRequest> {
+    task: TaskRequest): Observable<TaskResponse> {
 
     return this.requestService.postRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks', task)
   }
@@ -49,5 +49,22 @@ export class TaskService {
     task: TaskRequest): Observable<TaskResponse> {
 
     return this.requestService.putRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskId, task)
+  }
+
+  public updateTaskOrder(
+    boardId: string,
+    columnId: string,
+    taskResponse: TaskResponse): Observable<TaskResponse> {
+
+    const taskRequest: TaskRequest = {
+      title: taskResponse.title,
+      done: taskResponse.done,
+      order: taskResponse.order,
+      description: taskResponse.description,
+      userId: taskResponse.userId,
+      boardId: boardId,
+      columnId: columnId
+    }
+    return this.requestService.putRequest('/boards/' + boardId + '/columns/' + columnId + '/tasks/' + taskResponse.id, taskRequest)
   }
 }

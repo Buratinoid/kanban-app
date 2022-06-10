@@ -1,15 +1,36 @@
 <div>
   Board: {{boardResponse.title}}<br>
   Description: {{boardResponse.description}}<br>
-  <button 
-    (click)="newColumnModal()"
-    i18n="'Add column' button in board | 
+  <button
+    (click)="addColumnModal()"
+    i18n="'Add column' button in board |
     @@board_AddColumnButton"
-    >Add column</button>
-  <div *ngFor="let columnResponse of columnResponseArray">
-    <app-column
-      [boardResponse]="boardResponse"
-      [columnResponse]="columnResponse"
-      ></app-column>
+  >Add column
+  </button>
+</div>
+<div
+>
+  <div
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    [cdkDropListData]="columnResponseArray"
+    (cdkDropListDropped)="dropColumn($event)"
+  >
+    <div
+      cdkDropListGroup
+      class="column-list"
+    >
+      <div
+        *ngFor="let columnResponse of columnResponseArray"
+        cdkDrag
+        class="column-box"
+      >
+        <app-column
+          [boardResponse]="boardResponse"
+          [columnResponse]="columnResponse"
+          [columnResponseArray]="columnResponseArray"
+        ></app-column>
+      </div>
+    </div>
   </div>
 </div>

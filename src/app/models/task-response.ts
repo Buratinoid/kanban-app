@@ -6,8 +6,9 @@ export class TaskResponse {
   order: number;
   description: string;
   userId: string;
-  boardId: string;
-  columnId: string;
+  // boardId: string;
+  // columnId: string;
+  files: []
 
   constructor(
     id: string = '',
@@ -16,8 +17,9 @@ export class TaskResponse {
     order: number = 1,
     description: string = '',
     userId: string = '',
-    boardId: string = '',
-    columnId: string = ''
+    // boardId: string = '',
+    // columnId: string = '',
+    files: [] = []
   ) {
 
     this.id = id
@@ -26,7 +28,8 @@ export class TaskResponse {
     this.order = order
     this.description = description
     this.userId = userId
-    this.boardId = boardId
-    this.columnId = columnId
+    // this.boardId = boardId
+    // this.columnId = columnId
+    this.files = files
   }
 }

@@ -69,11 +69,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   findUserByName(): void {
     const userLogin: string = this.authService.userLogin
     this.usersResponse
-    .find((userResponse: UserResponse) => {
-      if(userResponse.login === userLogin) {
-        this.userResponse = userResponse
-      }
-    })
+      .find((userResponse: UserResponse) => {
+        if (userResponse.login === userLogin) {
+          this.userResponse = userResponse
+        }
+      })
   }
 
   updateUser(): void {

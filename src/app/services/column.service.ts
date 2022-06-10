@@ -44,4 +44,15 @@ export class ColumnService {
 
     return this.requestService.putRequest('/boards/' + boardId + '/columns/' + columnId, column)
   }
+
+  public updateColumnOrder(
+    boardId: string,
+    columnResponse: ColumnResponse): Observable<ColumnResponse> {
+
+    const columnRequest: ColumnRequest = {
+      title: columnResponse.title,
+      order: columnResponse.order,
+    }
+    return this.requestService.putRequest('/boards/' + boardId + '/columns/' + columnResponse.id, columnRequest)
+  }
 }

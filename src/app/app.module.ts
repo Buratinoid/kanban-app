@@ -20,7 +20,6 @@ import {TaskComponent} from './components/kanban-components/task/task.component'
 import {BoardAddComponent} from './modals/board-add/board-add.component';
 import {BoardUpdateComponent} from './modals/board-update/board-update.component';
 import {ColumnAddComponent} from './modals/column-add/column-add.component';
-import {ColumnUpdateComponent} from './modals/column-update/column-update.component';
 import {TaskAddComponent} from './modals/task-add/task-add.component';
 import {TaskUpdateComponent} from './modals/task-update/task-update.component';
 import {DeleteConfirmComponent} from './modals/delete-confirm/delete-confirm.component';
@@ -39,6 +38,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     BoardAddComponent,
     BoardUpdateComponent,
     ColumnAddComponent,
-    ColumnUpdateComponent,
     TaskAddComponent,
     TaskUpdateComponent,
     DeleteConfirmComponent
@@ -73,7 +72,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatSidenavModule
+    MatSidenavModule,
+    DragDropModule
 
   ],
   providers: [
@@ -91,7 +91,6 @@ import {MatSidenavModule} from '@angular/material/sidenav';
     BoardAddComponent,
     BoardUpdateComponent,
     ColumnAddComponent,
-    ColumnUpdateComponent,
     TaskAddComponent,
     TaskUpdateComponent,
     DeleteConfirmComponent

@@ -47,7 +47,7 @@ export class AuthService {
   public getIsLoggedIn(): Observable<boolean> {
     return this._isLoggedIn;
   }
-  
+
   public setIsLoggedIn(state: boolean) {
     this._isLoggedIn.next(state);
   }
