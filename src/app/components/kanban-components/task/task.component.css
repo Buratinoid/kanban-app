@@ -3,3 +3,8 @@
   margin: 2px;
   background-color: aliceblue;
 }
+
+.task_info {
+  border: 1px solid black;
+  font-size: 10px;
+}

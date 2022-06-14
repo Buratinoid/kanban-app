@@ -2,9 +2,9 @@
   class="mainTask"
   (click)="updateTaskModal(taskResponse)">
   <p>
-    {{taskResponse.id}}<br>
+    
     Task: {{taskResponse.title}}<br>
-    <b>Order: {{taskResponse.order}}</b>
+    
   </p>
   <p>
     Task description:<br>
@@ -21,4 +21,8 @@
   >Delete task
   </button>
 
+</div>
+<div class="task_info">
+  {{taskResponse.id}}<br>
+  <b>Order: {{taskResponse.order}}</b>
 </div>

@@ -19,11 +19,6 @@
       *ngIf="getEditColumnCondition()"
     >{{columnResponse.title}}</button>
   </form>
-
-  <br>
-  Column: {{columnResponse.title}} [Order: {{columnResponse.order}}]<br>
-  {{columnResponse.id}}
-
   <button
     (click)="deleteColumnModal()"
     i18n="'Delete column' button in board |
@@ -36,6 +31,11 @@
     @@column_AddTaskButton"
   >Add task
   </button>
+  <div class="column_info">
+    Column:<br>
+    {{columnResponse.id}}<br>
+    <b>Order: {{columnResponse.order}}</b>
+  </div>
 </div>
 <div>
   <div
