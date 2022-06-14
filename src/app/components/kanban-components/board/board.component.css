@@ -1,7 +1,5 @@
 .column-list {
-  /* width: 1000px; */
-  /* max-width: 100%; */
-  border: solid 1px #ccc;
+  max-width: 100%;
   min-height: 60px;
   display: flex;
   flex-direction: row;
@@ -11,20 +9,34 @@
 }
 
 .column-box {
-  min-width: 250px;
-  padding: 20px 10px;
-  border-right: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
+  border-radius: 5px;
+  margin: 0 5px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   box-sizing: border-box;
-  cursor: move;
-  background: white;
+  position: relative;
+  z-index: 1;
   font-size: 14px;
   flex-grow: 1;
   flex-basis: 0;
+}
+
+.column {
+  width: 300px;
+  padding-top: 40px;
+  border: 2px solid yellow;
+}
+
+.column-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #ccc;
+  cursor: move;
+  width: 20px;
+  height: 20px;
 }
 
 .cdk-drag-preview {

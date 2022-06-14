@@ -8,8 +8,6 @@
   >Add column
   </button>
 </div>
-<div
->
   <div
     cdkDropList
     cdkDropListOrientation="horizontal"
@@ -24,8 +22,12 @@
         *ngFor="let columnResponse of columnResponseArray"
         cdkDrag
         class="column-box"
-      >
+        >
+        <div class="column-handle" cdkDragHandle>
+          <mat-icon>drag_handle</mat-icon>
+        </div>
         <app-column
+          class="column"
           [boardResponse]="boardResponse"
           [columnResponse]="columnResponse"
           [columnResponseArray]="columnResponseArray"
@@ -33,4 +35,3 @@
       </div>
     </div>
   </div>
-</div>
