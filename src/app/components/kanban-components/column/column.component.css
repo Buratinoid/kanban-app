@@ -13,10 +13,10 @@
 
 .task-list {
   border: solid 1px blue;
-  min-height: 200px;
+  height: 700px;
   background: white;
   border-radius: 4px;
-  overflow: hidden;
+  overflow-y: scroll;
   display: block;
 }
 
@@ -128,5 +128,6 @@
 .task {
   width: 100%;
   border: 2px solid red;
+  margin-top: 10px;
   padding-top: 40px;
 }
