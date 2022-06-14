@@ -1,12 +1,14 @@
 <div>
-  Board: {{boardResponse.title}}<br>
-  Description: {{boardResponse.description}}<br>
+  <!-- Board: {{boardResponse.title}}<br>
+  Description: {{boardResponse.description}}<br> -->
   <button
+    class="add_column"
+    mat-icon-button
     title="Add column"
     (click)="addColumnModal()"
     i18n-title="'Add column' button in board |
     @@board_AddColumnButton"
-  >Add column
+  ><mat-icon>addchart</mat-icon>
   </button>
 </div>
   <div
