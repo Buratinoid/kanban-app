@@ -38,6 +38,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
@@ -73,6 +74,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatButtonModule,
     MatSelectModule,
     MatSidenavModule,
+    MatIconModule,
     DragDropModule
 
   ],
