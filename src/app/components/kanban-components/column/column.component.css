@@ -1,18 +1,19 @@
-.mainColumn {
+/* .mainColumn {
   border: 1px solid red;
-}
+} */
 
-.task-container {
+/* .task-container {
   width: 400px;
   max-width: 100%;
   margin: 0 25px 25px 0;
   display: inline-block;
   vertical-align: top;
-}
+  border: 5px solid blue;
+} */
 
 .task-list {
-  border: solid 1px #ccc;
-  min-height: 60px;
+  border: solid 1px blue;
+  min-height: 200px;
   background: white;
   border-radius: 4px;
   overflow: hidden;
@@ -20,15 +21,17 @@
 }
 
 .task-box {
-  padding: 20px 10px;
-  border-bottom: solid 1px #ccc;
+  width: 250px;
+  min-height: 50px;
+  margin: 0 auto;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   box-sizing: border-box;
-  cursor: move;
+  z-index: 1;
+  position: relative;
   background: white;
   font-size: 14px;
 }
@@ -99,4 +102,23 @@
   height: 2rem;
   margin: 0;
   padding: 0;
+}
+
+.task-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #ccc;
+  /* width: 20px; */
+  /* height: 20px; */
+}
+
+.task-handle:hover {
+  color: black;
+}
+
+.task {
+  width: 100%;
+  border: 2px solid red;
+  padding-top: 40px;
 }

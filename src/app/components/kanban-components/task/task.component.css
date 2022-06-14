@@ -1,4 +1,5 @@
 .mainTask {
+  width: 100%;
   border: 1px dotted black;
   margin: 2px;
   background-color: aliceblue;
@@ -7,4 +8,18 @@
 .task_info {
   border: 1px solid black;
   font-size: 10px;
+}
+
+.delete_task {
+  position: absolute;
+  color: #ccc;
+  top: 0px;
+  right: 0px;
+}
+
+.delete_task:hover {
+  position: absolute;
+  color: black;
+  top: 0px;
+  right: 0px;
 }

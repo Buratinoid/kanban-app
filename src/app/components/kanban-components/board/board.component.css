@@ -25,6 +25,7 @@
 
 .column {
   width: 300px;
+  min-height: 300px;
   padding-top: 40px;
   border: 2px solid yellow;
 }
@@ -34,8 +35,8 @@
   top: 10px;
   left: 10px;
   color: #ccc;
-  width: 20px;
-  height: 20px;
+  /* width: 20px; */
+  /* height: 20px; */
 }
 
 .column-handle:hover {

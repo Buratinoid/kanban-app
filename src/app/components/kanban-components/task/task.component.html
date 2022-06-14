@@ -1,5 +1,4 @@
 <div
-  class="mainTask"
   (click)="updateTaskModal(taskResponse)">
   <p>
     
@@ -14,11 +13,12 @@
 </div>
 <div>
   <button
-    class="delete"
+    mat-icon-button
+    class="delete_task"
     (click)="deleteTaskModal()"
     i18n="'Delete task' button in column |
   @@column_DeleteTaskButton"
-  >Delete task
+  ><mat-icon>delete_outline</mat-icon>
   </button>
 
 </div>

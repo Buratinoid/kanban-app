@@ -13,10 +13,10 @@
     cdkDropListOrientation="horizontal"
     [cdkDropListData]="columnResponseArray"
     (cdkDropListDropped)="dropColumn($event)"
-  >
+    >
     <div
-      cdkDropListGroup
-      class="column-list"
+    cdkDropListGroup
+    class="column-list"
     >
       <div
         *ngFor="let columnResponse of columnResponseArray"

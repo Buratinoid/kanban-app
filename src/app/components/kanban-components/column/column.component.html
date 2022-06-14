@@ -59,7 +59,11 @@
       cdkDrag
       class="task-box"
     >
+      <div class="task-handle" cdkDragHandle>
+        <mat-icon>drag_handle</mat-icon>
+      </div>
       <app-task
+        class="task"
         [boardResponse]="boardResponse"
         [columnResponse]="columnResponse"
         [taskResponseArray]="taskResponseArray"
