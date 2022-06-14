@@ -28,6 +28,7 @@
   min-height: 300px;
   padding-top: 40px;
   border: 2px solid yellow;
+  border-radius: 15px;
 }
 
 .column-handle {

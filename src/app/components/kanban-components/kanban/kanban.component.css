@@ -1,0 +1,32 @@
+.board {
+    /* width: 90%; */
+    height: 2.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    margin: 5px 0;
+    border: 1px solid blue;
+    border-radius: 10px;
+}
+
+.board-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    padding: 0 5px;
+    color: black;
+}
+
+.delete_board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+}
+
+.delete_board:hover {
+    color: black;
+}
