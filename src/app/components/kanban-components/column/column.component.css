@@ -79,6 +79,14 @@
   right: 0px;
 }
 
+.add_task {
+  color: #ccc;
+}
+
+.add_task:hover {
+  color: black;
+}
+
 .column_title {
   width: 100%;
   height: 2rem;
