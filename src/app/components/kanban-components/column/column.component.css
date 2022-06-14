@@ -64,6 +64,14 @@
 
 .delete_column {
   position: absolute;
+  color: #ccc;
+  top: 0px;
+  right: 0px;
+}
+
+.delete_column:hover {
+  position: absolute;
+  color: black;
   top: 0px;
   right: 0px;
 }

@@ -34,9 +34,12 @@
   top: 10px;
   left: 10px;
   color: #ccc;
-  cursor: move;
   width: 20px;
   height: 20px;
+}
+
+.column-handle:hover {
+  color: black;
 }
 
 .cdk-drag-preview {
