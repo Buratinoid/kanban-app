@@ -2,8 +2,9 @@
   Board: {{boardResponse.title}}<br>
   Description: {{boardResponse.description}}<br>
   <button
+    title="Add column"
     (click)="addColumnModal()"
-    i18n="'Add column' button in board |
+    i18n-title="'Add column' button in board |
     @@board_AddColumnButton"
   >Add column
   </button>
