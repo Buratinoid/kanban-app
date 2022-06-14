@@ -1,3 +1,8 @@
+<div class="column_info">
+  Column:<br>
+  {{columnResponse.id}}<br>
+  <b>Order: {{columnResponse.order}}</b>
+</div>
 <div class="mainColumn">
   <form [formGroup]="editColumnTitleForm">
     <input
@@ -34,16 +39,13 @@
   ><mat-icon>delete_outline</mat-icon>
   </button>
   <button
+    mat-icon-button
     (click)="addTaskModal()"
-    i18n="'Add task' button in column |
+    title="Add task"
+    i18n-title="'Add task' button in column |
     @@column_AddTaskButton"
-  >Add task
+    ><mat-icon>post_add</mat-icon>
   </button>
-  <div class="column_info">
-    Column:<br>
-    {{columnResponse.id}}<br>
-    <b>Order: {{columnResponse.order}}</b>
-  </div>
 </div>
 <div>
   <div
