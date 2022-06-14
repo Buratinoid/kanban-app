@@ -106,13 +106,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.columnResponseArray.splice(deletedColumnIndex, 1)
         this.changeColumnsOrder(changeColumnOrderArray)
-          .subscribe((changedColumnResponse: ColumnResponse) => {
-            this.columnResponseArray.find((columnResponse: ColumnResponse) => {
-              if (changedColumnResponse.id === columnResponse.id) {
-                columnResponse.order = changedColumnResponse.order
-              }
-            })
-          })
+
       })
   }
 
@@ -204,6 +198,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
           if (task.id === deletedTask.id) {
             task.id = taskResponse.id
             task.order = taskResponse.order
+            task.boardId = taskResponse.boardId
+            task.columnId = taskResponse.columnId
           }
         })
       })
@@ -221,133 +217,133 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   dropTask(event: CdkDragDrop<TaskResponse[]>): void {
-    const columnResponseArrayForDeleteTask: ColumnResponse[] = JSON.parse(JSON.stringify(this.columnResponseArray))
-
-    const movedTask: TaskResponse = this.taskResponseArray[event.previousIndex]
-    const movedTaskIndex: number = JSON.parse(JSON.stringify(event.currentIndex))
-    let deletedTaskColumnId = ''
-
+    
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-    } else {
+      } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
-      );
-    }
-
-    //Если перемещение МЕЖДУ колонками
-    if (event.container.data !== event.previousContainer.data) {
-
-      const currentTaskArray: TaskResponse[] = event.container.data
-      const deletedTask: TaskResponse = JSON.parse(JSON.stringify(event.container.data[movedTaskIndex]))
-
-      //Поиск Id колонки из которой удалён Task
-      columnResponseArrayForDeleteTask.forEach((column: ColumnResponse) => {
-        column.tasks.forEach((task: TaskResponse) => {
-          if (task.id === deletedTask.id) {
-
-            deletedTaskColumnId = column.id
-          }
-        })
-      })
-
-      currentTaskArray[movedTaskIndex].order = movedTaskIndex + 1
-
-      const changeTaskOrderCurrentColumnArray: TaskResponse[] = []
-      for (let i = movedTaskIndex + 1; i <= currentTaskArray.length - 1; i++) {
-        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(currentTaskArray[i]))
-        taskResponse.order += 1
-        changeTaskOrderCurrentColumnArray.push(taskResponse)
+        );
       }
-
+      
+      const movedTask: TaskResponse = event.container.data[event.currentIndex]   //Пустой массив!!!!!!
+      const movedTaskIndex: number = event.currentIndex
+      const movedTaskOrder: number = event.container.data[movedTaskIndex].order
+      const currentTaskArray: TaskResponse[] = event.container.data
       const previousTaskArray: TaskResponse[] = event.previousContainer.data
       const previousTaskIndex: number = event.previousIndex
 
-      const changeTaskOrderPrevColumnArray: TaskResponse[] = []
-      for (let i = previousTaskIndex; i <= previousTaskArray.length - 1; i++) {
-        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(previousTaskArray[i]))
-        taskResponse.order -= 1
-        changeTaskOrderPrevColumnArray.push(taskResponse)
-      }
+      if (event.container.data !== event.previousContainer.data) {
+      this.dropTaskBetweenColumns(movedTask, movedTaskIndex, previousTaskIndex, currentTaskArray, previousTaskArray)
 
-      this.addMovedTask(currentTaskArray[movedTaskIndex]);
-      this.deleteMovedTask(deletedTaskColumnId, deletedTask.id)
-
-      this.changeTasksOrder(deletedTaskColumnId, changeTaskOrderPrevColumnArray)
-        .subscribe((changedTaskResponse: TaskResponse) => {
-          this.columnResponseArray.find((columnResponse: ColumnResponse) => {
-            if (deletedTaskColumnId === columnResponse.id) {
-              columnResponse.tasks.find((taskResponse: TaskResponse) => {
-                if (changedTaskResponse.id === taskResponse.id) {
-                  taskResponse.order = changedTaskResponse.order
-                }
-              })
-            }
-          })
-        })
-
-      this.changeTasksOrder(this.columnResponse.id, changeTaskOrderCurrentColumnArray)
-        .subscribe((changedTaskResponse: TaskResponse) => {
-          this.taskResponseArray.find((taskResponse: TaskResponse) => {
-            if (changedTaskResponse.id === taskResponse.id) {
-              taskResponse.order = changedTaskResponse.order
-            }
-          })
-        })
-
-    } else { //Если перемещение ВНУТРИ колонки
-      const requestArray: TaskResponse[] = [];
-      const index: number = this.taskResponseArray.findIndex((value: TaskResponse) => value.id === movedTask.id);
-      const order: number = movedTask.order;
-
-      if (index >= order) {
-
-        for (let i: number = order - 1; i < index; i++) {
-          const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.taskResponseArray[i]))
-          taskResponse.order -= 1
-          requestArray.push(taskResponse)
-        }
       } else {
-
-        for (let i: number = order - 1; i > index; i--) {
-          const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.taskResponseArray[i]))
-          taskResponse.order += 1
-          requestArray.push(taskResponse)
-        }
-      }
-      movedTask.order = index + 1;
-      requestArray.push(movedTask)
-
-      this.changeTasksOrder(this.columnResponse.id, requestArray)
-        .subscribe((changedTaskResponse: TaskResponse) => {
-          this.taskResponseArray.find((taskResponse: TaskResponse) => {
-            if (changedTaskResponse.id === taskResponse.id) {
-              taskResponse.order = changedTaskResponse.order
-            }
-          })
-        })
+      this.dropTaskInsideColumn(movedTask, movedTaskIndex, movedTaskOrder)
     }
-
   }
 
-  changeTasksOrder(columnId: string, changeOrderArray: TaskResponse[]): Observable<TaskResponse> {
-    return from(changeOrderArray).pipe(
-      takeUntil(this.columnNotifier),
-      concatMap((response: TaskResponse) => this.taskService.updateTaskOrder(this.boardResponse.id, columnId, response))
-    )
+  dropTaskBetweenColumns(movedTask: TaskResponse, movedTaskIndex: number, previousTaskIndex: number, currentTaskArray: TaskResponse[], previousTaskArray: TaskResponse[]) {
+    const changeTaskOrderCurrentColumnArray: TaskResponse[] = []
+    const changeTaskOrderPrevColumnArray: TaskResponse[] = []
+    movedTask.order = movedTaskIndex + 1
+
+  for (let i = movedTaskIndex + 1; i <= currentTaskArray.length - 1; i++) {
+    const taskResponse: TaskResponse = JSON.parse(JSON.stringify(currentTaskArray[i]))
+    taskResponse.order += 1
+    changeTaskOrderCurrentColumnArray.push(taskResponse)
   }
 
-  changeColumnsOrder(changeOrderArray: ColumnResponse[]): Observable<ColumnResponse> {
-    return from(changeOrderArray).pipe(
+  for (let i = previousTaskIndex; i <= previousTaskArray.length - 1; i++) {
+    const taskResponse: TaskResponse = JSON.parse(JSON.stringify(previousTaskArray[i]))
+    taskResponse.order -= 1
+    changeTaskOrderPrevColumnArray.push(taskResponse)
+  }
+
+  this.addMovedTask(movedTask);
+  this.deleteMovedTask(movedTask.columnId, movedTask.id)
+  this.changeTasksOrderPreviousColumn(movedTask.columnId, changeTaskOrderPrevColumnArray)
+  this.changeTasksOrderCurrentColumn(this.columnResponse.id, changeTaskOrderCurrentColumnArray)
+  }
+
+  dropTaskInsideColumn(movedTask: TaskResponse, movedTaskIndex: number, movedTaskOrder: number) {
+    const requestArray: TaskResponse[] = [];
+
+    if (movedTaskIndex >= movedTaskOrder) {
+
+      for (let i: number = movedTaskOrder - 1; i < movedTaskIndex; i++) {
+        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.taskResponseArray[i]))
+        taskResponse.order -= 1
+        requestArray.push(taskResponse)
+      }
+    } else {
+
+      for (let i: number = movedTaskOrder - 1; i > movedTaskIndex; i--) {
+        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.taskResponseArray[i]))
+        taskResponse.order += 1
+        requestArray.push(taskResponse)
+      }
+    }
+    movedTask.order = movedTaskIndex + 1;
+    requestArray.push(movedTask)
+    this.changeTasksOrderCurrentColumn(this.columnResponse.id, requestArray)
+  }
+
+  changeTasksOrderCurrentColumn(columnId: string, changeOrderArray: TaskResponse[]): void {
+      from(changeOrderArray).pipe(
       takeUntil(this.columnNotifier),
-      concatMap((columnResponse: ColumnResponse) => this.columnService.updateColumnOrder(this.boardResponse.id, columnResponse))
+      concatMap((response: TaskResponse) => {
+        return this.taskService.updateTaskOrder(this.boardResponse.id, columnId, response)
+      })
     )
+    .subscribe((changedTaskResponse: TaskResponse) => {
+      this.taskResponseArray.find((taskResponse: TaskResponse) => {
+        if (changedTaskResponse.id === taskResponse.id) {
+          taskResponse.order = changedTaskResponse.order
+        }
+      })
+    })
+  }
+
+  changeTasksOrderPreviousColumn(columnId: string, changeOrderArray: TaskResponse[]): void {
+    from(changeOrderArray).pipe(
+    takeUntil(this.columnNotifier),
+    concatMap((response: TaskResponse) => {
+      return this.taskService.updateTaskOrder(this.boardResponse.id, columnId, response)
+    })
+  )
+  .subscribe((changedTaskResponse: TaskResponse) => {
+    this.columnResponseArray.find((columnResponse: ColumnResponse) => {
+      if (columnId === columnResponse.id) {
+        columnResponse.tasks.find((taskResponse: TaskResponse) => {
+          if (changedTaskResponse.id === taskResponse.id) {
+            taskResponse.order = changedTaskResponse.order
+          }
+        })
+      }
+    })
+  })
+}
+
+  changeColumnsOrder(changeOrderArray: ColumnResponse[]): void {
+      from(changeOrderArray).pipe(
+      takeUntil(this.columnNotifier),
+      concatMap((columnResponse: ColumnResponse) => {
+        return this.columnService.updateColumnOrder(this.boardResponse.id, columnResponse)
+      })
+    )
+    .subscribe((changedColumnResponse: ColumnResponse) => {
+      this.columnResponseArray.find((columnResponse: ColumnResponse) => {
+        if (changedColumnResponse.id === columnResponse.id) {
+          columnResponse.order = changedColumnResponse.order
+        }
+      })
+    })
+    
   }
 
   public getEditColumnCondition(): boolean {

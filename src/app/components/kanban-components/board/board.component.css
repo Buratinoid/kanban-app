@@ -3,9 +3,10 @@
   min-height: 60px;
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   background: white;
   border-radius: 4px;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 .column-box {
@@ -19,8 +20,6 @@
   position: relative;
   z-index: 1;
   font-size: 14px;
-  flex-grow: 1;
-  flex-basis: 0;
 }
 
 .column {
@@ -28,6 +27,7 @@
   min-height: 300px;
   padding-top: 40px;
   border: 2px solid yellow;
+  border-radius: 15px;
 }
 
 .column-handle {
@@ -73,4 +73,9 @@
 
 .add_column:hover {
   color: black;
+}
+
+.column-container {
+  display: flex;
+  justify-content: center;
 }

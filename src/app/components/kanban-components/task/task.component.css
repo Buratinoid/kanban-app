@@ -13,13 +13,10 @@
 .delete_task {
   position: absolute;
   color: #ccc;
-  top: 0px;
+  top: 10px;
   right: 0px;
 }
 
 .delete_task:hover {
-  position: absolute;
   color: black;
-  top: 0px;
-  right: 0px;
 }
