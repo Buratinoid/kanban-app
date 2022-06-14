@@ -20,10 +20,12 @@
     >{{columnResponse.title}}</button>
   </form>
   <button
+    mat-icon-button
+    class="delete_column"
     (click)="deleteColumnModal()"
     i18n="'Delete column' button in board |
     @@board_DeleteColumnButton"
-  >Delete column
+  ><mat-icon>delete_outline</mat-icon>
   </button>
   <button
     (click)="addTaskModal()"
