@@ -1,20 +1,26 @@
 <div class="mainColumn">
   <form [formGroup]="editColumnTitleForm">
     <input
+      class="edit_column_title"
       formControlName="title"
       *ngIf="!getEditColumnCondition()"
     >
     <button
+      class="edit_column_title_button"
+      mat-icon-button
       (click)="changeEditColumnCondition(); updateColumnTitle();"
       *ngIf="!getEditColumnCondition()"
-    >V
+    ><mat-icon>check</mat-icon>
     </button>
     <button
+      class="edit_column_title_button"
+      mat-icon-button
       (click)="changeEditColumnCondition()"
       *ngIf="!getEditColumnCondition()"
-    >X
+    ><mat-icon>close</mat-icon>
     </button>
     <button
+      class="column_title"
       (click)="changeEditColumnCondition(); editColumnTitle();"
       *ngIf="getEditColumnCondition()"
     >{{columnResponse.title}}</button>
