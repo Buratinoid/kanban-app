@@ -1,49 +1,53 @@
 <header>
-  <div>
+  <div class="header_left">
     <a  
+      mat-icon-button
       [routerLink]="['']" 
       i18n="'Home' button in navigation bar | 
       @@header_HomeButton"
-      >Home</a>
-  </div>
-  <div>
-    <a  
+      ><mat-icon>home</mat-icon>
+      </a>
+    <a
+      mat-icon-button
       [routerLink]="['kanban']" 
       i18n="'Kanban' button in navigation bar | 
       @@header_KanbanButton"
       *ngIf="isLoggedIn" 
-      >Kanban</a>
+      ><mat-icon>dashboard</mat-icon>
+      </a>
   </div>
-  <div>
+  <div class="header_right">
     <a  
+      mat-icon-button
       [routerLink]="['signin']" 
       i18n="'SignIn' button in navigation bar | 
       @@header_SignInButton"
-      *ngIf="!isLoggedIn" 
-      >Sign In</a>
-  </div>
-  <div>
+      *ngIf="!isLoggedIn"
+      ><mat-icon>login</mat-icon>
+      </a>
     <a  
+      mat-icon-button
       [routerLink]="['signup']" 
       i18n="'SignUp' button in navigation bar | 
       @@header_SignUpButton"
       *ngIf="!isLoggedIn" 
-      >Sign Up</a>
-  </div>
-  <div>
-    <a  
+      ><mat-icon>person_add_alt_1</mat-icon>
+      </a>
+    <a 
+      mat-icon-button
       [routerLink]="['profile']" 
       i18n="'Edit profile' button in navigation bar | 
       @@header_EditProfileButton"
       *ngIf="isLoggedIn" 
-      >Edit profile</a>
-  </div>
-  <div>
+      ><mat-icon>account_circle</mat-icon>
+      </a>
     <button 
+      mat-icon-button
       (click)="logOut()" 
       i18n="'Log Out' button in navigation bar | 
       @@header_LogOutButton"
       *ngIf="isLoggedIn" 
-      >Log Out</button>
+      ><mat-icon>logout</mat-icon>
+      </button>
   </div>
 </header>
