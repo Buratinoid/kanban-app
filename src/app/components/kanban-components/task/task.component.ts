@@ -60,7 +60,7 @@ export class TaskComponent implements OnInit, OnDestroy {
     this.userService.users
       .find((userResponse: UserResponse) => {
         if (userResponse.id === this.taskResponse.userId) {
-          this.userResponse = userResponse
+          this.userResponse.name = userResponse.name
         } // добавить else!!!
       });
   }

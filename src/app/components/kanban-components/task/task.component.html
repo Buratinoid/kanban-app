@@ -1,3 +1,7 @@
+<div class="task_info">
+  {{taskResponse.id}}<br>
+  <b>Order: {{taskResponse.order}}</b>
+</div>
 <div
   (click)="updateTaskModal(taskResponse)">
   <p>
@@ -13,7 +17,7 @@
 </div>
 <div>
   <button
-    mat-icon-button
+  mat-icon-button
     class="delete_task"
     (click)="deleteTaskModal()"
     i18n="'Delete task' button in column |
@@ -22,7 +26,4 @@
   </button>
 
 </div>
-<div class="task_info">
-  {{taskResponse.id}}<br>
-  <b>Order: {{taskResponse.order}}</b>
-</div>
+
