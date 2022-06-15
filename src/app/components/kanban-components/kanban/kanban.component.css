@@ -5,18 +5,20 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 0 5px;
-    margin: 5px 0;
-    border: 1px solid blue;
+    padding: 0;
+    margin: 5px 10px;
+    border: 1px solid #ff0000;
     border-radius: 10px;
+    background-color: #f5dede;
 }
 
 .board-link {
+    height: 2.5rem;
     display: flex;
     align-items: center;
     width: 100%;
     text-decoration: none;
-    padding: 0 5px;
+    padding: 0 10px;
     color: black;
 }
 
@@ -24,9 +26,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #ccc;
+    color: #fbff00;
 }
 
 .delete_board:hover {
-    color: black;
+    color: #2600ff;
 }

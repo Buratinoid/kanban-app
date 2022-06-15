@@ -14,7 +14,7 @@
 .task-list {
   /* border: solid 1px blue; */
   height: 700px;
-  background: white;
+  background: #7555ff;
   /* border-radius: 4px; */
   overflow-y: scroll;
   display: block;
@@ -32,7 +32,7 @@
   box-sizing: border-box;
   z-index: 1;
   position: relative;
-  background: white;
+  /* background: #000000; */
   font-size: 14px;
 }
 
@@ -67,21 +67,19 @@
 
 .delete_column {
   position: absolute;
-  color: #ccc;
+  color: #fbff00;
   top: 0px;
   right: 0px;
 }
 
-.delete_column:hover {
-  color: black;
+.delete_column:hover,
+.add_task:hover,
+.task-handle:hover {
+  color: #2600ff;
 }
 
 .add_task {
-  color: #ccc;
-}
-
-.add_task:hover {
-  color: black;
+  color: #fbff00;
 }
 
 .column_title {
@@ -89,7 +87,8 @@
   height: 2rem;
   border: none;
   outline: none;
-  background: rgb(212, 212, 245);
+  background: #eb9e9e;
+  color: #000000;
   margin: 0;
   padding: 0;
 }
@@ -111,20 +110,18 @@
 
 .task-handle {
   position: absolute;
-  top: 20px;
+  top: 10px;
   left: 10px;
-  color: #ccc;
-  /* width: 20px; */
-  /* height: 20px; */
-}
-
-.task-handle:hover {
-  color: black;
+  color: #fbff00;
 }
 
 .task {
   width: 100%;
-  border: 2px solid red;
-  margin-top: 10px;
-  padding-top: 40px;
+  border: 2px solid #ff0000;
+  border-radius: 5px;
+  /* margin-top: 10px; */
+  padding: 30px 5px 5px 5px;
+  margin-top: 5px; 
+  background-color: #f5dede;
+  /* color: #000000; */
 }

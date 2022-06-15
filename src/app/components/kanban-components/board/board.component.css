@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  background: white;
+  /* background: #000000; */
   border-radius: 4px;
   overflow-x: auto;
 }
@@ -20,27 +20,27 @@
   position: relative;
   z-index: 1;
   font-size: 14px;
+  /* background: #ffffff; */
 }
 
 .column {
   width: 300px;
   min-height: 300px;
   padding-top: 40px;
-  border: 2px solid yellow;
+  border: 2px solid #ff0000;
   border-radius: 15px;
+  background-color: #7555ff;
 }
 
 .column-handle {
   position: absolute;
   top: 10px;
   left: 10px;
-  color: #ccc;
-  /* width: 20px; */
-  /* height: 20px; */
+  color: #fbff00;
 }
 
 .column-handle:hover {
-  color: black;
+  color: #2600ff;
 }
 
 .cdk-drag-preview {
@@ -68,11 +68,11 @@
 }
 
 .add_column {
-  color: #ccc;
+  color: #fbff00;
 }
 
 .add_column:hover {
-  color: black;
+  color: #2600ff;
 }
 
 .column-container {
