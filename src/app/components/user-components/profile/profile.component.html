@@ -1,36 +1,65 @@
-<!-- Добавить i18n и прочую лабуду -->
-<form [formGroup]="userForm" (submit)="updateUser()">
-  <label>
-    <p
+<form 
+  class="profile-form"
+  [formGroup]="userForm" 
+  (submit)="updateUser()">
+  ><mat-form-field 
+    class="profile-input"
+    appearance="fill"> 
+    <mat-label
       i18n="'Name' field name in profile |
       @@profile_NameInput"
-    >Name</p>
-    <input formControlName="name">
-  </label>
-  <label>
-    <p
-      i18n="'Login' field name in profile |
-      @@profile_LoginInput"
-    >Login</p>
-    <input formControlName="login">
-  </label>
-  <label>
-    <p
-      i18n="'Password' field name in profile |
-      @@profile_PasswordInput"
-    >Password</p>
-    <input formControlName="password">
-  </label>
-  <p>
+    >Name</mat-label>>
+    <input
+      matInput 
+      formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field
+    class="profile-input"
+    appearance="fill">
+      <mat-label
+        i18n="'Login' field name in profile |
+        @@profile_LoginInput"
+    >E-mail</mat-label>>
+    <input 
+      matInput
+      formControlName="login">
+    </mat-form-field>
+
+    <mat-form-field
+      class="profile-input"
+      appearance="fill">
+      <mat-label
+        i18n="'Password' field name in profile |
+        @@profile_PasswordInput"
+    >Password</mat-label>>
+    <input 
+    matInput
+    [type]="isHidePassword ? 'password' : 'text'"
+    formControlName="password">
+      <button
+        mat-icon-button
+        matSuffix
+        (click)="isHidePassword = !isHidePassword"
+        [attr.aria-label]="'Hide password'" 
+        [attr.aria-pressed]="isHidePassword"
+        >
+        <mat-icon>
+          {{isHidePassword ? 'visibility' : 'visibility_off'}}
+        </mat-icon>
+      </button>
+    </mat-form-field>
+
     <button
+      mat-raised-button
       type="submit"
       i18n="'Save' button in profile |
       @@profile_SaveButton"
     >Save
     </button>
-  </p>
 </form>
 <button
+  mat-raised-button
   (click)="deleteUserModal()"
   i18n="'Delete user' button in profile |
     @@profile_DeleteUserButton"

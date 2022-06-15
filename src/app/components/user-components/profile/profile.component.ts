@@ -19,14 +19,12 @@ import {UserResponse} from '../../../models/user-response';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
+  isHidePassword: boolean = true;
   usersResponse: UserResponse[] = [];
-
   userResponse: UserResponse = new UserResponse();
 
   userForm: FormGroup;
-
   userSubscription: Subscription = new Subscription;
-
   userNotifier: Subject<void> = new Subject();
 
   constructor(
