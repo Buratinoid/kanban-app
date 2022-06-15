@@ -1,31 +1,61 @@
-<form [formGroup]="registrationForm" (submit)="signUp()">
-  <label>
-    <p
+
+<form 
+  class="signin_form"
+  [formGroup]="registrationForm" 
+  (submit)="signUp()"
+  ><mat-form-field 
+  class="signin_input"
+  appearance="fill"> 
+    <mat-label
       i18n="'Name' field name in registration |
       @@registration_NameInput"
-    >Name:</p>
-    <input formControlName="name">
-  </label>
-  <label>
-    <p
+    >Name</mat-label>
+    <input 
+    matInput
+    formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field 
+  class="signin_input"
+  appearance="fill">
+    <mat-label
       i18n="'Login' field name in registration |
       @@registration_LoginInput"
-    >Login:</p>
-    <input formControlName="login">
-  </label>
-  <label>
-    <p
+    >E-mail</mat-label>
+    <input
+    matInput
+    formControlName="login">
+    </mat-form-field>
+
+  <mat-form-field 
+  class="signin_input"
+  appearance="fill">
+    <mat-label
       i18n="'Password' field name in registration |
       @@registration_PasswordInput"
-    >Password:</p>
-    <input formControlName="password">
-  </label>
-  <p>
+    >Password</mat-label>
+    <input 
+    matInput
+    [type]="isHidePassword ? 'password' : 'text'"
+    formControlName="password">
     <button
-      type="submit"
-      i18n="'SignUp' button in registration |
-      @@registration_SignUpButton"
-    >Sign Up
+      mat-icon-button
+      matSuffix
+      (click)="isHidePassword = !isHidePassword"
+      [attr.aria-label]="'Hide password'" 
+      [attr.aria-pressed]="isHidePassword"
+      >
+      <mat-icon>
+        {{isHidePassword ? 'visibility' : 'visibility_off'}}
+      </mat-icon>
     </button>
-  </p>
-</form>
+   </mat-form-field>
+
+     <button
+     mat-raised-button
+     type="submit"
+     i18n="'SignUp' button in registration |
+     @@registration_SignUpButton"
+     >Sign Up
+    </button>
+  </form>

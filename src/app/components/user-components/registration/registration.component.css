@@ -1,25 +1,15 @@
-form {
-    background-color: rgb(228, 123, 123);
+.signin_input {
+    width: 250px;
+    margin: 0;
+}
+
+.signin_form {
+    width: 300px;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
     border: 1px solid red;
+    background-color: aqua;
+    padding: 10px 0;
     margin: 0 auto;
-    width: 50vw;
-}
-
-label {
-    border: 1px solid blue;
-    margin: 0.5rem auto;
-}
-
-p {
-    margin: 0;
-    /* border: 1px solid blue; */
-    text-align: center;
-}
-
-input {
-    margin: 0;
-
 }

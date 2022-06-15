@@ -16,6 +16,7 @@ import {UserResponse} from "../../../models/user-response";
 })
 export class RegistrationComponent implements OnInit, OnDestroy {
 
+  isHidePassword: boolean = true;
   registrationForm: FormGroup;
 
   constructor(
@@ -24,7 +25,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   ) {
     this.registrationForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      login: new FormControl('', [Validators.required]),
+      login: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required])
     });
   }
