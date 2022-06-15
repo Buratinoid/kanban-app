@@ -1,9 +1,9 @@
-.signin_input {
+.signup_input {
     width: 250px;
     margin: 0;
 }
 
-.signin_form {
+.signup_form {
     width: 300px;
     display: flex;
     flex-flow: column nowrap;
