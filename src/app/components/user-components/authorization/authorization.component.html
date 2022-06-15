@@ -4,7 +4,7 @@
   (submit)="signIn()"
   >
   <mat-form-field 
-    class="signin_input"
+    class="signin-input"
     appearance="fill"
   ><mat-label 
     i18n="'E-mail' field name in authorization |
@@ -16,7 +16,7 @@
   </mat-form-field>
 
   <mat-form-field 
-    class="signin_input"
+    class="signin-input"
     appearance="fill"
     ><mat-label 
     i18n="'Password' field name in authorization |
@@ -25,8 +25,8 @@
 
     <input 
     matInput
+    [type]="isHidePassword ? 'password' : 'text'"
     formControlName="password">
-    
     <button
     mat-icon-button
     matSuffix
