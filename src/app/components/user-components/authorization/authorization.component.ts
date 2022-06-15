@@ -17,6 +17,7 @@ import {SingInRequest} from '../../../models/sing-in-request';
 })
 export class AuthorizationComponent implements OnInit, OnDestroy {
 
+  isHidePassword: boolean = true;
   authorizationForm: FormGroup;
   authorizationStatus: AuthorizationStatus = new AuthorizationStatus(false);
   authorizationSubscription: Subscription = new Subscription;

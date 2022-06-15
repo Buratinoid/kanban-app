@@ -1,31 +1,56 @@
-<form [formGroup]="authorizationForm" (submit)="signIn()">
-  <label>
-    <p
-      i18n="'Login' field name in authorization |
+  <form
+  class="signin-form"
+  [formGroup]="authorizationForm" 
+  (submit)="signIn()"
+  >
+  <mat-form-field 
+    class="signin_input"
+    appearance="fill"
+  ><mat-label 
+    i18n="'E-mail' field name in authorization |
     @@authorization_LoginInput"
-    >Login:</p>
-    <input formControlName="login">
-  </label>
-  <label>
-    <p
-      i18n="'Password' field name in authorization |
+    >E-mail:</mat-label>
+    <input
+    matInput 
+    formControlName="login">
+  </mat-form-field>
+
+  <mat-form-field 
+    class="signin_input"
+    appearance="fill"
+    ><mat-label 
+    i18n="'Password' field name in authorization |
     @@authorization_PasswordInput"
-    >Password:</p>
-    <input formControlName="password">
-  </label>
-  <p>
+    >Password:</mat-label>
+
+    <input 
+    matInput
+    formControlName="password">
+    
     <button
+    mat-icon-button
+    matSuffix
+    (click)="isHidePassword = !isHidePassword"
+    [attr.aria-label]="'Hide password'" 
+    [attr.aria-pressed]="isHidePassword"
+    >
+    <mat-icon>
+      {{isHidePassword ? 'visibility' : 'visibility_off'}}
+    </mat-icon>
+  </button>
+</mat-form-field>
+
+    <button
+      mat-raised-button
       type="submit"
       i18n="'SignIn' button in authorization |
     @@authorization_SignInButton"
     >Sign In
     </button>
-  </p>
-  <div>
+
+  <div class="error-form">
     Code: {{authorizationStatus.errorCode}}<br>
     Text: {{authorizationStatus.errorText}}<br>
     Status: {{authorizationStatus.isSuccessful.toString()}}
   </div>
 </form>
-
-
