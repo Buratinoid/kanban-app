@@ -1,15 +1,17 @@
-import {AuthorizationToken} from '../models/authorization-token';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {SingInRequest} from '../models/sing-in-request';
 import {Injectable} from '@angular/core';
+
+import {Url} from '../models/url';
+import {AuthorizationToken} from '../models/authorization-token';
+import {SingInRequest} from '../models/sing-in-request';
 import {SingUpRequest} from "../models/sing-up-request";
 import {UserResponse} from "../models/user-response";
 
 @Injectable()
 export class AuthService {
 
-  private readonly url: string = 'http://localhost:8010/proxy/';
+  private readonly serverUrl: Url = new Url();
 
   private _authorizationToken: AuthorizationToken = {
     token: ''
@@ -24,11 +26,11 @@ export class AuthService {
   }
 
   public signUpUser(singUpRequest: SingUpRequest): Observable<UserResponse> {
-    return this.httpClient.post<UserResponse>(this.url + 'signup', singUpRequest)
+    return this.httpClient.post<UserResponse>(this.serverUrl.url + 'signup', singUpRequest)
   }
 
   public getUserToken(singInRequest: SingInRequest): Observable<AuthorizationToken> {
-    return this.httpClient.post<AuthorizationToken>(this.url + 'signin', singInRequest);
+    return this.httpClient.post<AuthorizationToken>(this.serverUrl.url + 'signin', singInRequest);
   }
 
   public logOut(): void {

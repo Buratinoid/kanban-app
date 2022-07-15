@@ -1,10 +1,57 @@
 header {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    width: 100vw;
-    margin: 0;
-    height: 10vh;
-    background-color: rgb(197, 233, 212);
+  display: flex;
+  height: 6vh;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #00000042;
+  color: #0A0A0A;
+}
+
+.header-left,
+.header-right {
+  display: flex;
+  width: 12vh;
+}
+
+.header-left {
+  justify-content: flex-start;
+}
+
+.header-right {
+  justify-content: flex-end;
+}
+
+.header-center {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.header-button {
+  display: flex;
+  height: 6vh;
+  width: 6vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-button:hover {
+  background-color: #0000001a;
+}
+
+@media (max-width: 1024px) {
+  header {
+    height: 10vmin;
+  }
+
+  .header-left,
+  .header-right {
+    width: 20vmin;
+  }
+
+  .header-button {
+    height: 10vmin;
+    width: 10vmin;
+  }
 }

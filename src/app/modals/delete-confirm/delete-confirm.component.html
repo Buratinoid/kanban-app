@@ -1,10 +1,35 @@
-<h2 mat-dialog-title>Внимание!</h2>
+<h2
+  mat-dialog-title
+  i18n="'Attention!' header in delete confirm modal |
+  @@deleteConfirm_AttentionTitle"
+>
+  Attention!
+</h2>
 
-<mat-dialog-content>
-  Вы уверены?
+<mat-dialog-content
+  i18n="Confirm text in delete confirm modal |
+  @@deleteConfirm_AttentionText"
+>
+  Are you sure?
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button (click)="close()">Отмена</button>
-  <button (click)="confirm()">Ок</button>
+  <button
+    mat-raised-button
+    type="submit"
+    (click)="confirm()"
+    i18n="'Ok' button in delete confirm modal |
+    @@deleteConfirm_OkButton"
+  >
+    Ок
+  </button>
+
+  <button
+    mat-raised-button
+    (click)="close()"
+    i18n="'Cancel' button in delete confirm modal |
+    @@deleteConfirm_CancelButton"
+  >
+    Cancel
+  </button>
 </mat-dialog-actions>

@@ -1,11 +1,12 @@
-import {TaskCondition} from '../../models/task-condition';
-import {UserService} from '../../services/user.service';
-import {UserResponse} from '../../models/user-response';
-import {Subscription, Subject, takeUntil} from 'rxjs';
-import {MatDialogRef} from '@angular/material/dialog';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {MatDialogRef} from '@angular/material/dialog';
+
+import {UserService} from '../../services/user.service';
+
+import {UserResponse} from '../../models/user-response';
 import {TaskRequest} from '../../models/task-request';
+import {TaskCondition} from '../../models/task-condition';
 
 @Component({
   selector: 'app-task-add',
@@ -14,15 +15,10 @@ import {TaskRequest} from '../../models/task-request';
 })
 export class TaskAddComponent implements OnInit {
 
+  usersList: UserResponse[] = [];
   taskCondition = new TaskCondition();
 
-  usersResponse: UserResponse[] = [];
-
   newTaskForm: FormGroup;
-
-  newTaskSubscription: Subscription = new Subscription;
-
-  newTaskNotifier: Subject<void> = new Subject();
 
   constructor(
     private newTaskDialogRef: MatDialogRef<TaskAddComponent>,
@@ -30,21 +26,14 @@ export class TaskAddComponent implements OnInit {
   ) {
     this.newTaskForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
-      done: new FormControl('', [Validators.pattern(/[0-1]/)]),
+      done: new FormControl('', [Validators.pattern(/[0-1]/), Validators.required]),
       description: new FormControl('', [Validators.required]),
       userId: new FormControl('', [Validators.required])
     })
   }
 
   ngOnInit(): void {
-    this.newTaskSubscription = this.userService
-      .getAllUsers()
-      .pipe(
-        takeUntil(this.newTaskNotifier)
-      )
-      .subscribe(
-        (usersResponse: UserResponse[]) => this.usersResponse = usersResponse
-      )
+    this.usersList = this.userService.users
   }
 
   newTask(): void {

@@ -1,12 +1,13 @@
-import {TaskCondition} from '../../models/task-condition';
-import {UserResponse} from '../../models/user-response';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormGroup, Validators, FormControl} from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 import {UserService} from 'src/app/services/user.service';
-import {Subscription, Subject, takeUntil} from 'rxjs';
+
+import {UserResponse} from '../../models/user-response';
 import {TaskRequest} from '../../models/task-request';
 import {TaskResponse} from '../../models/task-response';
-import {FormGroup, Validators, FormControl} from '@angular/forms';
-import {Component, Inject, OnInit} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {TaskCondition} from '../../models/task-condition';
 
 @Component({
   selector: 'app-task-update',
@@ -15,15 +16,9 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class TaskUpdateComponent implements OnInit {
 
+  usersList: UserResponse[] = [];
   taskCondition = new TaskCondition();
-
-  usersResponse: UserResponse[] = [];
-
   updateTaskForm: FormGroup;
-
-  updateTaskSubscription: Subscription = new Subscription;
-
-  updateTaskNotifier: Subject<void> = new Subject();
 
   constructor(
     private userService: UserService,
@@ -32,7 +27,7 @@ export class TaskUpdateComponent implements OnInit {
   ) {
     this.updateTaskForm = new FormGroup({
       title: new FormControl(taskResponse.title, [Validators.required]),
-      done: new FormControl(taskResponse.done, [Validators.pattern(/[0-1]/)]),
+      done: new FormControl(Number(taskResponse.done), [Validators.pattern(/[0-1]/), Validators.required]),
       order: new FormControl(taskResponse.order, [Validators.required]),
       description: new FormControl(taskResponse.description, [Validators.required]),
       userId: new FormControl(taskResponse.userId, [Validators.required])
@@ -40,14 +35,7 @@ export class TaskUpdateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.updateTaskSubscription = this.userService
-      .getAllUsers()
-      .pipe(
-        takeUntil(this.updateTaskNotifier)
-      )
-      .subscribe(
-        (usersResponse: UserResponse[]) => this.usersResponse = usersResponse
-      )
+    this.usersList = this.userService.users
   }
 
   updateTask(): void {
@@ -66,11 +54,5 @@ export class TaskUpdateComponent implements OnInit {
 
   close(): void {
     this.updateColumnDialogRef.close()
-  }
-
-  ngOnDestroy(): void {
-    this.updateTaskNotifier.next();
-    this.updateTaskNotifier.complete();
-    this.updateTaskSubscription.unsubscribe();
   }
 }

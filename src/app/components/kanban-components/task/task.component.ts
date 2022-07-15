@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {Subscription, takeUntil, Subject, concatMap, Observable, from} from 'rxjs';
+import {takeUntil, Subject, concatMap, Observable, from} from 'rxjs';
 
 import {UserService} from '../../../services/user.service';
 import {TaskService} from '../../../services/task.service';
@@ -22,18 +22,17 @@ import {UserResponse} from '../../../models/user-response';
 export class TaskComponent implements OnInit, OnDestroy {
 
   @Input()
-  boardResponse: BoardResponse = new BoardResponse();
+  board: BoardResponse = new BoardResponse();
   @Input()
-  columnResponse: ColumnResponse = new ColumnResponse();
+  column: ColumnResponse = new ColumnResponse();
   @Input()
-  taskResponseArray: TaskResponse[] = [];
+  tasksArray: TaskResponse[] = [];
   @Input()
-  taskResponse: TaskResponse = new TaskResponse();
+  task: TaskResponse = new TaskResponse();
 
-  userResponseArray: UserResponse[] = [];
-  userResponse: UserResponse = new UserResponse();
+  user: UserResponse = new UserResponse();
+  usersArray: UserResponse[] = [];
 
-  taskSubscription: Subscription = new Subscription;
   taskNotifier: Subject<void> = new Subject();
 
   constructor(
@@ -44,12 +43,10 @@ export class TaskComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userResponseArray = this.userService.users;
+    this.usersArray = this.userService.users;
     this.findUserById();
-    this.taskResponseArray.sort((
-      previousTask: TaskResponse,
-      nextTask: TaskResponse): number => {
-      return previousTask.order - nextTask.order
+    this.tasksArray.sort((a: TaskResponse, b: TaskResponse): number => {
+      return a.order - b.order
     })
   }
 
@@ -59,56 +56,23 @@ export class TaskComponent implements OnInit, OnDestroy {
   findUserById(): void {
     this.userService.users
       .find((userResponse: UserResponse) => {
-        if (userResponse.id === this.taskResponse.userId) {
-          this.userResponse.name = userResponse.name
-        } // добавить else!!!
+        if (userResponse.id === this.task.userId) {
+          this.user.name = userResponse.name
+        }
       });
   }
 
   updateTask(updatedTaskRequest: TaskRequest): void {
-    updatedTaskRequest.boardId = this.boardResponse.id
-    updatedTaskRequest.columnId = this.columnResponse.id
-    this.taskSubscription = this.taskService
-      .updateTask(this.boardResponse.id, this.columnResponse.id, this.taskResponse.id, updatedTaskRequest)
+    updatedTaskRequest.boardId = this.board.id
+    updatedTaskRequest.columnId = this.column.id
+    this.taskService.updateTask(this.board.id, this.column.id, this.task.id, updatedTaskRequest)
       .pipe(
         takeUntil(this.taskNotifier)
       )
       .subscribe((updatedTaskResponse: TaskResponse) => {
-        this.taskResponse.title = updatedTaskResponse.title
-        this.taskResponse.done = updatedTaskResponse.done
-        this.taskResponse.description = updatedTaskResponse.description
-        this.taskResponse.userId = updatedTaskResponse.userId
+        this.task = updatedTaskResponse
+        this.findUserById()
       })
-  }
-
-  deleteTask(): void {
-    const changeTaskOrderArray: TaskResponse[] = [];
-    const deletedTaskIndex: number = this.taskResponseArray.indexOf(this.taskResponse)
-
-    for (let i = deletedTaskIndex + 1; i <= (this.taskResponseArray.length - 1); i++) {
-
-      const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.taskResponseArray[i]))
-      taskResponse.order -= 1
-      changeTaskOrderArray.push(taskResponse)
-    }
-
-    this.taskSubscription = this.taskService
-      .deleteTask(this.boardResponse.id, this.columnResponse.id, this.taskResponse.id)
-      .pipe(
-        takeUntil(this.taskNotifier)
-      )
-      .subscribe(() => {
-          this.taskResponseArray.splice(deletedTaskIndex, 1)
-          this.changeTasksOrder(this.columnResponse.id, changeTaskOrderArray)
-            .subscribe((changedTaskResponse: TaskResponse) => {
-              this.taskResponseArray.find((taskResponse: TaskResponse) => {
-                if (changedTaskResponse.id === taskResponse.id) {
-                  taskResponse.order = changedTaskResponse.order
-                }
-              })
-            })
-        }
-      )
   }
 
   updateTaskModal(taskResponse: TaskResponse): void {
@@ -128,6 +92,35 @@ export class TaskComponent implements OnInit, OnDestroy {
         }
       }
     )
+  }
+
+  deleteTask(): void {
+    const changeTaskOrderArray: TaskResponse[] = [];
+    const deletedTaskIndex: number = this.tasksArray.indexOf(this.task)
+
+    for (let i = deletedTaskIndex + 1; i <= (this.tasksArray.length - 1); i++) {
+
+      const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.tasksArray[i]))
+      taskResponse.order -= 1
+      changeTaskOrderArray.push(taskResponse)
+    }
+
+    this.taskService.deleteTask(this.board.id, this.column.id, this.task.id)
+      .pipe(
+        takeUntil(this.taskNotifier)
+      )
+      .subscribe(() => {
+          this.tasksArray.splice(deletedTaskIndex, 1)
+          this.changeTasksOrder(this.column.id, changeTaskOrderArray)
+            .subscribe((changedTaskResponse: TaskResponse) => {
+              this.tasksArray.find((taskResponse: TaskResponse) => {
+                if (changedTaskResponse.id === taskResponse.id) {
+                  taskResponse.order = changedTaskResponse.order
+                }
+              })
+            })
+        }
+      )
   }
 
   deleteTaskModal(): void {
@@ -150,7 +143,7 @@ export class TaskComponent implements OnInit, OnDestroy {
   changeTasksOrder(columnId: string, changeOrderArray: TaskResponse[]): Observable<TaskResponse> {
     return from(changeOrderArray).pipe(
       takeUntil(this.taskNotifier),
-      concatMap((response: TaskResponse) => this.taskService.updateTaskOrder(this.boardResponse.id, columnId, response))
+      concatMap((response: TaskResponse) => this.taskService.updateTaskOrder(this.board.id, columnId, response))
     )
   }
 }

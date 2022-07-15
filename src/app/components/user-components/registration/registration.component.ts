@@ -17,6 +17,7 @@ import {UserResponse} from "../../../models/user-response";
 export class RegistrationComponent implements OnInit, OnDestroy {
 
   isHidePassword: boolean = true;
+
   registrationForm: FormGroup;
 
   constructor(

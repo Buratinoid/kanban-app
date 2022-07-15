@@ -1,76 +1,101 @@
-<div class="column_info">
-  Column:<br>
-  {{columnResponse.id}}<br>
-  <b>Order: {{columnResponse.order}}</b>
-</div>
-<div class="mainColumn">
-  <form [formGroup]="editColumnTitleForm">
-    <input
-      class="edit_column_title"
-      formControlName="title"
-      *ngIf="!getEditColumnCondition()"
+<div
+  class="column-header"
+>
+  <mat-sidenav-container
+    class="sidenav-container-column-title"
+  >
+    <mat-sidenav
+      #column_title
+      class="opened-sidenav-column-title"
+      (openedStart)="editColumnTitle()"
     >
-    <button
-      class="edit_column_title_button"
-      mat-icon-button
-      (click)="changeEditColumnCondition(); updateColumnTitle();"
-      *ngIf="!getEditColumnCondition()"
-    ><mat-icon>check</mat-icon>
-    </button>
-    <button
-      class="edit_column_title_button"
-      mat-icon-button
-      (click)="changeEditColumnCondition()"
-      *ngIf="!getEditColumnCondition()"
-    ><mat-icon>close</mat-icon>
-    </button>
-    <button
-      class="column_title"
-      (click)="changeEditColumnCondition(); editColumnTitle();"
-      *ngIf="getEditColumnCondition()"
-    >{{columnResponse.title}}</button>
-  </form>
+      <form
+        class="edit-column-title-form"
+        [formGroup]="editColumnTitleForm"
+      >
+        <input
+          class="edit-column-title-form-input"
+          formControlName="title"
+        />
+
+        <button
+          class="edit-column-title-form-button"
+          mat-icon-button
+          (click)="column_title.toggle(); updateColumnTitle()"
+        >
+          <mat-icon>check</mat-icon>
+        </button>
+
+        <button
+          class="edit-column-title-form-button"
+          mat-icon-button
+          (click)="column_title.toggle()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </form>
+    </mat-sidenav>
+
+    <mat-sidenav-content
+      class="sidenav-column-title"
+    >
+      <button
+        class="edit-column-title-button"
+        (click)="column_title.toggle()"
+      >
+        {{column.title}}
+      </button>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
   <button
+    class="delete-column-button"
     mat-icon-button
     title="Delete column"
-    class="delete_column"
     (click)="deleteColumnModal()"
     i18n-title="'Delete column' button in board |
     @@board_DeleteColumnButton"
-  ><mat-icon>delete_outline</mat-icon>
-  </button>
-  <button
-    class="add_task"
-    mat-icon-button
-    (click)="addTaskModal()"
-    title="Add task"
-    i18n-title="'Add task' button in column |
-    @@column_AddTaskButton"
-    ><mat-icon>post_add</mat-icon>
+  >
+    <mat-icon>delete_outline</mat-icon>
   </button>
 </div>
-<div>
+
+<button
+  class="add-task-button"
+  mat-icon-button
+  (click)="addTaskModal()"
+  title="Add task"
+  i18n-title="'Add task' button in column |
+  @@column_AddTaskButton"
+>
+  <mat-icon>post_add</mat-icon>
+</button>
+
+<div
+  class="task-list"
+  cdkDropList
+  [cdkDropListData]="tasksArray"
+  (cdkDropListDropped)="dropTask($event)"
+>
   <div
-    cdkDropList
-    [cdkDropListData]="taskResponseArray"
-    (cdkDropListDropped)="dropTask($event)"
-    class="task-list"
+    class="task-box"
+    *ngFor="let task of tasksArray"
+    cdkDrag
   >
     <div
-      *ngFor="let taskResponse of taskResponseArray"
-      cdkDrag
-      class="task-box"
+      class="task-handle-button"
+      cdkDragHandle
     >
-      <div class="task-handle" cdkDragHandle>
-        <mat-icon>drag_handle</mat-icon>
-      </div>
-      <app-task
-        class="task"
-        [boardResponse]="boardResponse"
-        [columnResponse]="columnResponse"
-        [taskResponseArray]="taskResponseArray"
-        [taskResponse]="taskResponse"
-      ></app-task>
+      <mat-icon>drag_handle</mat-icon>
     </div>
+
+    <app-task
+      class="task"
+      [board]="board"
+      [column]="column"
+      [tasksArray]="tasksArray"
+      [task]="task"
+    >
+    </app-task>
   </div>
 </div>

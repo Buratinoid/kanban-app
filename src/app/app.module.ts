@@ -1,11 +1,19 @@
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-
 import {AppComponent} from './app.component';
+import {BrowserModule} from '@angular/platform-browser';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-
 import {AppRoutingModule} from './app-routing.module';
+
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {HomeComponent} from './components/home/home.component';
 import {RegistrationComponent} from './components/user-components/registration/registration.component';
@@ -30,16 +38,8 @@ import {ColumnService} from './services/column.service';
 import {TaskService} from './services/task.service';
 import {AuthService} from './services/auth.service';
 import {UserService} from './services/user.service';
+import {HeaderService} from './services/header.service';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatDialogModule, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import {MatSelectModule} from '@angular/material/select';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatIconModule} from '@angular/material/icon';
-import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -61,6 +61,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     TaskUpdateComponent,
     DeleteConfirmComponent
   ],
+
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -76,8 +77,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MatSidenavModule,
     MatIconModule,
     DragDropModule
-
   ],
+
   providers: [
     RequestService,
     BoardService,
@@ -85,9 +86,12 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     TaskService,
     UserService,
     AuthService,
+    HeaderService,
+
     {provide: MatDialogRef, useValue: {}},
     {provide: MAT_DIALOG_DATA, useValue: []}
   ],
+
   bootstrap: [AppComponent],
   entryComponents: [
     BoardAddComponent,
@@ -100,4 +104,3 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 })
 export class AppModule {
 }
-

@@ -1,19 +1,24 @@
-import {UserResponse} from '../models/user-response';
-import {Observable} from 'rxjs';
-import {RequestService} from './request.service';
+import {Observable, tap} from 'rxjs';
 import {Injectable} from '@angular/core';
+
+import {RequestService} from './request.service';
+
+import {UserResponse} from '../models/user-response';
 import {SingUpRequest} from "../models/sing-up-request";
 
 @Injectable()
 export class UserService {
 
-  private _users: UserResponse[] = [];
+  private _usersArray: UserResponse[] = [];
 
   constructor(private requestService: RequestService) {
   }
 
   public getAllUsers(): Observable<UserResponse[]> {
     return this.requestService.getRequest('/users')
+      .pipe(
+        tap((users: UserResponse[]) => this._usersArray = users)
+      )
   }
 
   public getUser(userId: string): Observable<UserResponse> {
@@ -29,10 +34,6 @@ export class UserService {
   }
 
   public get users(): UserResponse[] {
-    return this._users
-  }
-
-  public set users(value: UserResponse[]) {
-    this._users = value
+    return this._usersArray
   }
 }

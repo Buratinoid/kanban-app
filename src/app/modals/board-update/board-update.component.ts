@@ -1,8 +1,9 @@
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
 import {BoardRequest} from '../../models/board-request';
 import {BoardResponse} from '../../models/board-response';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Component, Inject, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-board-update',
@@ -15,11 +16,11 @@ export class BoardUpdateComponent implements OnInit {
 
   constructor(
     private updateBoardDialogRef: MatDialogRef<BoardUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) boardResponse: BoardResponse
+    @Inject(MAT_DIALOG_DATA) board: BoardResponse
   ) {
     this.updateBoardForm = new FormGroup({
-      title: new FormControl(boardResponse.title, [Validators.required]),
-      description: new FormControl(boardResponse.description, [Validators.required])
+      title: new FormControl(board.title, [Validators.required]),
+      description: new FormControl(board.description, [Validators.required])
     })
   }
 

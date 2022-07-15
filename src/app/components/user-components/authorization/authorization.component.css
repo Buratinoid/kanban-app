@@ -1,20 +1,4 @@
 .error-form {
-    display: flex;
-    background-color: aqua;
-}
-
-.signin-form {
-    width: 300px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    border: 1px solid red;
-    background-color: aqua;
-    padding: 10px 0;
-    margin: 0 auto;
-}
-
-.signin-input {
-    width: 250px;
-    margin: 0;
+  display: flex;
+  background-color: aqua;
 }

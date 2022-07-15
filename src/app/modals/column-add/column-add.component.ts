@@ -1,7 +1,8 @@
-import {ColumnRequest} from '../../models/column-request';
+import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {MatDialogRef} from '@angular/material/dialog';
-import {Component, OnInit} from '@angular/core';
+
+import {ColumnRequest} from '../../models/column-request';
 
 @Component({
   selector: 'app-column-add',

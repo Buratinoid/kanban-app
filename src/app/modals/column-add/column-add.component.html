@@ -1,15 +1,51 @@
-<h2 mat-dialog-title>Новая колонка</h2>
+<h2
+  mat-dialog-title
+  i18n="'Add column' header in add column modal |
+  @@columnAdd_AddColumnTitle"
+>
+  Add column
+</h2>
 
-<mat-dialog-content [formGroup]="newColumnForm">
-  <mat-form-field>
-    <mat-label>Название колонки</mat-label>
-    <input matInput
-           placeholder="Название колонки"
-           formControlName="title">
-  </mat-form-field>
-</mat-dialog-content>
+<form
+  [formGroup]="newColumnForm"
+>
+  <mat-dialog-content
+    class="modal-form"
+  >
+    <mat-form-field
+      appearance="outline"
+    >
+      <mat-label
+        i18n="'Column name' field in add column modal |
+        @@columnAdd_ColumnNameLabel"
+      >
+        Column title
+      </mat-label>
 
-<mat-dialog-actions>
-  <button mat-raised-button (click)="close()">Отмена</button>
-  <button mat-raised-button (click)="newColumn()">Создать</button>
-</mat-dialog-actions>
+      <input
+        matInput
+        formControlName="title">
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      (click)="newColumn()"
+      i18n="'Add' button in add column modal |
+      @@columnAdd_AddButton"
+    >
+      Add
+    </button>
+
+    <button
+      mat-raised-button
+      type="submit"
+      (click)="close()"
+      i18n="'Cancel' button in add column modal |
+      @@columnAdd_CancelButton"
+    >
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</form>

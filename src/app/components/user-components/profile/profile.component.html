@@ -1,53 +1,58 @@
-<form 
-  class="profile-form"
-  [formGroup]="userForm" 
-  (submit)="updateUser()">
-  ><mat-form-field 
-    class="profile-input"
-    appearance="fill"> 
-    <mat-label
-      i18n="'Name' field name in profile |
-      @@profile_NameInput"
-    >Name</mat-label>>
-    <input
-      matInput 
-      formControlName="name">
+<div
+  class="user-form-container"
+>
+  <form
+    class="user-form"
+    [formGroup]="userForm"
+    (submit)="updateUser()"
+  >
+    <mat-form-field
+      appearance="outline">
+      <mat-label
+        i18n="'Name' field name in profile |
+        @@profile_NameInput"
+      >
+        Name
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="name">
     </mat-form-field>
 
     <mat-form-field
-    class="profile-input"
-    appearance="fill">
+      appearance="outline">
       <mat-label
         i18n="'Login' field name in profile |
         @@profile_LoginInput"
-    >E-mail</mat-label>>
-    <input 
-      matInput
-      formControlName="login">
+      >
+        E-mail
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="login">
     </mat-form-field>
 
     <mat-form-field
-      class="profile-input"
-      appearance="fill">
+      appearance="outline">
       <mat-label
         i18n="'Password' field name in profile |
         @@profile_PasswordInput"
-    >Password</mat-label>>
-    <input 
-    matInput
-    [type]="isHidePassword ? 'password' : 'text'"
-    formControlName="password">
-      <button
-        mat-icon-button
+      >
+        Password
+      </mat-label>
+
+      <input
+        matInput
+        [type]="isHidePassword ? 'password' : 'text'"
+        formControlName="password">
+      <mat-icon
         matSuffix
         (click)="isHidePassword = !isHidePassword"
-        [attr.aria-label]="'Hide password'" 
-        [attr.aria-pressed]="isHidePassword"
-        >
-        <mat-icon>
-          {{isHidePassword ? 'visibility' : 'visibility_off'}}
-        </mat-icon>
-      </button>
+      >
+        {{isHidePassword ? 'visibility' : 'visibility_off'}}
+      </mat-icon>
     </mat-form-field>
 
     <button
@@ -55,13 +60,18 @@
       type="submit"
       i18n="'Save' button in profile |
       @@profile_SaveButton"
-    >Save
+    >
+      Save
     </button>
-</form>
-<button
-  mat-raised-button
-  (click)="deleteUserModal()"
-  i18n="'Delete user' button in profile |
-    @@profile_DeleteUserButton"
->Delete user
-</button>
+
+    <button
+      class="delete-user-button"
+      mat-raised-button
+      (click)="deleteUserModal()"
+      i18n="'Delete user' button in profile |
+      @@profile_DeleteUserButton"
+    >
+      Delete user
+    </button>
+  </form>
+</div>

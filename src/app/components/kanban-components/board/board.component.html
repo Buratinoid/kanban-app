@@ -1,41 +1,43 @@
-<div>
-  <!-- Board: {{boardResponse.title}}<br>
-  Description: {{boardResponse.description}}<br> -->
-  <button
-    class="add_column"
-    mat-icon-button
-    title="Add column"
-    (click)="addColumnModal()"
-    i18n-title="'Add column' button in board |
-    @@board_AddColumnButton"
-  ><mat-icon>addchart</mat-icon>
-  </button>
-</div>
+<button
+  class="add-column-button"
+  mat-icon-button
+  title="Add column"
+  (click)="addColumnModal()"
+  i18n-title="'Add column' button in board |
+  @@board_AddColumnButton"
+>
+  <mat-icon>addchart</mat-icon>
+</button>
+
+<div
+  class="column-container"
+  cdkDropList
+  cdkDropListOrientation="horizontal"
+  [cdkDropListData]="columnsArray"
+  (cdkDropListDropped)="dropColumn($event)"
+>
   <div
-    cdkDropList
-    cdkDropListOrientation="horizontal"
-    [cdkDropListData]="columnResponseArray"
-    (cdkDropListDropped)="dropColumn($event)"
-    class="column-container"
-    >
-    <div
-    cdkDropListGroup
     class="column-list"
+    cdkDropListGroup
+  >
+    <div
+      class="column-box"
+      *ngFor="let column of columnsArray"
+      cdkDrag
     >
       <div
-        *ngFor="let columnResponse of columnResponseArray"
-        cdkDrag
-        class="column-box"
-        >
-        <div class="column-handle" cdkDragHandle>
-          <mat-icon>drag_handle</mat-icon>
-        </div>
-        <app-column
-          class="column"
-          [boardResponse]="boardResponse"
-          [columnResponse]="columnResponse"
-          [columnResponseArray]="columnResponseArray"
-        ></app-column>
+        class="column-handle-button"
+        cdkDragHandle
+      >
+        <mat-icon>drag_handle</mat-icon>
       </div>
+
+      <app-column
+        class="column"
+        [board]="board"
+        [column]="column"
+        [columnsArray]="columnsArray"
+      ></app-column>
     </div>
   </div>
+</div>

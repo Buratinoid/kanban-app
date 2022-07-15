@@ -1,11 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 13px;
+}
 
-/* html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
-html, body {
-    width: 100vw;
-    height: 100vh;
-    background-color: brown;
-    margin: 0;
-    padding: 0;
+body {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-flow: column nowrap;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  background: linear-gradient(#FFFFF7, 35%, #4589B0);
+}
+
+.mat-dialog-container {
+  background-color: #FFFFF7;
+}
+
+.mat-dialog-content,
+.mat-dialog-title {
+  text-align: center;
+  color: #0A0A0A;
+}
+
+.mat-raised-button {
+  width: 100px;
+  background-color: #FFFFF7;
+  color: #0A0A0A;
+}
+
+.mat-form-field-appearance-outline {
+  width: 200px;
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.user-form {
+  display: flex;
+  width: 280px;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column nowrap;
+  margin: auto;
+  padding: 2rem 0;
+  border-radius: 5px;
+  background-color: #FFFFF7;
+  box-shadow: 6px -6px 8px -1px rgba(0, 0, 0, 0.3);
+  color: #0A0A0A;
+
+}
+
+.user-form-container {
+  display: flex;
+  width: 100vw;
+  height: 94vh;
+  flex-flow: column nowrap;
+  overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+  .user-form-container {
+    height: 90vh;
+  }
 }

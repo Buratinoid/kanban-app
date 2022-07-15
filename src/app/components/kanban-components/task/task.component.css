@@ -1,22 +1,65 @@
-.mainTask {
-  width: 100%;
-  border: 1px dotted black;
-  margin: 2px;
-  background-color: aliceblue;
+.task-header {
+  display: flex;
+  width: 260px;
+  margin: 0;
+  border-radius: 7px 7px 0 0;
+  background-color: #73B1D6;
 }
 
-.task_info {
-  border: 1px solid black;
-  font-size: 10px;
+.task-title {
+  flex-grow: 1;
+  margin: auto 0 auto 3rem;
+  padding: 0 5px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.delete_task {
-  position: absolute;
-  color: #fbff00;
-  top: 0px;
-  right: 0px;
+.delete-task-button {
+  display: flex;
+  height: 3rem;
+  width: 3rem;
+  justify-content: center;
+  align-items: center;
+  align-self: flex-start;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 3rem;
+  padding-bottom: 1px;
 }
 
-.delete_task:hover {
-  color: #2600ff;
+.delete-task-button:hover {
+  background-color: #0000001a;
+}
+
+.task-body {
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 5px;
+  background-color: #FFFFF7;
+  border-radius: 0 0 7px 7px;
+}
+
+.task-user-name,
+.task-condition {
+  display: flex;
+  max-width: 85%;
+  height: 1.5rem;
+  align-items: center;
+  align-self: flex-start;
+  margin: 5px 0 0;
+  padding: 2px 10px;
+  border: 1px solid #1D628B;
+  border-radius: 1.5rem;
+}
+
+.task-description {
+  display: flex;
+  min-height: 1.5rem;
+  align-items: center;
+  margin: 0;
+  padding: 7px;
+  border: 1px solid #1D628B;
+  border-radius: 5px;
 }

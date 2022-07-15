@@ -1,9 +1,8 @@
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {Component, Input, OnInit, OnDestroy} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {Subscription, Subject, takeUntil, concatMap, Observable, from} from 'rxjs';
+import {Subject, takeUntil, concatMap, from} from 'rxjs';
 
 import {ColumnService} from '../../../services/column.service';
 import {TaskService} from '../../../services/task.service';
@@ -25,88 +24,78 @@ import {TaskRequest} from '../../../models/task-request';
 export class ColumnComponent implements OnInit, OnDestroy {
 
   @Input()
-  boardResponse: BoardResponse = new BoardResponse();
+  board: BoardResponse = new BoardResponse();
   @Input()
-  columnResponse: ColumnResponse = new ColumnResponse();
+  column: ColumnResponse = new ColumnResponse();
   @Input()
-  columnResponseArray: ColumnResponse[] = [];
+  columnsArray: ColumnResponse[] = [];
 
-  taskResponseArray: TaskResponse[] = [];
-
-  private _editColumnTitleCondition: boolean = true;
+  tasksArray: TaskResponse[] = [];
 
   editColumnTitleForm: FormGroup;
 
-  columnSubscription: Subscription = new Subscription;
   columnNotifier: Subject<void> = new Subject();
 
   constructor(
-    private httpService: HttpClient,
+    private matDialog: MatDialog,
     private columnService: ColumnService,
-    private taskService: TaskService,
-    private matDialog: MatDialog
+    private taskService: TaskService
   ) {
     this.editColumnTitleForm = new FormGroup({
-      title: new FormControl('', [Validators.required])
+      title: new FormControl(this.column.title, [Validators.required])
     })
   }
 
   ngOnInit(): void {
-    this.columnResponseArray.sort((
-      previousColumn: ColumnResponse,
-      nextColumn: ColumnResponse): number => {
-      return previousColumn.order - nextColumn.order
+    this.columnsArray.sort((a: ColumnResponse, b: ColumnResponse): number => {
+      return a.order - b.order
     })
-    this.taskResponseArray = this.columnResponse.tasks;
+    this.tasksArray = this.column.tasks;
   }
 
   ngOnDestroy(): void {
     this.columnNotifier.next();
     this.columnNotifier.complete();
-    this.columnSubscription.unsubscribe();
   }
 
   editColumnTitle(): void {
-    this.editColumnTitleForm.setValue({title: this.columnResponse.title})
+    this.editColumnTitleForm.setValue({title: this.column.title})
   }
 
   updateColumnTitle(): void {
-    if (this.columnResponse.title !== this.editColumnTitleForm.value.title) {
+    if (this.column.title !== this.editColumnTitleForm.value.title && this.editColumnTitleForm.valid) {
       const columnRequest: ColumnRequest = {
         title: this.editColumnTitleForm.value.title,
-        order: this.columnResponse.order
+        order: this.column.order
       }
-      this.columnSubscription = this.columnService
-        .updateColumn(this.boardResponse.id, this.columnResponse.id, columnRequest)
+      this.columnService.updateColumn(this.board.id, this.column.id, columnRequest)
         .pipe(
           takeUntil(this.columnNotifier)
         )
         .subscribe((columnResponse: ColumnResponse) => {
-          this.columnResponse.title = columnResponse.title
+          this.column.title = columnResponse.title
         })
     }
   }
 
   deleteColumn(): void {
     const changeColumnOrderArray: ColumnResponse[] = [];
-    const deletedColumnIndex: number = this.columnResponseArray.indexOf(this.columnResponse)
+    const deletedColumnIndex: number = this.columnsArray.indexOf(this.column)
 
-    for (let i = deletedColumnIndex + 1; i <= (this.columnResponseArray.length - 1); i++) {
+    for (let i = deletedColumnIndex + 1; i <= (this.columnsArray.length - 1); i++) {
 
-      const changedColumnResponse: ColumnResponse = JSON.parse(JSON.stringify(this.columnResponseArray[i]))
+      const changedColumnResponse: ColumnResponse = JSON.parse(JSON.stringify(this.columnsArray[i]))
       changedColumnResponse.order -= 1
       changeColumnOrderArray.push(changedColumnResponse)
     }
 
-    this.columnSubscription = this.columnService
-      .deleteColumn(this.boardResponse.id, this.columnResponse.id)
+    this.columnService.deleteColumn(this.board.id, this.column.id)
       .pipe(
         takeUntil(this.columnNotifier)
       )
       .subscribe(() => {
-        this.columnResponseArray.splice(deletedColumnIndex, 1)
+        this.columnsArray.splice(deletedColumnIndex, 1)
         this.changeColumnsOrder(changeColumnOrderArray)
-
       })
   }
 
@@ -128,14 +117,12 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   updateColumnOrder(updatedColumnId: string, updatedColumnRequest: ColumnRequest): void {
-    this.columnSubscription = this.columnService
-      .updateColumn(this.boardResponse.id, updatedColumnId, updatedColumnRequest)
+    this.columnService.updateColumn(this.board.id, updatedColumnId, updatedColumnRequest)
       .pipe(
         takeUntil(this.columnNotifier)
       )
       .subscribe((updatedColumnResponse: ColumnResponse) => {
-
-        this.columnResponseArray.find((columnResponse: ColumnResponse) => {
+        this.columnsArray.find((columnResponse: ColumnResponse) => {
           if (updatedColumnId === columnResponse.id) {
             columnResponse.order = updatedColumnResponse.order
           }
@@ -144,22 +131,19 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   addTask(taskRequest: TaskRequest): void {
-    const increaseTaskOrder: number = 1;
-    // Где потерял массив???
-    if (this.taskResponseArray === undefined || this.taskResponseArray.length === 0) {
-      this.taskResponseArray = []
-      taskRequest.order = increaseTaskOrder
+    if (this.tasksArray === undefined || this.tasksArray.length === 0) {
+      this.tasksArray = []
+      taskRequest.order = 1
     } else {
-      const lastTaskIndex: number = this.taskResponseArray.length - 1
-      taskRequest.order = this.taskResponseArray[lastTaskIndex].order + increaseTaskOrder
+      const lastTaskIndex: number = this.tasksArray.length - 1
+      taskRequest.order = this.tasksArray[lastTaskIndex].order + 1
     }
-    this.columnSubscription = this.taskService
-      .createTask(this.boardResponse.id, this.columnResponse.id, taskRequest)
+    this.taskService.createTask(this.board.id, this.column.id, taskRequest)
       .pipe(
         takeUntil(this.columnNotifier)
       )
       .subscribe((taskResponse: TaskResponse) => {
-        this.taskResponseArray.push(taskResponse)
+        this.tasksArray.push(taskResponse)
       })
   }
 
@@ -188,13 +172,12 @@ export class ColumnComponent implements OnInit, OnDestroy {
       description: deletedTask.description,
       userId: deletedTask.userId
     }
-    this.columnSubscription = this.taskService
-      .createTask(this.boardResponse.id, this.columnResponse.id, taskRequest)
+    this.taskService.createTask(this.board.id, this.column.id, taskRequest)
       .pipe(
         takeUntil(this.columnNotifier)
       )
       .subscribe((taskResponse: TaskResponse) => {
-        this.taskResponseArray.find((task: TaskResponse) => {
+        this.tasksArray.find((task: TaskResponse) => {
           if (task.id === deletedTask.id) {
             task.id = taskResponse.id
             task.order = taskResponse.order
@@ -206,43 +189,40 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   deleteMovedTask(columnId: string, taskId: string): void {
-    this.columnSubscription = this.taskService
-      .deleteTask(this.boardResponse.id, columnId, taskId)
+    this.taskService.deleteTask(this.board.id, columnId, taskId)
       .pipe(
         takeUntil(this.columnNotifier)
       )
-      .subscribe(() => {
-        console.log('Task in prev Column deleted!'); //???
-      })
+      .subscribe()
   }
 
   dropTask(event: CdkDragDrop<TaskResponse[]>): void {
-    
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      } else {
+    } else {
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
-        );
-      }
-      
-      const movedTask: TaskResponse = event.container.data[event.currentIndex]   //Пустой массив!!!!!!
-      const movedTaskIndex: number = event.currentIndex
-      const movedTaskOrder: number = event.container.data[movedTaskIndex].order
-      const currentTaskArray: TaskResponse[] = event.container.data
-      const previousTaskArray: TaskResponse[] = event.previousContainer.data
-      const previousTaskIndex: number = event.previousIndex
+      );
+    }
 
-      if (event.container.data !== event.previousContainer.data) {
+    const movedTask: TaskResponse = event.container.data[event.currentIndex]
+    const movedTaskIndex: number = event.currentIndex
+    const movedTaskOrder: number = event.container.data[movedTaskIndex].order
+    const currentTaskArray: TaskResponse[] = event.container.data
+    const previousTaskArray: TaskResponse[] = event.previousContainer.data
+    const previousTaskIndex: number = event.previousIndex
+
+    if (event.container.data !== event.previousContainer.data) {
       this.dropTaskBetweenColumns(movedTask, movedTaskIndex, previousTaskIndex, currentTaskArray, previousTaskArray)
 
-      } else {
+    } else {
       this.dropTaskInsideColumn(movedTask, movedTaskIndex, movedTaskOrder)
     }
   }
@@ -252,22 +232,22 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const changeTaskOrderPrevColumnArray: TaskResponse[] = []
     movedTask.order = movedTaskIndex + 1
 
-  for (let i = movedTaskIndex + 1; i <= currentTaskArray.length - 1; i++) {
-    const taskResponse: TaskResponse = JSON.parse(JSON.stringify(currentTaskArray[i]))
-    taskResponse.order += 1
-    changeTaskOrderCurrentColumnArray.push(taskResponse)
-  }
+    for (let i = movedTaskIndex + 1; i <= currentTaskArray.length - 1; i++) {
+      const taskResponse: TaskResponse = JSON.parse(JSON.stringify(currentTaskArray[i]))
+      taskResponse.order += 1
+      changeTaskOrderCurrentColumnArray.push(taskResponse)
+    }
 
-  for (let i = previousTaskIndex; i <= previousTaskArray.length - 1; i++) {
-    const taskResponse: TaskResponse = JSON.parse(JSON.stringify(previousTaskArray[i]))
-    taskResponse.order -= 1
-    changeTaskOrderPrevColumnArray.push(taskResponse)
-  }
+    for (let i = previousTaskIndex; i <= previousTaskArray.length - 1; i++) {
+      const taskResponse: TaskResponse = JSON.parse(JSON.stringify(previousTaskArray[i]))
+      taskResponse.order -= 1
+      changeTaskOrderPrevColumnArray.push(taskResponse)
+    }
 
-  this.addMovedTask(movedTask);
-  this.deleteMovedTask(movedTask.columnId, movedTask.id)
-  this.changeTasksOrderPreviousColumn(movedTask.columnId, changeTaskOrderPrevColumnArray)
-  this.changeTasksOrderCurrentColumn(this.columnResponse.id, changeTaskOrderCurrentColumnArray)
+    this.addMovedTask(movedTask);
+    this.deleteMovedTask(movedTask.columnId, movedTask.id)
+    this.changeTasksOrderPreviousColumn(movedTask.columnId, changeTaskOrderPrevColumnArray)
+    this.changeTasksOrderCurrentColumn(this.column.id, changeTaskOrderCurrentColumnArray)
   }
 
   dropTaskInsideColumn(movedTask: TaskResponse, movedTaskIndex: number, movedTaskOrder: number) {
@@ -276,81 +256,76 @@ export class ColumnComponent implements OnInit, OnDestroy {
     if (movedTaskIndex >= movedTaskOrder) {
 
       for (let i: number = movedTaskOrder - 1; i < movedTaskIndex; i++) {
-        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.taskResponseArray[i]))
+        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.tasksArray[i]))
         taskResponse.order -= 1
         requestArray.push(taskResponse)
       }
     } else {
 
       for (let i: number = movedTaskOrder - 1; i > movedTaskIndex; i--) {
-        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.taskResponseArray[i]))
+        const taskResponse: TaskResponse = JSON.parse(JSON.stringify(this.tasksArray[i]))
         taskResponse.order += 1
         requestArray.push(taskResponse)
       }
     }
     movedTask.order = movedTaskIndex + 1;
     requestArray.push(movedTask)
-    this.changeTasksOrderCurrentColumn(this.columnResponse.id, requestArray)
+    this.changeTasksOrderCurrentColumn(this.column.id, requestArray)
   }
 
   changeTasksOrderCurrentColumn(columnId: string, changeOrderArray: TaskResponse[]): void {
-      from(changeOrderArray).pipe(
-      takeUntil(this.columnNotifier),
-      concatMap((response: TaskResponse) => {
-        return this.taskService.updateTaskOrder(this.boardResponse.id, columnId, response)
-      })
-    )
-    .subscribe((changedTaskResponse: TaskResponse) => {
-      this.taskResponseArray.find((taskResponse: TaskResponse) => {
-        if (changedTaskResponse.id === taskResponse.id) {
-          taskResponse.order = changedTaskResponse.order
-        }
-      })
-    })
-  }
-
-  changeTasksOrderPreviousColumn(columnId: string, changeOrderArray: TaskResponse[]): void {
-    from(changeOrderArray).pipe(
-    takeUntil(this.columnNotifier),
-    concatMap((response: TaskResponse) => {
-      return this.taskService.updateTaskOrder(this.boardResponse.id, columnId, response)
-    })
-  )
-  .subscribe((changedTaskResponse: TaskResponse) => {
-    this.columnResponseArray.find((columnResponse: ColumnResponse) => {
-      if (columnId === columnResponse.id) {
-        columnResponse.tasks.find((taskResponse: TaskResponse) => {
+    from(changeOrderArray)
+      .pipe(
+        takeUntil(this.columnNotifier),
+        concatMap((response: TaskResponse) => {
+          return this.taskService.updateTaskOrder(this.board.id, columnId, response)
+        })
+      )
+      .subscribe((changedTaskResponse: TaskResponse) => {
+        this.tasksArray.find((taskResponse: TaskResponse) => {
           if (changedTaskResponse.id === taskResponse.id) {
             taskResponse.order = changedTaskResponse.order
           }
         })
-      }
-    })
-  })
-}
+      })
+  }
+
+  changeTasksOrderPreviousColumn(columnId: string, changeOrderArray: TaskResponse[]): void {
+    from(changeOrderArray)
+      .pipe(
+        takeUntil(this.columnNotifier),
+        concatMap((response: TaskResponse) => {
+          return this.taskService.updateTaskOrder(this.board.id, columnId, response)
+        })
+      )
+      .subscribe((changedTaskResponse: TaskResponse) => {
+        this.columnsArray.find((columnResponse: ColumnResponse) => {
+          if (columnId === columnResponse.id) {
+            columnResponse.tasks.find((taskResponse: TaskResponse) => {
+              if (changedTaskResponse.id === taskResponse.id) {
+                taskResponse.order = changedTaskResponse.order
+              }
+            })
+          }
+        })
+      })
+  }
 
   changeColumnsOrder(changeOrderArray: ColumnResponse[]): void {
-      from(changeOrderArray).pipe(
-      takeUntil(this.columnNotifier),
-      concatMap((columnResponse: ColumnResponse) => {
-        return this.columnService.updateColumnOrder(this.boardResponse.id, columnResponse)
+    from(changeOrderArray)
+      .pipe(
+        takeUntil(this.columnNotifier),
+        concatMap((columnResponse: ColumnResponse) => {
+          return this.columnService.updateColumnOrder(this.board.id, columnResponse)
+        })
+      )
+      .subscribe((changedColumnResponse: ColumnResponse) => {
+        this.columnsArray.find((columnResponse: ColumnResponse) => {
+          if (changedColumnResponse.id === columnResponse.id) {
+            columnResponse.order = changedColumnResponse.order
+          }
+        })
       })
-    )
-    .subscribe((changedColumnResponse: ColumnResponse) => {
-      this.columnResponseArray.find((columnResponse: ColumnResponse) => {
-        if (changedColumnResponse.id === columnResponse.id) {
-          columnResponse.order = changedColumnResponse.order
-        }
-      })
-    })
-    
-  }
 
-  public getEditColumnCondition(): boolean {
-    return this._editColumnTitleCondition
-  }
-
-  public changeEditColumnCondition(): void {
-    this._editColumnTitleCondition = !this._editColumnTitleCondition;
   }
 }

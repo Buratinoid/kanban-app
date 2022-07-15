@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {Subscription, Subject, takeUntil, map} from 'rxjs';
+import {Subject, takeUntil, map} from 'rxjs';
 
 import {AuthService} from '../../../services/auth.service';
 import {UserService} from '../../../services/user.service';
@@ -24,7 +24,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   userResponse: UserResponse = new UserResponse();
 
   userForm: FormGroup;
-  userSubscription: Subscription = new Subscription;
   userNotifier: Subject<void> = new Subject();
 
   constructor(
@@ -34,20 +33,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.userForm = new FormGroup({
-      login: new FormControl('', [Validators.required]),
+      login: new FormControl('', [Validators.email, Validators.required]),
       name: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required])
     })
   }
 
   ngOnInit(): void {
-    this.userSubscription = this.userService
-      .getAllUsers()
+    this.userService.getAllUsers()
       .pipe(
         takeUntil(this.userNotifier),
         map((usersResponse: UserResponse[]) => {
           this.usersResponse = usersResponse;
-          this.findUserByName();
+          this.findUserByLogin();
           this.userForm.setValue({
             name: this.userResponse.name,
             login: this.userResponse.login,
@@ -61,10 +59,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userNotifier.next();
     this.userNotifier.complete();
-    this.userSubscription.unsubscribe();
   }
 
-  findUserByName(): void {
+  findUserByLogin(): void {
     const userLogin: string = this.authService.userLogin
     this.usersResponse
       .find((userResponse: UserResponse) => {
@@ -77,8 +74,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   updateUser(): void {
     if (this.userForm.valid) {
       const userRequest: SingUpRequest = this.userForm.value
-      this.userSubscription = this.userService
-        .updateUser(this.userResponse.id, userRequest)
+      this.userService.updateUser(this.userResponse.id, userRequest)
         .pipe(
           takeUntil(this.userNotifier)
         )
@@ -89,8 +85,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(userId: string): void {
-    this.userSubscription = this.userService
-      .deleteUser(userId)
+    this.userService.deleteUser(userId)
       .pipe(
         takeUntil(this.userNotifier)
       )

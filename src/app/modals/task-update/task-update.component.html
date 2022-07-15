@@ -1,37 +1,110 @@
-<h2 mat-dialog-title>Редактировать задачу</h2>
+<h2
+  mat-dialog-title
+  i18n="'Edit task' header in edit task modal |
+  @@taskUpdate_EditTaskTitle"
+>
+  Edit task
+</h2>
 
-<mat-dialog-content [formGroup]="updateTaskForm">
-  <mat-form-field>
-    <mat-label>Название задачи</mat-label>
-    <input matInput
-           placeholder="Название задачи"
-           formControlName="title">
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>Состояние задачи</mat-label>
-    <mat-select formControlName="done">
-      <mat-option [value]="taskCondition.true">True</mat-option>
-      <mat-option [value]="taskCondition.false">False</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>Описание задачи</mat-label>
-    <input matInput
-           placeholder="Описание задачи"
-           formControlName="description">
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>Ответственный</mat-label>
-    <mat-select formControlName="userId">
-      <mat-option *ngFor="let user of usersResponse" [value]="user.id">{{user.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</mat-dialog-content>
+<form
+  [formGroup]="updateTaskForm"
+>
+  <mat-dialog-content
+    class="modal-form"
+  >
+    <mat-form-field
+      appearance="outline"
+    >
+      <mat-label
+        i18n="'Task title' field name in edit task modal |
+        @@taskUpdate_TaskTitleInput"
+      >
+        Task title
+      </mat-label>
+      <input
+        matInput
+        formControlName="title">
+    </mat-form-field>
 
-<mat-dialog-actions>
-  <button mat-raised-button (click)="close()">Отмена</button>
-  <button mat-raised-button (click)="updateTask()">Сохранить</button>
-</mat-dialog-actions>
+    <mat-form-field
+      appearance="outline"
+    >
+      <mat-label
+        i18n="'Task condition' select name in edit task modal |
+        @@taskUpdate_TaskConditionSelect"
+      >
+        Task condition
+      </mat-label>
+      <mat-select
+        formControlName="done"
+      >
+        <mat-option
+          [value]="taskCondition.true"
+        >
+          Complete
+        </mat-option>
+        <mat-option
+          [value]="taskCondition.false"
+        >
+          In Work
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+    >
+      <mat-label
+        i18n="'Task description' field name in edit task modal |
+        @@taskUpdate_TaskDescriptionInput"
+      >
+        Task description
+      </mat-label>
+      <input
+        matInput
+        formControlName="description">
+    </mat-form-field>
+
+    <mat-form-field
+      appearance="outline"
+    >
+      <mat-label
+        i18n="'Task executor' select name in edit task modal |
+        @@taskUpdate_TaskExecutorSelect"
+      >
+        Executor
+      </mat-label>
+      <mat-select
+        formControlName="userId"
+      >
+        <mat-option
+          *ngFor="let user of usersList"
+          [value]="user.id"
+        >
+          {{user.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      type="submit"
+      (click)="updateTask()"
+      i18n="'Save' button in edit task modal |
+      @@taskUpdate_SaveButton"
+    >
+      Save
+    </button>
+
+    <button
+      mat-raised-button
+      (click)="close()"
+      i18n="'Cancel' button in edit task modal |
+      @@taskUpdate_CancelButton"
+    >
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</form>

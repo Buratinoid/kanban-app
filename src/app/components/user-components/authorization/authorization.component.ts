@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpErrorResponse} from "@angular/common/http";
-import {Subject, Subscription, takeUntil} from 'rxjs';
+import {Subject, takeUntil} from 'rxjs';
 
 import {AuthService} from '../../../services/auth.service';
 
@@ -18,9 +18,9 @@ import {SingInRequest} from '../../../models/sing-in-request';
 export class AuthorizationComponent implements OnInit, OnDestroy {
 
   isHidePassword: boolean = true;
+
   authorizationForm: FormGroup;
   authorizationStatus: AuthorizationStatus = new AuthorizationStatus(false);
-  authorizationSubscription: Subscription = new Subscription;
   authorizationNotifier: Subject<void> = new Subject();
 
   constructor(
@@ -28,7 +28,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
     private authService: AuthService
   ) {
     this.authorizationForm = new FormGroup({
-      login: new FormControl('', [Validators.required]),
+      login: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required])
     })
 
@@ -66,6 +66,5 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.authorizationNotifier.next();
     this.authorizationNotifier.complete();
-    this.authorizationSubscription.unsubscribe();
   }
 }

@@ -1,27 +1,38 @@
-<button
-  mat-icon-button
-  title="Add board"
-  (click)="addBoardModal()"
-  i18n-title="'Add board' button in kanban |
-  @@kanban_AddBoardButton"
-  ><mat-icon>add</mat-icon>
-</button>
-
-<div 
-  *ngFor="let boardResponse of boardResponseArray"
-  class="board"
+<ul
+  class="kanban-list"
+>
+  <li
+    class="board"
+    *ngFor="let board of getBoardsArray()"
   >
-  <a 
-    [routerLink]="['/', 'board', boardResponse.id]"
-    class="board-link"
-    >{{boardResponse.title}}</a>
-  <button
-    class="delete_board"
-    mat-icon-button
-    title="Delete board"
-    (click)="deleteBoardModal(boardResponse.id, boardResponse)"
-    i18n-title="'Delete board' button in kanban |
-    @@kanban_DeleteBoardButton"
-  ><mat-icon>delete_outline</mat-icon>
-  </button>
-</div>
+    <a
+      [routerLink]="['/', 'board', board.id]"
+      class="board-link"
+    >
+      Board: {{board.title}}<br>
+      Description: {{board.description}}<br>
+    </a>
+
+    <button
+      class="kanban-button"
+      mat-icon-button
+      title="Edit board"
+      (click)="updateBoardModal(board.id, board)"
+      i18n-title="'Edit board' button in kanban |
+      @@kanban_EditBoardButton"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button
+      class="kanban-button"
+      mat-icon-button
+      title="Delete board"
+      (click)="deleteBoardModal(board.id, board)"
+      i18n-title="'Delete board' button in kanban |
+      @@kanban_DeleteBoardButton"
+    >
+      <mat-icon>delete_outline</mat-icon>
+    </button>
+  </li>
+</ul>
